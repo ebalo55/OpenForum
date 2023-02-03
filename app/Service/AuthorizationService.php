@@ -10,8 +10,8 @@ use JetBrains\PhpStorm\ArrayShape;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 
-final readonly
-class AuthorizationService {
+final
+class AuthorizationService extends BaseService {
     /**
      * Assign to the given user the default admin role
      *

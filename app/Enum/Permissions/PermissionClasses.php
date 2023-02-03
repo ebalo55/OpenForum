@@ -4,6 +4,7 @@ namespace App\Enum\Permissions;
 
 use App\Enum\Metadata\Collectable;
 use App\Enum\Metadata\Permissions;
+use App\Enum\Permissions\Classes\Control;
 use App\Enum\Permissions\Classes\Event;
 use App\Trait\SerializableEnum;
 use ArchTech\Enums\Meta\Meta;
@@ -20,5 +21,7 @@ enum PermissionClasses: string {
     use SerializableEnum;
 
     #[Permissions(Event::class), Collectable(Event::class)]
-    case EVENT = "event";
+    case EVENT   = "event";
+    #[Permissions(Control::class), Collectable(Control::class)]
+    case CONTROL = "control";
 }

@@ -14,6 +14,14 @@ use Laravel\Fortify\Fortify;
 
 class FortifyServiceProvider extends ServiceProvider {
     /**
+     * Register any application services.
+     */
+    public
+    function register(): void {
+        //
+    }
+
+    /**
      * Bootstrap any application services.
      */
     public
@@ -38,13 +46,5 @@ class FortifyServiceProvider extends ServiceProvider {
                 return Limit::perMinute(5)->by($request->session()->get('login.id'));
             },
         );
-    }
-
-    /**
-     * Register any application services.
-     */
-    public
-    function register(): void {
-        //
     }
 }
