@@ -1,0 +1,9 @@
+<component name="ProjectRunConfigurationManager">
+    <configuration default="false" name="post-update-cmd" type="ComposerRunConfigurationType"
+                   factoryName="Composer Script">
+        <option name="commandLineParameters" value=""/>
+        <option name="pathToComposerJson" value="$PROJECT_DIR$/composer.json"/>
+        <option name="script" value="post-update-cmd"/>
+        <method v="2"/>
+    </configuration>
+</component>
