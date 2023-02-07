@@ -9,13 +9,77 @@ use Illuminate\Support\Facades\Notification;
 use Laravel\Fortify\Features;
 use Tests\TestCase;
 
-class PasswordResetTest extends TestCase
-{
+class PasswordResetTest extends TestCase {
     use RefreshDatabase;
 
-    public function test_reset_password_link_screen_can_be_rendered(): void
-    {
-        if (! Features::enabled(Features::resetPasswords())) {
+    public
+    function test_password_can_be_reset_with_valid_token(): void {
+        if (!Features::enabled(Features::resetPasswords())) {
+            $this->markTestSkipped('Password updates are not enabled.');
+
+            return;
+        }
+
+        Notification::fake();
+
+        $user = User::factory()->create();
+
+        $response = $this->post(
+            '/forgot-password',
+            [
+                'email' => $user->email,
+            ],
+        );
+
+        Notification::assertSentTo(
+            $user,
+            ResetPassword::class,
+            function(object $notification) use ($user) {
+                $response = $this->post(
+                    '/reset-password',
+                    [
+                        'token'                 => $notification->token,
+                        'email'                 => $user->email,
+                        'password'              => 'password',
+                        'password_confirmation' => 'password',
+                    ],
+                );
+
+                $response->assertSessionHasNoErrors();
+
+                return true;
+            },
+        );
+    }
+
+    public
+    function test_reset_password_link_can_be_requested(): void {
+        if (!Features::enabled(Features::resetPasswords())) {
+            $this->markTestSkipped('Password updates are not enabled.');
+
+            return;
+        }
+
+        Notification::fake();
+
+        $user = User::factory()->create();
+
+        $response = $this->post(
+            '/forgot-password',
+            [
+                'email' => $user->email,
+            ],
+        );
+
+        Notification::assertSentTo(
+            $user,
+            ResetPassword::class,
+        );
+    }
+
+    public
+    function test_reset_password_link_screen_can_be_rendered(): void {
+        if (!Features::enabled(Features::resetPasswords())) {
             $this->markTestSkipped('Password updates are not enabled.');
 
             return;
@@ -26,9 +90,9 @@ class PasswordResetTest extends TestCase
         $response->assertStatus(200);
     }
 
-    public function test_reset_password_link_can_be_requested(): void
-    {
-        if (! Features::enabled(Features::resetPasswords())) {
+    public
+    function test_reset_password_screen_can_be_rendered(): void {
+        if (!Features::enabled(Features::resetPasswords())) {
             $this->markTestSkipped('Password updates are not enabled.');
 
             return;
@@ -38,65 +102,23 @@ class PasswordResetTest extends TestCase
 
         $user = User::factory()->create();
 
-        $response = $this->post('/forgot-password', [
-            'email' => $user->email,
-        ]);
-
-        Notification::assertSentTo($user, ResetPassword::class);
-    }
-
-    public function test_reset_password_screen_can_be_rendered(): void
-    {
-        if (! Features::enabled(Features::resetPasswords())) {
-            $this->markTestSkipped('Password updates are not enabled.');
-
-            return;
-        }
-
-        Notification::fake();
-
-        $user = User::factory()->create();
-
-        $response = $this->post('/forgot-password', [
-            'email' => $user->email,
-        ]);
-
-        Notification::assertSentTo($user, ResetPassword::class, function (object $notification) {
-            $response = $this->get('/reset-password/'.$notification->token);
-
-            $response->assertStatus(200);
-
-            return true;
-        });
-    }
-
-    public function test_password_can_be_reset_with_valid_token(): void
-    {
-        if (! Features::enabled(Features::resetPasswords())) {
-            $this->markTestSkipped('Password updates are not enabled.');
-
-            return;
-        }
-
-        Notification::fake();
-
-        $user = User::factory()->create();
-
-        $response = $this->post('/forgot-password', [
-            'email' => $user->email,
-        ]);
-
-        Notification::assertSentTo($user, ResetPassword::class, function (object $notification) use ($user) {
-            $response = $this->post('/reset-password', [
-                'token' => $notification->token,
+        $response = $this->post(
+            '/forgot-password',
+            [
                 'email' => $user->email,
-                'password' => 'password',
-                'password_confirmation' => 'password',
-            ]);
+            ],
+        );
 
-            $response->assertSessionHasNoErrors();
+        Notification::assertSentTo(
+            $user,
+            ResetPassword::class,
+            function(object $notification) {
+                $response = $this->get('/reset-password/' . $notification->token);
 
-            return true;
-        });
+                $response->assertStatus(200);
+
+                return true;
+            },
+        );
     }
 }

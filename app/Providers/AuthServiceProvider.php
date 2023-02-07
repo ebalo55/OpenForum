@@ -7,8 +7,7 @@ use App\Enum\InternalRoles;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
 
-class AuthServiceProvider extends ServiceProvider
-{
+class AuthServiceProvider extends ServiceProvider {
     /**
      * The model to policy mappings for the application.
      *
@@ -21,7 +20,8 @@ class AuthServiceProvider extends ServiceProvider
     /**
      * Register any authentication / authorization services.
      */
-    public function boot(): void {
+    public
+    function boot(): void {
         $this->registerPolicies();
 
         // Implicitly grant "Super Admin" role all permissions

@@ -10,13 +10,12 @@ use Laravel\Jetstream\Http\Livewire\ApiTokenManager;
 use Livewire\Livewire;
 use Tests\TestCase;
 
-class ApiTokenPermissionsTest extends TestCase
-{
+class ApiTokenPermissionsTest extends TestCase {
     use RefreshDatabase;
 
-    public function test_api_token_permissions_can_be_updated(): void
-    {
-        if (! Features::hasApiFeatures()) {
+    public
+    function test_api_token_permissions_can_be_updated(): void {
+        if (!Features::hasApiFeatures()) {
             $this->markTestSkipped('API support is not enabled.');
 
             return;
@@ -24,21 +23,27 @@ class ApiTokenPermissionsTest extends TestCase
 
         $this->actingAs($user = User::factory()->withPersonalTeam()->create());
 
-        $token = $user->tokens()->create([
-            'name' => 'Test Token',
-            'token' => Str::random(40),
-            'abilities' => ['create', 'read'],
-        ]);
+        $token = $user->tokens()->create(
+            [
+                'name'      => 'Test Token',
+                'token'     => Str::random(40),
+                'abilities' => ['create', 'read'],
+            ],
+        );
 
         Livewire::test(ApiTokenManager::class)
-                    ->set(['managingPermissionsFor' => $token])
-                    ->set(['updateApiTokenForm' => [
-                        'permissions' => [
-                            'delete',
-                            'missing-permission',
+                ->set(['managingPermissionsFor' => $token])
+                ->set(
+                    [
+                        'updateApiTokenForm' => [
+                            'permissions' => [
+                                'delete',
+                                'missing-permission',
+                            ],
                         ],
-                    ]])
-                    ->call('updateApiToken');
+                    ],
+                )
+                ->call('updateApiToken');
 
         $this->assertFalse($user->fresh()->tokens->first()->can('delete'));
         $this->assertFalse($user->fresh()->tokens->first()->can('read'));

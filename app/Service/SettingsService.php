@@ -10,6 +10,18 @@ use Carbon\Carbon;
 final
 class SettingsService extends BaseService {
     /**
+     * Globally increase the number of import errors
+     *
+     * @return int
+     */
+    public
+    function increaseImportErrors(): int {
+        $this->general_settings->import_errors++;
+        $this->general_settings->save();
+        return $this->general_settings->import_errors;
+    }
+
+    /**
      * Globally define the new site name
      *
      * @param bool $is_in_progress
@@ -113,18 +125,6 @@ class SettingsService extends BaseService {
                 $this->general_settings->save();
             },
         );
-    }
-
-    /**
-     * Globally increase the number of import errors
-     *
-     * @return int
-     */
-    public
-    function increaseImportErrors(): int {
-        $this->general_settings->import_errors++;
-        $this->general_settings->save();
-        return $this->general_settings->import_errors;
     }
 
     public
