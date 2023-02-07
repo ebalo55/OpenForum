@@ -290,7 +290,7 @@ return [
     | or there is an import (use className) of a given class
     |
     */
-    'force_fqn' => true,
+    'force_fqn'               => false,
 
     /*
     |--------------------------------------------------------------------------

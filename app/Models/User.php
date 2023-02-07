@@ -15,7 +15,7 @@ use Spatie\Permission\Traits\HasRoles;
  *
  * @property int $id
  * @property string $name
- * @property string $email
+ * @property string|null $email
  * @property \Illuminate\Support\Carbon|null $email_verified_at
  * @property string $password
  * @property string|null $remember_token
@@ -27,7 +27,8 @@ use Spatie\Permission\Traits\HasRoles;
  * @property string|null $two_factor_recovery_codes
  * @property string|null $two_factor_confirmed_at
  * @property-read string $profile_photo_url
- * @property-read \Illuminate\Notifications\DatabaseNotificationCollection<int, \Illuminate\Notifications\DatabaseNotification> $notifications
+ * @property-read \Illuminate\Notifications\DatabaseNotificationCollection<int,
+ *                \Illuminate\Notifications\DatabaseNotification> $notifications
  * @property-read int|null $notifications_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \Spatie\Permission\Models\Permission> $permissions
  * @property-read int|null $permissions_count
@@ -56,7 +57,7 @@ use Spatie\Permission\Traits\HasRoles;
  * @method static \Illuminate\Database\Eloquent\Builder|User whereUpdatedAt($value)
  * @mixin \Eloquent
  */
-class User extends Authenticatable{
+class User extends Authenticatable {
     use HasApiTokens;
     use HasFactory;
     use HasProfilePhoto;
@@ -80,16 +81,8 @@ class User extends Authenticatable{
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
-     */
-    protected $fillable = [
-        'name',
-        'email',
-        'password',
-    ];
+
+    protected $guarded = [];
     /**
      * The attributes that should be hidden for serialization.
      *
