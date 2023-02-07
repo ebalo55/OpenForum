@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'code_highlighting'       => [
+    'code_highlighting' => [
         /*
          * To highlight code, we'll use Shiki under the hood. Make sure it's installed.
          *
@@ -14,7 +14,7 @@ return [
          *
          * More info: https://github.com/shikijs/shiki/blob/main/docs/themes.md
          */
-        'theme'   => 'github-light',
+        'theme' => 'github-light',
     ],
 
     /*
@@ -28,7 +28,7 @@ return [
      *
      * More info: https://spatie.be/docs/laravel-markdown/v1/using-the-blade-component/passing-options-to-commonmark
      */
-    'commonmark_options'      => [],
+    'commonmark_options' => [],
 
     /*
      * Rendering markdown to HTML can be resource intensive. By default
@@ -38,7 +38,7 @@ return [
      * the default cache store will be used. If you do not want to use
      * caching set this value to `false`.
      */
-    'cache_store'             => null,
+    'cache_store' => null,
 
     /*
      * This class will convert markdown to HTML
@@ -48,7 +48,7 @@ return [
      *
      * More info: https://spatie.be/docs/laravel-markdown/v1/advanced-usage/customizing-the-rendering-process
      */
-    'renderer_class'          => Spatie\LaravelMarkdown\MarkdownRenderer::class,
+    'renderer_class' => Spatie\LaravelMarkdown\MarkdownRenderer::class,
 
     /*
      * These extensions should be added to the markdown environment. A valid
@@ -56,7 +56,7 @@ return [
      *
      * More info: https://commonmark.thephpleague.com/2.1/extensions/overview/
      */
-    'extensions'              => [
+    'extensions' => [
         //
     ],
 
@@ -66,7 +66,7 @@ return [
      *
      * More info: https://commonmark.thephpleague.com/2.1/customization/rendering/
      */
-    'block_renderers'         => [
+    'block_renderers' => [
         // ['class' => FencedCode::class, 'renderer' => new MyCustomCodeRenderer(), 'priority' => 0]
     ],
 
@@ -76,7 +76,7 @@ return [
      *
      * More info: https://commonmark.thephpleague.com/2.1/customization/rendering/
      */
-    'inline_renderers'        => [
+    'inline_renderers' => [
         // ['class' => FencedCode::class, 'renderer' => new MyCustomCodeRenderer(), 'priority' => 0]
     ],
 
@@ -86,7 +86,7 @@ return [
      *
      * More info: https://commonmark.thephpleague.com/2.3/customization/inline-parsing/
      */
-    'inline_parsers'          => [
+    'inline_parsers' => [
         // ['parser' => new MyCustomInlineParser(), 'priority' => 0]
     ],
 ];

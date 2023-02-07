@@ -8,10 +8,7 @@ use ArchTech\Enums\Meta\Meta;
 
 /**
  * @method string description()
- * @method static string REGISTER()
- * @method static string CREATE()
- * @method static string UPDATE()
- * @method static string DELETE()
+ * @method static string RESET()
  */
 #[Meta(Description::class)]
 enum Control: string {

@@ -15,6 +15,7 @@ use Illuminate\Support\Collection;
  * @method Collection<string> collect()
  *
  * @method static string EVENT()
+ * @method static string CONTROL()
  */
 #[Meta(Permissions::class, Collectable::class)]
 enum PermissionClasses: string {

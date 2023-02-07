@@ -34,10 +34,6 @@ class UserService extends BaseService {
             $email,
         );
 
-        if (!is_null($email)) {
-            $user->sendEmailVerificationNotification();
-        }
-
         // assign default platform roles
         $this->authorization_service->assignDefaultUserRole($user);
 

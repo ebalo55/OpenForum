@@ -1,5 +1,8 @@
 <?php
 
+use App\Settings\GeneralSettings;
+use App\Settings\PasswordGenerationSettings;
+
 return [
 
     /*
@@ -7,7 +10,8 @@ return [
      * put them (manually) here.
      */
     'settings'                       => [
-
+        GeneralSettings::class,
+        PasswordGenerationSettings::class,
     ],
 
     /*

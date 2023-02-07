@@ -36,10 +36,7 @@ return [
     |
     */
 
-    'server' => env(
-        'OCTANE_SERVER',
-        'roadrunner',
-    ),
+    'server' => env('OCTANE_SERVER', 'roadrunner'),
 
     /*
     |--------------------------------------------------------------------------
@@ -52,10 +49,7 @@ return [
     |
     */
 
-    'https' => env(
-        'OCTANE_HTTPS',
-        false,
-    ),
+    'https' => env('OCTANE_HTTPS', false),
 
     /*
     |--------------------------------------------------------------------------
@@ -153,7 +147,7 @@ return [
     */
 
     'cache' => [
-        'rows'  => 1000,
+        'rows' => 1000,
         'bytes' => 10000,
     ],
 
@@ -170,7 +164,7 @@ return [
 
     'tables' => [
         'example:1000' => [
-            'name'  => 'string:1000',
+            'name' => 'string:1000',
             'votes' => 'int',
         ],
     ],

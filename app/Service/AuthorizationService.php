@@ -88,10 +88,10 @@ class AuthorizationService extends BaseService {
         return [
             InternalRoles::SUPER_ADMIN() => [],
             InternalRoles::ADMIN()       => [
-                PermissionClasses::EVENT->collect()->except([Event::REGISTER()]),
+                ...PermissionClasses::EVENT->collect(),
             ],
             InternalRoles::USER()        => [
-                PermissionClasses::EVENT->collect()->only([Event::REGISTER()]),
+                ...PermissionClasses::EVENT->collect()->only([Event::REGISTER()]),
             ],
         ];
     }

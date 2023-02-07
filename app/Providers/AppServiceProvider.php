@@ -3,7 +3,10 @@
 namespace App\Providers;
 
 use App\Service\AuthorizationService;
+use App\Service\BulkService;
+use App\Service\SettingsService;
 use App\Service\UserService;
+use App\Transformers\NullTransformer;
 use Illuminate\Support\ServiceProvider;
 use Spatie\Fractal\Fractal;
 
@@ -15,6 +18,8 @@ class AppServiceProvider extends ServiceProvider {
      */
     public array $singletons = [
         AuthorizationService::class => AuthorizationService::class,
+        BulkService::class          => BulkService::class,
+        SettingsService::class      => SettingsService::class,
         UserService::class          => UserService::class,
     ];
 
@@ -36,7 +41,6 @@ class AppServiceProvider extends ServiceProvider {
         Fractal::macro(
             "error",
             function(array $errors): Fractal {
-                /** @var Fractal $this */
                 return Fractal::create(
                     [],
                     NullTransformer::class,
