@@ -11,8 +11,7 @@ return [
     ),
 
     "exception_codes" => [
-        FileNotFoundException::class            => 1000,
-        MissingOrInvalidHeadersException::class => 1001,
-        PendingUploadInProgressException::class => 1002,
+        MissingOrInvalidHeadersException::class => 1000,
+        PendingUploadInProgressException::class => 1001,
     ],
 ];

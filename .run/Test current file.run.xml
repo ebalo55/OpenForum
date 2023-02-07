@@ -1,0 +1,7 @@
+<component name="ProjectRunConfigurationManager">
+    <configuration default="false" name="Test current file" type="PhpLocalRunConfigurationType"
+                   factoryName="PHP Console" path="$PROJECT_DIR$/artisan"
+                   scriptParameters="test $FilePathRelativeToProjectRoot$">
+        <method v="2"/>
+    </configuration>
+</component>

@@ -24,6 +24,12 @@ class SettingsService extends BaseService {
             $is_in_progress,
             function(bool $is_in_progress) {
                 $this->general_settings->is_import_in_progress = $is_in_progress;
+
+                // reset the number of errors if a new import is started
+                if ($is_in_progress) {
+                    $this->general_settings->import_errors = 0;
+                }
+
                 $this->general_settings->save();
             },
         );
@@ -107,6 +113,18 @@ class SettingsService extends BaseService {
                 $this->general_settings->save();
             },
         );
+    }
+
+    /**
+     * Globally increase the number of import errors
+     *
+     * @return int
+     */
+    public
+    function increaseImportErrors(): int {
+        $this->general_settings->import_errors++;
+        $this->general_settings->save();
+        return $this->general_settings->import_errors;
     }
 
     public

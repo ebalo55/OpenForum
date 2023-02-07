@@ -1,0 +1,12 @@
+<component name="ProjectRunConfigurationManager">
+    <configuration default="false" name="Fresh &amp; post-update-cmd" type="ComposerRunConfigurationType"
+                   factoryName="Composer Script">
+        <option name="commandLineParameters" value=""/>
+        <option name="pathToComposerJson" value="$PROJECT_DIR$/composer.json"/>
+        <option name="script" value="post-update-cmd"/>
+        <method v="2">
+            <option name="RunConfigurationTask" enabled="true" run_configuration_name="Fresh &amp; Seed"
+                    run_configuration_type="PhpLocalRunConfigurationType"/>
+        </method>
+    </configuration>
+</component>

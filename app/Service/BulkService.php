@@ -2,14 +2,12 @@
 
 namespace App\Service;
 
-use App\Exceptions\FileNotFoundException;
 use App\Exceptions\MissingOrInvalidHeadersException;
 use App\Exceptions\PendingUploadInProgressException;
 use App\Jobs\BulkImportUserJob;
 use App\Settings\GeneralSettings;
+use Carbon\Carbon;
 use Illuminate\Http\UploadedFile;
-use Illuminate\Support\Arr;
-use Illuminate\Support\Facades\Storage;
 use Spatie\SimpleExcel\SimpleExcelReader;
 
 final
@@ -29,14 +27,27 @@ class BulkService extends BaseService {
                                    ->trimHeaderRow()
                                    ->headersToSnakeCase();
 
+
         $reader->getRows()
                ->each(
                    function(array $row) {
+                       // if the format is not respected increase the number of errors and skip the record
+                       if (!Carbon::hasFormat(
+                           $row["birth_date"],
+                           "d/m/Y",
+                       )) {
+                           $this->settings_service->increaseImportErrors();
+                           return;
+                       }
+
                        $this->user_service->create(
                            $row["full_name"],
                            $this->user_service->generatePassword(
                                $row["full_name"],
-                               $row["birth_date"],
+                               Carbon::createFromFormat(
+                                   "d/m/Y",
+                                   $row["birth_date"],
+                               ),
                            ),
                        );
                    },
@@ -46,7 +57,7 @@ class BulkService extends BaseService {
         $this->settings_service->setIsImportInProgress(false);
 
         // finally delete the import file
-        Storage::delete($filename);
+        unlink($filename);
     }
 
     /**
@@ -70,22 +81,24 @@ class BulkService extends BaseService {
         $headers = $reader->getHeaders();
 
         // check that at least the full name and the birthdate are given as they are required for the app to work
-        if (!Arr::has(
-            $headers,
-            ["full_name", "birth_date"],
-        )) {
+        if (
+            !is_array($headers) ||
+            !in_array(
+                "full_name",
+                $headers,
+            ) ||
+            !in_array(
+                "birth_date",
+                $headers,
+            )
+        ) {
             throw new MissingOrInvalidHeadersException();
         }
 
-        // try to store the file with the extension derived from its mime
-        if (
-            !($filename = $file->storeAs(
-                "",
-                "import" . $this->getExtensionFromMime($file->getMimeType()),
-            ))
-        ) {
-            throw new FileNotFoundException();
-        }
+        $filename = $file->storeAs(
+            "",
+            "import" . $this->getExtensionFromMime($file->getMimeType()),
+        );
 
         // if everything matches then the file have been stored we dispatch the job with the filename and set the
         // uploading status on in order to avoid further uploads until the import is completed

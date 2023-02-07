@@ -10,7 +10,7 @@ class MissingOrInvalidHeadersException extends HttpException {
     function __construct() {
         parent::__construct(
             statusCode: Response::HTTP_PRECONDITION_FAILED,
-            message:    "Something went wrong during the upload, the file is missing",
+            message:    "Something went wrong during the upload, the file is missing or required headers not present",
             code:       config("student-forum.exception_codes." . static::class),
         );
     }

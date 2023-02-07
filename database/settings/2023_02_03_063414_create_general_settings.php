@@ -15,5 +15,9 @@ class CreateGeneralSettings extends SettingsMigration {
             "general.site_name",
             "CasteForum",
         );
+        $this->migrator->add(
+            "general.import_errors",
+            0,
+        );
     }
 }
