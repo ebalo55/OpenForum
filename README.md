@@ -1,5 +1,12 @@
 # Student Forum - Full backend
 
+<p align="center">
+    <img src="resources/assets/cover.png" alt="Student Forum - Full Administration Panel"/>
+</p>
+<p align="center">
+    <img src="https://img.shields.io/badge/Coverage-100%25-brightgreen" alt="Coverage: 100%"/>
+</p>
+
 ## Why does this repository exists?
 
 Why does this repository exists? The answer may be difficult to understand at first but let's try...
