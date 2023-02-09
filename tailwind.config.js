@@ -14,6 +14,15 @@ module.exports = {
             fontFamily: {
                 sans: ['Nunito', ...defaultTheme.fontFamily.sans],
             },
+            animation: {
+                float: "float 5s linear infinite"
+            },
+            keyframes: {
+                float: {
+                    '0%, 100%': {transform: 'translateY(0)'},
+                    '50%': {transform: 'translateY(.5rem)'},
+                }
+            },
         },
     },
 

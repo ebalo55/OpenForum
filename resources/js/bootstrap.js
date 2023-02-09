@@ -1,5 +1,9 @@
 import _ from 'lodash';
 import axios from 'axios';
+/**
+ * Load lottie player
+ */
+import "@lottiefiles/lottie-player";
 
 window._ = _;
 
@@ -33,3 +37,11 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 //     forceTLS: (import.meta.env.VITE_PUSHER_SCHEME ?? 'https') === 'https',
 //     enabledTransports: ['ws', 'wss'],
 // });
+
+/**
+ * Load assets into Vite
+ */
+import.meta.glob([
+    '../assets/**',
+]);
+

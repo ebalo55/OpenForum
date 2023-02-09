@@ -9,9 +9,9 @@ return [
     |
     | This value sets the root namespace for Livewire component classes in
     | your application. This value affects component auto-discovery and
-    | any Livewire file helper commands, like `artisan make:livewire`.
+    | any Livewire file helper commands, like `artisan make:modules`.
     |
-    | After changing this item, run: `php artisan livewire:discover`.
+    | After changing this item, run: `php artisan modules:discover`.
     |
     */
 
@@ -23,7 +23,7 @@ return [
     |--------------------------------------------------------------------------
     |
     | This value sets the path for Livewire component views. This affects
-    | file manipulation helper commands like `artisan make:livewire`.
+    | file manipulation helper commands like `artisan make:modules`.
     |
     */
 
@@ -61,7 +61,7 @@ return [
     | Livewire App URL
     |--------------------------------------------------------------------------
     |
-    | This value should be used if livewire assets are served from CDN.
+    | This value should be used if modules assets are served from CDN.
     | Livewire will communicate with an app through this url.
     |
     | Examples: "https://my-app.com", "myurl.com/app".
@@ -101,7 +101,7 @@ return [
         'rules'           => null,
         // Example: ['file', 'mimes:png,jpg']  Default: ['required', 'file', 'max:12288'] (12MB)
         'directory'       => null,
-        // Example: 'tmp'                      Default  'livewire-tmp'
+        // Example: 'tmp'                      Default  'modules-tmp'
         'middleware'      => null,
         // Example: 'throttle:5,1'             Default: 'throttle:60,1'
         'preview_mimes'   => [   // Supported file types for temporary pre-signed file URLs.
@@ -133,10 +133,10 @@ return [
     |
     | This value sets the path to the Livewire manifest file.
     | The default should work for most cases (which is
-    | "<app_root>/bootstrap/cache/livewire-components.php"), but for specific
+    | "<app_root>/bootstrap/cache/modules-components.php"), but for specific
     | cases like when hosting on Laravel Vapor, it could be set to a different value.
     |
-    | Example: for Laravel Vapor, it would be "/tmp/storage/bootstrap/cache/livewire-components.php".
+    | Example: for Laravel Vapor, it would be "/tmp/storage/bootstrap/cache/modules-components.php".
     |
     */
 

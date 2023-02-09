@@ -1768,12 +1768,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "03bff92c9baa15848cc7ddf638154e93bb358e2d"
+                "reference": "89ce187b0d99903dcb68e0651693a692350db530"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/03bff92c9baa15848cc7ddf638154e93bb358e2d",
-                "reference": "03bff92c9baa15848cc7ddf638154e93bb358e2d",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/89ce187b0d99903dcb68e0651693a692350db530",
+                "reference": "89ce187b0d99903dcb68e0651693a692350db530",
                 "shasum": ""
             },
             "require": {
@@ -1874,7 +1874,7 @@
                 "pda/pheanstalk": "^4.0",
                 "phpstan/phpdoc-parser": "^1.15",
                 "phpstan/phpstan": "^1.4.7",
-                "phpunit/phpunit": "^9.6.0 || ^10.0.1",
+                "phpunit/phpunit": "^9.6.0 || ^10.0.7",
                 "predis/predis": "^2.0.2",
                 "symfony/cache": "^6.2",
                 "symfony/http-client": "^6.2.4"
@@ -1958,7 +1958,7 @@
                 "issues": "https://github.com/laravel/framework/issues",
                 "source": "https://github.com/laravel/framework"
             },
-            "time": "2023-02-08T02:10:17+00:00"
+            "time": "2023-02-08T16:52:33+00:00"
         },
         {
             "name": "laravel/jetstream",
@@ -2032,16 +2032,16 @@
         },
         {
             "name": "laravel/octane",
-            "version": "v1.4.1",
+            "version": "v1.4.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/octane.git",
-                "reference": "ef2bc175fdbe8af967511650975f62e86ebe8f8e"
+                "reference": "b7b1fb4e77c57edd3cdc668ce483adff6830fc4c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/octane/zipball/ef2bc175fdbe8af967511650975f62e86ebe8f8e",
-                "reference": "ef2bc175fdbe8af967511650975f62e86ebe8f8e",
+                "url": "https://api.github.com/repos/laravel/octane/zipball/b7b1fb4e77c57edd3cdc668ce483adff6830fc4c",
+                "reference": "b7b1fb4e77c57edd3cdc668ce483adff6830fc4c",
                 "shasum": ""
             },
             "require": {
@@ -2104,7 +2104,7 @@
                 "issues": "https://github.com/laravel/octane/issues",
                 "source": "https://github.com/laravel/octane"
             },
-            "time": "2023-02-03T16:19:05+00:00"
+            "time": "2023-02-08T02:10:42+00:00"
         },
         {
             "name": "laravel/sanctum",
@@ -8460,16 +8460,16 @@
         },
         {
             "name": "laravel/sail",
-            "version": "v1.20.0",
+            "version": "v1.20.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/sail.git",
-                "reference": "65dc0556d5809f47f7c39267df4e93f3cc59c512"
+                "reference": "4b85dbfa3dceeaf7227e3029707562fd60297e86"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/sail/zipball/65dc0556d5809f47f7c39267df4e93f3cc59c512",
-                "reference": "65dc0556d5809f47f7c39267df4e93f3cc59c512",
+                "url": "https://api.github.com/repos/laravel/sail/zipball/4b85dbfa3dceeaf7227e3029707562fd60297e86",
+                "reference": "4b85dbfa3dceeaf7227e3029707562fd60297e86",
                 "shasum": ""
             },
             "require": {
@@ -8517,7 +8517,7 @@
                 "issues": "https://github.com/laravel/sail/issues",
                 "source": "https://github.com/laravel/sail"
             },
-            "time": "2023-02-05T15:12:03+00:00"
+            "time": "2023-02-08T02:08:37+00:00"
         },
         {
             "name": "mockery/mockery",

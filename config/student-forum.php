@@ -1,6 +1,5 @@
 <?php
 
-use App\Exceptions\FileNotFoundException;
 use App\Exceptions\MissingOrInvalidHeadersException;
 use App\Exceptions\PendingUploadInProgressException;
 
@@ -14,4 +13,8 @@ return [
         MissingOrInvalidHeadersException::class => 1000,
         PendingUploadInProgressException::class => 1001,
     ],
+
+    "datetime_format" => "d/m/Y H:i:s",
+
+    "time_format" => "H:i:s",
 ];

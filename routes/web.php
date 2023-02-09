@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\PagesController;
+use App\Http\Livewire\Dashboard\Index;
+use App\Http\Livewire\Settings\Editor;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,9 +18,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get(
     '/',
-    function() {
-        return redirect()->route("login");
-    },
+    [PagesController::class, "loginRedirect"],
 );
 
 Route::middleware(
@@ -30,9 +31,20 @@ Route::middleware(
     function() {
         Route::get(
             '/dashboard',
-            function() {
-                return view('dashboard');
-            },
+            Index::class,
         )->name('dashboard');
+
+        Route::middleware(
+            [
+                "can:" . \App\Enum\Permissions\Classes\Event::UPDATE(),
+            ],
+        )->group(
+            function() {
+                Route::get(
+                    '/settings',
+                    Editor::class,
+                )->name('settings.editor');
+            },
+        );
     },
 );

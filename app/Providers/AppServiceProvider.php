@@ -7,6 +7,7 @@ use App\Service\BulkService;
 use App\Service\SettingsService;
 use App\Service\UserService;
 use App\Transformers\NullTransformer;
+use Illuminate\Support\Facades\Vite;
 use Illuminate\Support\ServiceProvider;
 use Spatie\Fractal\Fractal;
 
@@ -46,6 +47,11 @@ class AppServiceProvider extends ServiceProvider {
                     NullTransformer::class,
                 )->addMeta(["success" => false, "errors" => $errors]);
             },
+        );
+
+        Vite::macro(
+            'image',
+            fn($asset) => Vite::asset("resources/assets/images/{$asset}"),
         );
     }
 
