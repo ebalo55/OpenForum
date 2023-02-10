@@ -44,5 +44,13 @@
 
 @livewireScripts
 @stack("script")
+<script>
+    document.addEventListener("scroll.to_top", (event) => {
+        window.scrollTo({top: 0, behavior: "smooth"})
+    })
+    document.addEventListener("scroll.to_bottom", (event) => {
+        window.scrollTo({top: document.body.scrollHeight + 100, behavior: "smooth"})
+    })
+</script>
 </body>
 </html>

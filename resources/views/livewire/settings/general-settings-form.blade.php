@@ -30,17 +30,18 @@
                 <x-jet-label>
                     Website name:
                 </x-jet-label>
-                <x-jet-input wire:model.debounce="site_name"
+                <x-jet-input wire:model.defer="site_name"
                              type="text"
                              placeholder="CasteForum"
-                             class="max-w-[20rem]"/>
+                             class="max-w-[20rem]"
+                />
                 <x-jet-input-error for="site_name"/>
             </div>
             <div class="flex flex-col mb-4">
                 <x-jet-label>
                     Registration available from:
                 </x-jet-label>
-                <x-jet-input wire:model.debounce="registration_available_from"
+                <x-jet-input wire:model.defer="registration_available_from"
                              type="text"
                              id="registration_available_from"
                              class="max-w-[20rem]"/>
@@ -50,7 +51,7 @@
                 <x-jet-label>
                     Registration available to:
                 </x-jet-label>
-                <x-jet-input wire:model.debounce="registration_available_to"
+                <x-jet-input wire:model.defer="registration_available_to"
                              type="text"
                              id="registration_available_to"
                              class="max-w-[20rem]"/>
@@ -61,10 +62,16 @@
     <x-slot name="actions">
         <x-jet-secondary-button
             wire:click="resetForm"
-            class="border-0 bg-transparent shadow-none mr-4 hover:bg-gray-100 hover:border-b">
+            class="border-0 bg-transparent shadow-none mr-4 hover:bg-gray-100 hover:border-b"
+            wire:dirty.attr.remove="disabled"
+            wire:target="site_name, registration_available_from, registration_available_to"
+            disabled>
             Reset
         </x-jet-secondary-button>
-        <x-jet-button class="bg-sky-500 hover:bg-sky-600 tracking-normal text-sm">
+        <x-jet-button class="bg-sky-500 hover:bg-sky-600 tracking-normal text-sm"
+                      wire:dirty.attr.remove="disabled"
+                      wire:target="site_name, registration_available_from, registration_available_to"
+                      disabled>
             Save
         </x-jet-button>
     </x-slot>

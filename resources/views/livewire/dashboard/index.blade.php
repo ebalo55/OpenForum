@@ -8,16 +8,15 @@
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             @can(\App\Enum\Permissions\Classes\Event::UPDATE())
-                @if($this->isImporting)
-                    <x-banner.upload-in-progress/>
-                @endif
+                <x-banner.upload-in-progress wire:poll.3s="checkIfImporting"/>
                 <div class="grid grid-cols-2 gap-8">
                     @foreach($this->cardsData as $data)
                         @php
                             /** @var array{title: string, content: string|bool|int } $data */
                         @endphp
 
-                        <x-card :class="!$this->shouldSpanFullGrid($data) ?: 'col-span-full'" wire:key="$data['title']">
+                        <x-card :class="!$this->shouldSpanFullGrid($data) ?: 'col-span-full'"
+                                wire:key="{{$data['title']}}">
                             <x-card.header :class="!$this->shouldSpanFullGrid($data) ?: 'mx-auto'">
                                 {{$data["title"]}}
 
@@ -50,3 +49,6 @@
         </div>
     </div>
 </div>
+
+@push("script")
+@endpush

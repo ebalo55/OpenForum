@@ -2,9 +2,10 @@
 
 namespace App\Http\Livewire\Settings;
 
-use App\Service\BannerService;
+use App\Facade\LivewireBannerServiceFacade;
 use App\Service\SettingsService;
 use App\Settings\GeneralSettings;
+use App\Trait\HasComponentChecksum;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -16,7 +17,6 @@ class GeneralSettingsForm extends Component {
     public string $registration_available_from;
     public string $registration_available_to;
     public string $site_name;
-
     protected $validationAttributes = [
         "registration_available_from" => "registration starting date",
         "registration_available_to"   => "registration ending date",
@@ -68,13 +68,8 @@ class GeneralSettingsForm extends Component {
             },
         );
 
-        /*$this->dispatchBrowserEvent(
-            "banner.success",
-            [
-                'message' => 'General settings successfully saved!'
-            ]
-        );*/
-        (new BannerService())->from($this)->success("test");
+        LivewireBannerServiceFacade::from($this)
+                                   ->success("General settings successfully saved!");
     }
 
     /**

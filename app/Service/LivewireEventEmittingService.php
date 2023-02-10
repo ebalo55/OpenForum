@@ -3,19 +3,37 @@
 namespace App\Service;
 
 use App\Enum\LivewireEventEmissionMethod;
+use Illuminate\Support\Arr;
 use Livewire\Component;
 
-abstract
+
 class LivewireEventEmittingService extends BaseService {
-    protected array $additional_method_argument = [];
     protected ?Component $component = null;
     protected array $event_parameters = [];
     protected LivewireEventEmissionMethod $method = LivewireEventEmissionMethod::EVENT;
+    protected array $method_arguments = [];
+
+    /**
+     * Add the given key-value pair to the list of additional parameter to emit with the event
+     *
+     * @param string $key
+     * @param mixed $value
+     *
+     * @return static
+     */
+    public
+    function addParameter(
+        string $key,
+        mixed  $value,
+    ): static {
+        $this->event_parameters[$key] = $value;
+        return $this;
+    }
 
     /**
      * Set the method used to emit the current event as a basic event
      *
-     * @return $this
+     * @return static
      */
     public
     function asBasic(): static {
@@ -26,7 +44,7 @@ class LivewireEventEmittingService extends BaseService {
     /**
      * Set the method used to emit the current event as a client event
      *
-     * @return $this
+     * @return static
      */
     public
     function asClient(): static {
@@ -37,7 +55,7 @@ class LivewireEventEmittingService extends BaseService {
     /**
      * Set the method used to emit the current event as a parent only event
      *
-     * @return $this
+     * @return static
      */
     public
     function asParentOnly(): static {
@@ -48,7 +66,7 @@ class LivewireEventEmittingService extends BaseService {
     /**
      * Set the method used to emit the current event as a self event
      *
-     * @return $this
+     * @return static
      */
     public
     function asSelf(): static {
@@ -59,13 +77,15 @@ class LivewireEventEmittingService extends BaseService {
     /**
      * Set the method used to emit the current event as a targeted event
      *
-     * @return $this
+     * @param string $component_name
+     *
+     * @return static
      */
     public
     function asTargeted(
         string $component_name,
     ): static {
-        $this->additional_method_argument = ["name" => $component_name];
+        $this->method_arguments = ["name" => $component_name];
         return $this->emitAs(LivewireEventEmissionMethod::TO_COMPONENT_EVENT);
     }
 
@@ -74,7 +94,7 @@ class LivewireEventEmittingService extends BaseService {
      *
      * @param LivewireEventEmissionMethod $emission_method
      *
-     * @return $this
+     * @return static
      */
     public
     function emitAs(
@@ -91,7 +111,7 @@ class LivewireEventEmittingService extends BaseService {
      *
      * @param Component $component
      *
-     * @return $this
+     * @return static
      */
     public
     function from(
@@ -105,7 +125,7 @@ class LivewireEventEmittingService extends BaseService {
      *
      * @param Component $component
      *
-     * @return $this
+     * @return static
      */
     public
     function withComponent(
@@ -120,13 +140,59 @@ class LivewireEventEmittingService extends BaseService {
      *
      * @param mixed ...$parameters
      *
-     * @return $this
+     * @return static
      */
     public
     function withParameters(
-        mixed ...$parameters
+        mixed ...$parameters,
     ): static {
-        $this->event_parameters = $parameters;
+        $this->event_parameters = Arr::collapse($parameters);
+        return $this;
+    }
+
+    /**
+     * Spread the defined arguments on the method definition calling it, then reset the data
+     *
+     * @return void
+     */
+    protected
+    function call(): void {
+        $this->component->{($this->method)()}(
+            ...
+            $this->method_arguments,
+        );
+
+        $this->reset();
+    }
+
+    /**
+     * Create the final method_arguments array of data that can be spread upon any of the event emission method
+     *
+     * @param string $event
+     *
+     * @return static
+     */
+    protected
+    function packArguments(
+        string $event,
+    ): static {
+        if ($this->method === LivewireEventEmissionMethod::BROWSER_EVENT) {
+            $this->method_arguments = [
+                "event" => $event,
+                "data"  => [
+                    ...$this->event_parameters,
+                ],
+            ];
+        } else {
+            $this->method_arguments = [
+                ...$this->method_arguments,
+                "event"  => $event,
+                "params" => [
+                    ...$this->event_parameters,
+                ],
+            ];
+        }
+
         return $this;
     }
 
@@ -150,7 +216,7 @@ class LivewireEventEmittingService extends BaseService {
      */
     protected
     function resetAdditionalMethodArguments(): void {
-        $this->additional_method_argument = [];
+        $this->method_arguments = [];
     }
 
     /**

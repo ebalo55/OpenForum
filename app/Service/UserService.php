@@ -70,6 +70,7 @@ class UserService extends BaseService {
      *
      * @param string $full_name
      * @param Carbon $birth_date
+     * @param array|null $generation_rule_override
      *
      * @return string
      */
@@ -77,6 +78,7 @@ class UserService extends BaseService {
     function generatePassword(
         string $full_name,
         Carbon $birth_date,
+        ?array $generation_rule_override = null,
     ): string {
         $name_fragments = explode(
             " ",
@@ -84,7 +86,7 @@ class UserService extends BaseService {
         );
 
         $psw = "";
-        foreach (app(PasswordGenerationSettings::class)->generation_rule as $rule) {
+        foreach (($generation_rule_override ?? app(PasswordGenerationSettings::class)->generation_rule) as $rule) {
             $psw .= match ($rule) {
                 PasswordGenerationRules::FIRST_NAME                => Arr::first($name_fragments),
                 PasswordGenerationRules::LAST_NAME                 => Arr::last($name_fragments),

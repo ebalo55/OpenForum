@@ -9,6 +9,8 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <x-banner.success/>
             <livewire:settings.general-settings-form/>
+            <x-jet-section-border/>
+            <livewire:settings.password-generation-form/>
         </div>
     </div>
 </div>

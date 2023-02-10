@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\Service\AuthorizationService;
 use App\Service\BulkService;
+use App\Service\LivewireBannerService;
 use App\Service\SettingsService;
 use App\Service\UserService;
 use App\Transformers\NullTransformer;
@@ -18,10 +19,11 @@ class AppServiceProvider extends ServiceProvider {
      * @var array
      */
     public array $singletons = [
-        AuthorizationService::class => AuthorizationService::class,
-        BulkService::class          => BulkService::class,
-        SettingsService::class      => SettingsService::class,
-        UserService::class          => UserService::class,
+	    AuthorizationService::class  => AuthorizationService::class,
+	    BulkService::class           => BulkService::class,
+	    SettingsService::class       => SettingsService::class,
+	    UserService::class           => UserService::class,
+	    LivewireBannerService::class => LivewireBannerService::class,
     ];
 
     /**
@@ -60,6 +62,5 @@ class AppServiceProvider extends ServiceProvider {
      */
     public
     function register(): void {
-        //
     }
 }
