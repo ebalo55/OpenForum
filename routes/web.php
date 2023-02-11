@@ -3,6 +3,7 @@
 use App\Http\Controllers\PagesController;
 use App\Http\Livewire\Dashboard\Index;
 use App\Http\Livewire\Settings\Editor;
+use App\Http\Livewire\Users\Import;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -36,15 +37,28 @@ Route::middleware(
 
         Route::middleware(
             [
-                "can:" . \App\Enum\Permissions\Classes\Event::UPDATE(),
+	            "can:" . \App\Enum\Permissions\Classes\Event::UPDATE(),
             ],
         )->group(
-            function() {
-                Route::get(
-                    '/settings',
-                    Editor::class,
-                )->name('settings.editor');
-            },
+	        function() {
+		        Route::get(
+			        '/settings',
+			        Editor::class,
+		        )->name('settings.editor');
+	        },
         );
+
+	    Route::middleware(
+		    [
+			    "can:" . \App\Enum\Permissions\Classes\Event::UPDATE(),
+		    ],
+	    )->group(
+		    function() {
+			    Route::get(
+				    '/users',
+				    \App\Http\Livewire\Users\Index::class,
+			    )->name('users.index');
+		    },
+	    );
     },
 );

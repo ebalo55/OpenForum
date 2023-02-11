@@ -32,10 +32,11 @@ class BulkService extends BaseService {
                ->each(
                    function(array $row) {
                        // if the format is not respected increase the number of errors and skip the record
-                       if (!Carbon::hasFormat(
-                           $row["birth_date"],
-                           "d/m/Y",
-                       )) {
+                       if (
+                           !Carbon::hasFormat(
+                               $row["birth_date"],
+                               "d/m/Y",
+                           )) {
                            $this->settings_service->increaseImportErrors();
                            return;
                        }
@@ -66,6 +67,8 @@ class BulkService extends BaseService {
      * @param UploadedFile $file
      *
      * @return void
+     * @throws MissingOrInvalidHeadersException
+     * @throws PendingUploadInProgressException
      */
     public
     function verifyAndDispatch(
@@ -92,6 +95,7 @@ class BulkService extends BaseService {
                 $headers,
             )
         ) {
+
             throw new MissingOrInvalidHeadersException();
         }
 
@@ -106,7 +110,7 @@ class BulkService extends BaseService {
 
         dispatch(
             new BulkImportUserJob(
-                $filename
+                storage_path("app/" . $filename)
             ),
         );
     }

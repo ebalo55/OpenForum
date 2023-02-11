@@ -3,6 +3,7 @@
 <div {{ $attributes->merge([
 		"class" => "relative col-span-full w-full rounded-0 p-4 font-semibold bg-white border flex" . ($show ?: " hidden")
      ]) }}
+     x-data="{{ json_encode(["show" => $show ?? false, "message" => null]) }}"
      x-init="
                 document.addEventListener('{{$event_listener}}', event => {
                     $el.classList.remove('hidden')
@@ -13,10 +14,9 @@
                     $el.querySelectorAll('lottie-player').forEach((player) => player.seek(0))
 
                     // hide the banner after the given timeout
-                    setTimeout(() => show = !show, event.detail?.timeout ?? 5000)
+                    setTimeout(() => {show = !show }, event.detail?.timeout ?? 5000)
                 });
           "
-     x-data="{{ json_encode(["show" => $show ?? false, "message" => null]) }}"
      x-show="show"
      x-transition.duration.300ms
 >

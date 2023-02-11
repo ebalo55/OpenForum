@@ -43,6 +43,28 @@ class LivewireBannerService extends LivewireEventEmittingService {
     }
 
     /**
+     * Publish the client event responsible for the display of the error banner
+     *
+     * @param string $message
+     * @param int|float|null $timeout
+     *
+     * @return void
+     */
+    public
+    function error(
+        string         $message,
+        int|float|null $timeout = null,
+    ): void {
+        $this->withParameters(
+            [
+                "message" => $message,
+                "timeout" => $timeout,
+            ],
+        )->packArguments("banner.error")
+             ->call();
+    }
+
+    /**
      * Publish the client event responsible for the display of the upload in progress banner
      *
      * @param string $message

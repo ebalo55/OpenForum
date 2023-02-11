@@ -27,7 +27,10 @@ class Index extends Component {
 	function checkIfImporting(): void {
 		if ($this->getIsImportingProperty()) {
 			LivewireBannerServiceFacade::from($this)
-			                           ->uploadInProgress("Import in progress, contact addition disabled.");
+			                           ->uploadInProgress(
+				                           "Import in progress, contact addition disabled.",
+				                           LivewireBannerServiceFacade::UNLIMITED_TIMEOUT(),
+			                           );
 		}
 	}
 

@@ -8,6 +8,7 @@
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <x-banner.success/>
+            <x-banner.error/>
             <livewire:settings.general-settings-form/>
             <x-jet-section-border/>
             <livewire:settings.password-generation-form/>

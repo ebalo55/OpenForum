@@ -18,6 +18,11 @@
 
     <!-- Styles -->
     @livewireStyles
+    <style>
+        [x-cloak] {
+            display: none !important;
+        }
+    </style>
 </head>
 <body class="font-sans antialiased">
 <x-jet-banner/>

@@ -65,14 +65,6 @@ class User extends Authenticatable {
     use HasRoles;
 
     /**
-     * The accessors to append to the model's array form.
-     *
-     * @var array<int, string>
-     */
-    protected $appends = [
-        'profile_photo_url',
-    ];
-    /**
      * The attributes that should be cast.
      *
      * @var array<string, string>

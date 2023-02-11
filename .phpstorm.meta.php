@@ -15,7 +15,7 @@ namespace PHPSTORM_META {
 			[
 				''                                                                                => '@',
 				'App\Service\AuthorizationService'                                                => \App\Service\AuthorizationService::class,
-				'App\Service\BannerService'                                                       => \App\Service\LivewireBannerService::class,
+				'App\Service\LivewireBannerService'                                               => \App\Service\LivewireBannerService::class,
 				'App\Service\UserService'                                                         => \App\Service\UserService::class,
 				'Illuminate\Auth\Console\ClearResetsCommand'                                      => \Illuminate\Auth\Console\ClearResetsCommand::class,
 				'Illuminate\Broadcasting\BroadcastManager'                                        => \Illuminate\Broadcasting\BroadcastManager::class,
@@ -171,7 +171,7 @@ namespace PHPSTORM_META {
 			[
 				''                                                                                => '@',
 				'App\Service\AuthorizationService'                                                => \App\Service\AuthorizationService::class,
-				'App\Service\BannerService'                                                       => \App\Service\LivewireBannerService::class,
+				'App\Service\LivewireBannerService'                                               => \App\Service\LivewireBannerService::class,
 				'App\Service\UserService'                                                         => \App\Service\UserService::class,
 				'Illuminate\Auth\Console\ClearResetsCommand'                                      => \Illuminate\Auth\Console\ClearResetsCommand::class,
 				'Illuminate\Broadcasting\BroadcastManager'                                        => \Illuminate\Broadcasting\BroadcastManager::class,
@@ -327,7 +327,7 @@ namespace PHPSTORM_META {
 			[
 				''                                                                                => '@',
 				'App\Service\AuthorizationService'                                                => \App\Service\AuthorizationService::class,
-				'App\Service\BannerService'                                                       => \App\Service\LivewireBannerService::class,
+				'App\Service\LivewireBannerService'                                               => \App\Service\LivewireBannerService::class,
 				'App\Service\UserService'                                                         => \App\Service\UserService::class,
 				'Illuminate\Auth\Console\ClearResetsCommand'                                      => \Illuminate\Auth\Console\ClearResetsCommand::class,
 				'Illuminate\Broadcasting\BroadcastManager'                                        => \Illuminate\Broadcasting\BroadcastManager::class,
@@ -483,7 +483,7 @@ namespace PHPSTORM_META {
 			[
 				''                                                                                => '@',
 				'App\Service\AuthorizationService'                                                => \App\Service\AuthorizationService::class,
-				'App\Service\BannerService'                                                       => \App\Service\LivewireBannerService::class,
+				'App\Service\LivewireBannerService'                                               => \App\Service\LivewireBannerService::class,
 				'App\Service\UserService'                                                         => \App\Service\UserService::class,
 				'Illuminate\Auth\Console\ClearResetsCommand'                                      => \Illuminate\Auth\Console\ClearResetsCommand::class,
 				'Illuminate\Broadcasting\BroadcastManager'                                        => \Illuminate\Broadcasting\BroadcastManager::class,
@@ -639,7 +639,7 @@ namespace PHPSTORM_META {
 			[
 				''                                                                                => '@',
 				'App\Service\AuthorizationService'                                                => \App\Service\AuthorizationService::class,
-				'App\Service\BannerService'                                                       => \App\Service\LivewireBannerService::class,
+				'App\Service\LivewireBannerService'                                               => \App\Service\LivewireBannerService::class,
 				'App\Service\UserService'                                                         => \App\Service\UserService::class,
 				'Illuminate\Auth\Console\ClearResetsCommand'                                      => \Illuminate\Auth\Console\ClearResetsCommand::class,
 				'Illuminate\Broadcasting\BroadcastManager'                                        => \Illuminate\Broadcasting\BroadcastManager::class,
@@ -795,7 +795,7 @@ namespace PHPSTORM_META {
 			[
 				''                                                                                => '@',
 				'App\Service\AuthorizationService'                                                => \App\Service\AuthorizationService::class,
-				'App\Service\BannerService'                                                       => \App\Service\LivewireBannerService::class,
+				'App\Service\LivewireBannerService'                                               => \App\Service\LivewireBannerService::class,
 				'App\Service\UserService'                                                         => \App\Service\UserService::class,
 				'Illuminate\Auth\Console\ClearResetsCommand'                                      => \Illuminate\Auth\Console\ClearResetsCommand::class,
 				'Illuminate\Broadcasting\BroadcastManager'                                        => \Illuminate\Broadcasting\BroadcastManager::class,
@@ -951,7 +951,7 @@ namespace PHPSTORM_META {
 			[
 				''                                                                                => '@',
 				'App\Service\AuthorizationService'                                                => \App\Service\AuthorizationService::class,
-				'App\Service\BannerService'                                                       => \App\Service\LivewireBannerService::class,
+				'App\Service\LivewireBannerService'                                               => \App\Service\LivewireBannerService::class,
 				'App\Service\UserService'                                                         => \App\Service\UserService::class,
 				'Illuminate\Auth\Console\ClearResetsCommand'                                      => \Illuminate\Auth\Console\ClearResetsCommand::class,
 				'Illuminate\Broadcasting\BroadcastManager'                                        => \Illuminate\Broadcasting\BroadcastManager::class,
@@ -1107,7 +1107,7 @@ namespace PHPSTORM_META {
 			[
 				''                                                                                => '@',
 				'App\Service\AuthorizationService'                                                => \App\Service\AuthorizationService::class,
-				'App\Service\BannerService'                                                       => \App\Service\LivewireBannerService::class,
+				'App\Service\LivewireBannerService'                                               => \App\Service\LivewireBannerService::class,
 				'App\Service\UserService'                                                         => \App\Service\UserService::class,
 				'Illuminate\Auth\Console\ClearResetsCommand'                                      => \Illuminate\Auth\Console\ClearResetsCommand::class,
 				'Illuminate\Broadcasting\BroadcastManager'                                        => \Illuminate\Broadcasting\BroadcastManager::class,
@@ -1263,7 +1263,7 @@ namespace PHPSTORM_META {
 			[
 				''                                                                                => '@',
 				'App\Service\AuthorizationService'                                                => \App\Service\AuthorizationService::class,
-				'App\Service\BannerService'                                                       => \App\Service\LivewireBannerService::class,
+				'App\Service\LivewireBannerService'                                               => \App\Service\LivewireBannerService::class,
 				'App\Service\UserService'                                                         => \App\Service\UserService::class,
 				'Illuminate\Auth\Console\ClearResetsCommand'                                      => \Illuminate\Auth\Console\ClearResetsCommand::class,
 				'Illuminate\Broadcasting\BroadcastManager'                                        => \Illuminate\Broadcasting\BroadcastManager::class,
@@ -1419,7 +1419,7 @@ namespace PHPSTORM_META {
 			[
 				''                                                                                => '@',
 				'App\Service\AuthorizationService'                                                => \App\Service\AuthorizationService::class,
-				'App\Service\BannerService'                                                       => \App\Service\LivewireBannerService::class,
+				'App\Service\LivewireBannerService'                                               => \App\Service\LivewireBannerService::class,
 				'App\Service\UserService'                                                         => \App\Service\UserService::class,
 				'Illuminate\Auth\Console\ClearResetsCommand'                                      => \Illuminate\Auth\Console\ClearResetsCommand::class,
 				'Illuminate\Broadcasting\BroadcastManager'                                        => \Illuminate\Broadcasting\BroadcastManager::class,
@@ -1575,7 +1575,7 @@ namespace PHPSTORM_META {
 			[
 				''                                                                                => '@',
 				'App\Service\AuthorizationService'                                                => \App\Service\AuthorizationService::class,
-				'App\Service\BannerService'                                                       => \App\Service\LivewireBannerService::class,
+				'App\Service\LivewireBannerService'                                               => \App\Service\LivewireBannerService::class,
 				'App\Service\UserService'                                                         => \App\Service\UserService::class,
 				'Illuminate\Auth\Console\ClearResetsCommand'                                      => \Illuminate\Auth\Console\ClearResetsCommand::class,
 				'Illuminate\Broadcasting\BroadcastManager'                                        => \Illuminate\Broadcasting\BroadcastManager::class,

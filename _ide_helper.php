@@ -230,6 +230,22 @@ namespace Illuminate\Support\Facades {
 		}
 
 		/**
+		 * Set the configuration directory.
+		 *
+		 * @param string $path
+		 *
+		 * @return \Illuminate\Foundation\Application
+		 * @static
+		 */
+		public static
+		function useConfigPath(
+			$path,
+		) {
+			/** @var \Illuminate\Foundation\Application $instance */
+			return $instance->useConfigPath($path);
+		}
+
+		/**
 		 * Get the path to the database directory.
 		 *
 		 * @param string $path
@@ -12973,22 +12989,22 @@ namespace Illuminate\Support\Facades {
 	/**
 	 *
 	 *
-	 * @method static \Illuminate\Console\Process\PendingProcess command(array|string $command)
-	 * @method static \Illuminate\Console\Process\PendingProcess path(string $path)
-	 * @method static \Illuminate\Console\Process\PendingProcess timeout(int $timeout)
-	 * @method static \Illuminate\Console\Process\PendingProcess idleTimeout(int $timeout)
-	 * @method static \Illuminate\Console\Process\PendingProcess forever()
-	 * @method static \Illuminate\Console\Process\PendingProcess env(array $environment)
-	 * @method static \Illuminate\Console\Process\PendingProcess quietly()
-	 * @method static \Illuminate\Console\Process\PendingProcess tty(bool $tty = true)
-	 * @method static \Illuminate\Console\Process\PendingProcess options(array $options)
-	 * @method static \Illuminate\Contracts\Console\Process\ProcessResult run(array|string|null $command = null,
-	 *         callable|null $output = null)
-	 * @method static \Illuminate\Console\Process\InvokedProcess start(array|string|null $command = null, callable
+	 * @method static \Illuminate\Process\PendingProcess command(array|string $command)
+	 * @method static \Illuminate\Process\PendingProcess path(string $path)
+	 * @method static \Illuminate\Process\PendingProcess timeout(int $timeout)
+	 * @method static \Illuminate\Process\PendingProcess idleTimeout(int $timeout)
+	 * @method static \Illuminate\Process\PendingProcess forever()
+	 * @method static \Illuminate\Process\PendingProcess env(array $environment)
+	 * @method static \Illuminate\Process\PendingProcess quietly()
+	 * @method static \Illuminate\Process\PendingProcess tty(bool $tty = true)
+	 * @method static \Illuminate\Process\PendingProcess options(array $options)
+	 * @method static \Illuminate\Contracts\Process\ProcessResult run(array|string|null $command = null, callable|null
 	 *         $output = null)
-	 * @method static \Illuminate\Console\Process\PendingProcess withFakeHandlers(array $fakeHandlers)
-	 * @see \Illuminate\Console\Process\PendingProcess
-	 * @see \Illuminate\Console\Process\Factory
+	 * @method static \Illuminate\Process\InvokedProcess start(array|string|null $command = null, callable $output =
+	 *         null)
+	 * @method static \Illuminate\Process\PendingProcess withFakeHandlers(array $fakeHandlers)
+	 * @see \Illuminate\Process\PendingProcess
+	 * @see \Illuminate\Process\Factory
 	 */
 	class Process {
 		/**
@@ -12998,7 +13014,7 @@ namespace Illuminate\Support\Facades {
 		 * @param array|string $errorOutput
 		 * @param int $exitCode
 		 *
-		 * @return \Illuminate\Console\Process\FakeProcessResult
+		 * @return \Illuminate\Process\FakeProcessResult
 		 * @static
 		 */
 		public static
@@ -13007,7 +13023,7 @@ namespace Illuminate\Support\Facades {
 			$errorOutput = '',
 			$exitCode = 0,
 		) {
-			/** @var \Illuminate\Console\Process\Factory $instance */
+			/** @var \Illuminate\Process\Factory $instance */
 			return $instance->result(
 				$output,
 				$errorOutput,
@@ -13018,12 +13034,12 @@ namespace Illuminate\Support\Facades {
 		/**
 		 * Begin describing a fake process lifecycle.
 		 *
-		 * @return \Illuminate\Console\Process\FakeProcessDescription
+		 * @return \Illuminate\Process\FakeProcessDescription
 		 * @static
 		 */
 		public static
 		function describe() {
-			/** @var \Illuminate\Console\Process\Factory $instance */
+			/** @var \Illuminate\Process\Factory $instance */
 			return $instance->describe();
 		}
 
@@ -13032,14 +13048,14 @@ namespace Illuminate\Support\Facades {
 		 *
 		 * @param array $processes
 		 *
-		 * @return \Illuminate\Console\Process\FakeProcessSequence
+		 * @return \Illuminate\Process\FakeProcessSequence
 		 * @static
 		 */
 		public static
 		function sequence(
 			$processes = [],
 		) {
-			/** @var \Illuminate\Console\Process\Factory $instance */
+			/** @var \Illuminate\Process\Factory $instance */
 			return $instance->sequence($processes);
 		}
 
@@ -13048,14 +13064,14 @@ namespace Illuminate\Support\Facades {
 		 *
 		 * @param \Closure|array|null $callback
 		 *
-		 * @return \Illuminate\Console\Process\Factory
+		 * @return \Illuminate\Process\Factory
 		 * @static
 		 */
 		public static
 		function fake(
 			$callback = null,
 		) {
-			/** @var \Illuminate\Console\Process\Factory $instance */
+			/** @var \Illuminate\Process\Factory $instance */
 			return $instance->fake($callback);
 		}
 
@@ -13067,17 +13083,17 @@ namespace Illuminate\Support\Facades {
 		 */
 		public static
 		function isRecording() {
-			/** @var \Illuminate\Console\Process\Factory $instance */
+			/** @var \Illuminate\Process\Factory $instance */
 			return $instance->isRecording();
 		}
 
 		/**
 		 * Record the given process if processes should be recorded.
 		 *
-		 * @param \Illuminate\Console\Process\PendingProcess $process
-		 * @param \Illuminate\Contracts\Console\Process\ProcessResult $result
+		 * @param \Illuminate\Process\PendingProcess $process
+		 * @param \Illuminate\Contracts\Process\ProcessResult $result
 		 *
-		 * @return \Illuminate\Console\Process\Factory
+		 * @return \Illuminate\Process\Factory
 		 * @static
 		 */
 		public static
@@ -13085,7 +13101,7 @@ namespace Illuminate\Support\Facades {
 			$process,
 			$result,
 		) {
-			/** @var \Illuminate\Console\Process\Factory $instance */
+			/** @var \Illuminate\Process\Factory $instance */
 			return $instance->recordIfRecording(
 				$process,
 				$result,
@@ -13095,10 +13111,10 @@ namespace Illuminate\Support\Facades {
 		/**
 		 * Record the given process.
 		 *
-		 * @param \Illuminate\Console\Process\PendingProcess $process
-		 * @param \Illuminate\Contracts\Console\Process\ProcessResult $result
+		 * @param \Illuminate\Process\PendingProcess $process
+		 * @param \Illuminate\Contracts\Process\ProcessResult $result
 		 *
-		 * @return \Illuminate\Console\Process\Factory
+		 * @return \Illuminate\Process\Factory
 		 * @static
 		 */
 		public static
@@ -13106,7 +13122,7 @@ namespace Illuminate\Support\Facades {
 			$process,
 			$result,
 		) {
-			/** @var \Illuminate\Console\Process\Factory $instance */
+			/** @var \Illuminate\Process\Factory $instance */
 			return $instance->record(
 				$process,
 				$result,
@@ -13118,14 +13134,14 @@ namespace Illuminate\Support\Facades {
 		 *
 		 * @param bool $prevent
 		 *
-		 * @return \Illuminate\Console\Process\Factory
+		 * @return \Illuminate\Process\Factory
 		 * @static
 		 */
 		public static
 		function preventStrayProcesses(
 			$prevent = true,
 		) {
-			/** @var \Illuminate\Console\Process\Factory $instance */
+			/** @var \Illuminate\Process\Factory $instance */
 			return $instance->preventStrayProcesses($prevent);
 		}
 
@@ -13137,7 +13153,7 @@ namespace Illuminate\Support\Facades {
 		 */
 		public static
 		function preventingStrayProcesses() {
-			/** @var \Illuminate\Console\Process\Factory $instance */
+			/** @var \Illuminate\Process\Factory $instance */
 			return $instance->preventingStrayProcesses();
 		}
 
@@ -13146,14 +13162,14 @@ namespace Illuminate\Support\Facades {
 		 *
 		 * @param \Closure|string $callback
 		 *
-		 * @return \Illuminate\Console\Process\Factory
+		 * @return \Illuminate\Process\Factory
 		 * @static
 		 */
 		public static
 		function assertRan(
 			$callback,
 		) {
-			/** @var \Illuminate\Console\Process\Factory $instance */
+			/** @var \Illuminate\Process\Factory $instance */
 			return $instance->assertRan($callback);
 		}
 
@@ -13163,7 +13179,7 @@ namespace Illuminate\Support\Facades {
 		 * @param \Closure|string $callback
 		 * @param int $times
 		 *
-		 * @return \Illuminate\Console\Process\Factory
+		 * @return \Illuminate\Process\Factory
 		 * @static
 		 */
 		public static
@@ -13171,7 +13187,7 @@ namespace Illuminate\Support\Facades {
 			$callback,
 			$times = 1,
 		) {
-			/** @var \Illuminate\Console\Process\Factory $instance */
+			/** @var \Illuminate\Process\Factory $instance */
 			return $instance->assertRanTimes(
 				$callback,
 				$times,
@@ -13183,14 +13199,14 @@ namespace Illuminate\Support\Facades {
 		 *
 		 * @param \Closure|string $callback
 		 *
-		 * @return \Illuminate\Console\Process\Factory
+		 * @return \Illuminate\Process\Factory
 		 * @static
 		 */
 		public static
 		function assertNotRan(
 			$callback,
 		) {
-			/** @var \Illuminate\Console\Process\Factory $instance */
+			/** @var \Illuminate\Process\Factory $instance */
 			return $instance->assertNotRan($callback);
 		}
 
@@ -13199,26 +13215,26 @@ namespace Illuminate\Support\Facades {
 		 *
 		 * @param \Closure|string $callback
 		 *
-		 * @return \Illuminate\Console\Process\Factory
+		 * @return \Illuminate\Process\Factory
 		 * @static
 		 */
 		public static
 		function assertDidntRun(
 			$callback,
 		) {
-			/** @var \Illuminate\Console\Process\Factory $instance */
+			/** @var \Illuminate\Process\Factory $instance */
 			return $instance->assertDidntRun($callback);
 		}
 
 		/**
 		 * Assert that no processes were recorded.
 		 *
-		 * @return \Illuminate\Console\Process\Factory
+		 * @return \Illuminate\Process\Factory
 		 * @static
 		 */
 		public static
 		function assertNothingRan() {
-			/** @var \Illuminate\Console\Process\Factory $instance */
+			/** @var \Illuminate\Process\Factory $instance */
 			return $instance->assertNothingRan();
 		}
 
@@ -13227,14 +13243,14 @@ namespace Illuminate\Support\Facades {
 		 *
 		 * @param callable $callback
 		 *
-		 * @return \Illuminate\Console\Process\Pool
+		 * @return \Illuminate\Process\Pool
 		 * @static
 		 */
 		public static
 		function pool(
 			$callback,
 		) {
-			/** @var \Illuminate\Console\Process\Factory $instance */
+			/** @var \Illuminate\Process\Factory $instance */
 			return $instance->pool($callback);
 		}
 
@@ -13244,7 +13260,7 @@ namespace Illuminate\Support\Facades {
 		 * @param callable $callback
 		 * @param callable|null $output
 		 *
-		 * @return \Illuminate\Console\Process\ProcessPoolResults
+		 * @return \Illuminate\Process\ProcessPoolResults
 		 * @static
 		 */
 		public static
@@ -13252,7 +13268,7 @@ namespace Illuminate\Support\Facades {
 			$callback,
 			$output = null,
 		) {
-			/** @var \Illuminate\Console\Process\Factory $instance */
+			/** @var \Illuminate\Process\Factory $instance */
 			return $instance->concurrently(
 				$callback,
 				$output,
@@ -13262,12 +13278,12 @@ namespace Illuminate\Support\Facades {
 		/**
 		 * Create a new pending process associated with this factory.
 		 *
-		 * @return \Illuminate\Console\Process\PendingProcess
+		 * @return \Illuminate\Process\PendingProcess
 		 * @static
 		 */
 		public static
 		function newPendingProcess() {
-			/** @var \Illuminate\Console\Process\Factory $instance */
+			/** @var \Illuminate\Process\Factory $instance */
 			return $instance->newPendingProcess();
 		}
 
@@ -13285,7 +13301,7 @@ namespace Illuminate\Support\Facades {
 			$name,
 			$macro,
 		) {
-			\Illuminate\Console\Process\Factory::macro(
+			\Illuminate\Process\Factory::macro(
 				$name,
 				$macro,
 			);
@@ -13306,7 +13322,7 @@ namespace Illuminate\Support\Facades {
 			$mixin,
 			$replace = true,
 		) {
-			\Illuminate\Console\Process\Factory::mixin(
+			\Illuminate\Process\Factory::mixin(
 				$mixin,
 				$replace,
 			);
@@ -13324,7 +13340,7 @@ namespace Illuminate\Support\Facades {
 		function hasMacro(
 			$name,
 		) {
-			return \Illuminate\Console\Process\Factory::hasMacro($name);
+			return \Illuminate\Process\Factory::hasMacro($name);
 		}
 
 		/**
@@ -13335,7 +13351,7 @@ namespace Illuminate\Support\Facades {
 		 */
 		public static
 		function flushMacros() {
-			\Illuminate\Console\Process\Factory::flushMacros();
+			\Illuminate\Process\Factory::flushMacros();
 		}
 
 		/**
@@ -13353,7 +13369,7 @@ namespace Illuminate\Support\Facades {
 			$method,
 			$parameters,
 		) {
-			/** @var \Illuminate\Console\Process\Factory $instance */
+			/** @var \Illuminate\Process\Factory $instance */
 			return $instance->macroCall(
 				$method,
 				$parameters,
@@ -33341,16 +33357,26 @@ namespace {
 	}
 
 	class Event extends \Illuminate\Support\Facades\Event { }
-            class File extends \Illuminate\Support\Facades\File {}
-            class Gate extends \Illuminate\Support\Facades\Gate {}
-            class Hash extends \Illuminate\Support\Facades\Hash {}
-            class Http extends \Illuminate\Support\Facades\Http {}
-            class Js extends \Illuminate\Support\Js {}
-            class Lang extends \Illuminate\Support\Facades\Lang {}
-            class Log extends \Illuminate\Support\Facades\Log {}
-            class Mail extends \Illuminate\Support\Facades\Mail {}
-            class Notification extends \Illuminate\Support\Facades\Notification {}
-            class Password extends \Illuminate\Support\Facades\Password {}
+
+	class File extends \Illuminate\Support\Facades\File { }
+
+	class Gate extends \Illuminate\Support\Facades\Gate { }
+
+	class Hash extends \Illuminate\Support\Facades\Hash { }
+
+	class Http extends \Illuminate\Support\Facades\Http { }
+
+	class Js extends \Illuminate\Support\Js { }
+
+	class Lang extends \Illuminate\Support\Facades\Lang { }
+
+	class Log extends \Illuminate\Support\Facades\Log { }
+
+	class Mail extends \Illuminate\Support\Facades\Mail { }
+
+	class Notification extends \Illuminate\Support\Facades\Notification { }
+
+	class Password extends \Illuminate\Support\Facades\Password { }
             class Process extends \Illuminate\Support\Facades\Process {}
             class Queue extends \Illuminate\Support\Facades\Queue {}
             class RateLimiter extends \Illuminate\Support\Facades\RateLimiter {}
@@ -33378,13 +33404,15 @@ namespace {
 namespace {
 
 
-    use Illuminate\Contracts\Support\DeferringDisplayableValue;
-    use Illuminate\Contracts\Support\Htmlable;
-    use Illuminate\Support\Env;
-    use Illuminate\Support\HigherOrderTapProxy;
-    use Illuminate\Support\Optional;
+use Illuminate\Contracts\Support\DeferringDisplayableValue;
+use Illuminate\Contracts\Support\Htmlable;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Env;
+use Illuminate\Support\HigherOrderTapProxy;
+use Illuminate\Support\Optional;
+use Illuminate\Support\Str;
 
-    if (! function_exists('append_config')) {
+if (! function_exists('append_config')) {
     /**
      * Assign high numeric IDs to a config item to force appending.
      *
