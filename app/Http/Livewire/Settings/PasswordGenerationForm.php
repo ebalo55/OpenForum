@@ -80,7 +80,17 @@ class PasswordGenerationForm extends Component {
 
     public
     function save(): void {
+        // temporarily cast back to string all generated rules, check them then re-cast them to their original type
+        $backup_value = [...$this->generation_rules];
+        $this->generation_rules = Arr::map(
+            $this->generation_rules,
+            fn(string|PasswordGenerationRules $value) => $value instanceof PasswordGenerationRules ? $value()
+                : $value,
+        );
+
         $this->validate();
+        // reset the value to the original one
+        $this->generation_rules = $backup_value;
 
         $this->updateData();
 
@@ -127,7 +137,8 @@ class PasswordGenerationForm extends Component {
     function updateData(): void {
         $this->generation_rules = Arr::map(
             $this->generation_rules,
-            fn(string $value) => PasswordGenerationRules::from($value),
+            fn(string|PasswordGenerationRules $value) => $value instanceof PasswordGenerationRules ? $value
+                : PasswordGenerationRules::from($value),
         );
 
         $this->options = Arr::map(

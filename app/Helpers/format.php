@@ -2,6 +2,7 @@
 
 use Carbon\Carbon;
 
+
 if (!function_exists("format")) {
     /**
      * Format the given datetime instance using the common platform datetime format definitions

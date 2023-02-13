@@ -2319,12 +2319,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "67c19a72ca73b0efa3a744cbe72e34217b9a58b5"
+                "reference": "cc0d31ece9ff201a2484cf329e22afe8423af803"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/67c19a72ca73b0efa3a744cbe72e34217b9a58b5",
-                "reference": "67c19a72ca73b0efa3a744cbe72e34217b9a58b5",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/cc0d31ece9ff201a2484cf329e22afe8423af803",
+                "reference": "cc0d31ece9ff201a2484cf329e22afe8423af803",
                 "shasum": ""
             },
             "require": {
@@ -2510,7 +2510,7 @@
                 "issues": "https://github.com/laravel/framework/issues",
                 "source": "https://github.com/laravel/framework"
             },
-            "time": "2023-02-10T15:25:48+00:00"
+            "time": "2023-02-12T20:40:10+00:00"
         },
         {
             "name": "laravel/jetstream",

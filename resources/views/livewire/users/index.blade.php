@@ -21,7 +21,7 @@
                     <livewire:user-table/>
                 </x-tabs.content>
                 <x-tabs.content :tab_id="1">
-                    <livewire:users.import>
+                    <livewire:users.import/>
                 </x-tabs.content>
             </x-tabs>
         </div>

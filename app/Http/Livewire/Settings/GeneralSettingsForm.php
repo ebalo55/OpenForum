@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Settings;
 
 use App\Facade\LivewireBannerServiceFacade;
+use App\Facade\LivewireScrollServiceFacade;
 use App\Service\SettingsService;
 use App\Settings\GeneralSettings;
 use App\Trait\HasComponentChecksum;
@@ -70,6 +71,8 @@ class GeneralSettingsForm extends Component {
 
         LivewireBannerServiceFacade::from($this)
                                    ->success("General settings successfully saved!");
+        LivewireScrollServiceFacade::from($this)
+                                   ->scrollToTop();
     }
 
     /**

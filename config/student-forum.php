@@ -1,5 +1,6 @@
 <?php
 
+use App\Exceptions\LivewireComponentNotInitialized;
 use App\Exceptions\MissingOrInvalidHeadersException;
 use App\Exceptions\PendingUploadInProgressException;
 
@@ -12,6 +13,7 @@ return [
     "exception_codes" => [
         MissingOrInvalidHeadersException::class => 1000,
         PendingUploadInProgressException::class => 1001,
+        LivewireComponentNotInitialized::class  => 1002,
     ],
 
     "datetime_format" => "d/m/Y H:i:s",
