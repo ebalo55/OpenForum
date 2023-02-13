@@ -17,6 +17,6 @@ return [
     ],
 
     "datetime_format" => "d/m/Y H:i:s",
-
-    "time_format" => "H:i:s",
+    "date_format"     => "d/m/Y",
+    "time_format"     => "H:i:s",
 ];

@@ -51,8 +51,14 @@ class Index extends Component {
             [
                 "title"         => "Site name",
                 "content"       => $this->getSiteNameProperty(),
-                "full"          => true,
+                "full"          => false,
                 "property_name" => "siteName",
+            ],
+            [
+                "title"         => "Events dates",
+                "content"       => $this->getEventsDateRangeProperty(),
+                "full"          => false,
+                "property_name" => "EventsDateRange",
             ],
             [
                 "title"         => "Registration available from",
@@ -77,6 +83,20 @@ class Index extends Component {
                 "react_to_import" => true,
             ],
         ];
+    }
+
+    /**
+     * Creates the computed property referring the events date range
+     *
+     * @return string
+     */
+    public
+    function getEventsDateRangeProperty(): string {
+        return app(GeneralSettings::class)->events_starting_day && app(GeneralSettings::class)->events_ending_day
+            ? "From " . format_date(
+                app(GeneralSettings::class)->events_starting_day,
+            ) . " to " . format_date(app(GeneralSettings::class)->events_ending_day)
+            : "Events day range not defined";
     }
 
     /**

@@ -18,6 +18,10 @@
                 error when requesting via API.
             </li>
             <li>
+                When the events starts and ends, this value is used to define the number of available days for the
+                creation of events.
+            </li>
+            <li>
                 The website name, this setting is not strictly required but if used allows to define and
                 edit the front-end main title from the backend without the need to re-deploy or change
                 anything on the front-end.
@@ -57,6 +61,18 @@
                              class="max-w-[20rem]"/>
                 <x-jet-input-error for="registration_available_to"/>
             </div>
+            <div class="flex flex-col mb-4">
+                <x-jet-label>
+                    Forum days:
+                </x-jet-label>
+                <x-jet-input wire:model.defer="forum_days"
+                             type="text"
+                             id="forum_days"
+                             class="max-w-[20rem]"/>
+                <x-jet-input-error for="forum_days"/>
+                <x-jet-input-error for="starting_date"/>
+                <x-jet-input-error for="ending_date"/>
+            </div>
         </div>
     </x-slot>
     <x-slot name="actions">
@@ -64,13 +80,13 @@
             wire:click="resetForm"
             class="border-0 bg-transparent shadow-none mr-4 hover:bg-gray-100 hover:border-b"
             wire:dirty.attr.remove="disabled"
-            wire:target="site_name, registration_available_from, registration_available_to"
+            wire:target="site_name, registration_available_from, registration_available_to, forum_days"
             disabled>
             Reset
         </x-jet-secondary-button>
         <x-jet-button class="bg-sky-500 hover:bg-sky-600 tracking-normal text-sm"
                       wire:dirty.attr.remove="disabled"
-                      wire:target="site_name, registration_available_from, registration_available_to"
+                      wire:target="site_name, registration_available_from, registration_available_to, forum_days"
                       disabled>
             Save
         </x-jet-button>

@@ -51,10 +51,7 @@ class PasswordGenerationForm extends Component {
                 30,
             ),
         );
-        $this->fake_birth_date_printable = explode(
-                                               " ",
-                                               format($this->fake_birth_date),
-                                           )[0];
+        $this->fake_birth_date_printable = format_date($this->fake_birth_date);
 
         $this->generation_rules = app(PasswordGenerationSettings::class)->generation_rule;
         $this->generated_password = UserServiceFacade::generatePassword(

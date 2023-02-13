@@ -22,6 +22,66 @@ class SettingsService extends BaseService {
     }
 
     /**
+     * Globally define the new events ending time
+     *
+     * @param Carbon $events_ending_time
+     *
+     * @return Carbon
+     */
+    public
+    function setEventsEndingDay(
+        Carbon $events_ending_time,
+    ): Carbon {
+        return tap(
+            $events_ending_time,
+            function(Carbon $events_ending_time) {
+                $this->general_settings->events_ending_day = $events_ending_time;
+                $this->general_settings->save();
+            },
+        );
+    }
+
+    /**
+     * Globally define the new event locations
+     *
+     * @param string[] $locations
+     *
+     * @return string[]
+     */
+    public
+    function setEventLocations(
+        array $locations,
+    ): array {
+        return tap(
+            $locations,
+            function(array $locations) {
+                $this->general_settings->event_locations = $locations;
+                $this->general_settings->save();
+            },
+        );
+    }
+
+    /**
+     * Globally define the new events starting time
+     *
+     * @param Carbon $events_starting_time
+     *
+     * @return Carbon
+     */
+    public
+    function setEventsStartingDay(
+        Carbon $events_starting_time,
+    ): Carbon {
+        return tap(
+            $events_starting_time,
+            function(Carbon $events_starting_time) {
+                $this->general_settings->events_starting_day = $events_starting_time;
+                $this->general_settings->save();
+            },
+        );
+    }
+
+    /**
      * Globally define the new site name
      *
      * @param bool $is_in_progress
