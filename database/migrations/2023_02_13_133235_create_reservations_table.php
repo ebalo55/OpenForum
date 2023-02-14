@@ -18,6 +18,7 @@ class extends Migration {
             'reservations',
             function(Blueprint $table) {
                 $table->id();
+                $table->string(config("prefixed-ids.prefixed_id_attribute_name"))->nullable()->unique();
                 $table->foreignIdFor(User::class)->onDelete("cascade");
                 $table->foreignIdFor(EventDay::class)->onDelete("cascade");
                 $table->foreignIdFor(Activity::class)->onDelete("cascade");

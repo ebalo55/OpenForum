@@ -1,5 +1,8 @@
 <?php
 
+use League\CommonMark\Extension\Embed\Bridge\OscaroteroEmbedAdapter;
+use League\CommonMark\Extension\HeadingPermalink\HeadingPermalinkRenderer;
+
 return [
     'code_highlighting'       => [
         /*
@@ -7,7 +10,7 @@ return [
          *
          * More info: https://spatie.be/docs/laravel-markdown/v1/installation-setup
          */
-        'enabled' => false,
+        'enabled' => true,
 
         /*
          * The name of or path to a Shiki theme
@@ -28,7 +31,41 @@ return [
      *
      * More info: https://spatie.be/docs/laravel-markdown/v1/using-the-blade-component/passing-options-to-commonmark
      */
-    'commonmark_options'      => [],
+    'commonmark_options'      => [
+        "embed"             => [
+            "adapter" => new OscaroteroEmbedAdapter(),
+        ],
+        "footnote"          => [
+            "backref_class"      => "footnote-backref",
+            "backref_symbol"     => "",
+            "container_add_hr"   => true,
+            "container_class"    => "footnotes",
+            "ref_class"          => "footnote-ref",
+            "ref_id_prefix"      => "fnref:",
+            "footnote_class"     => "footnote",
+            "footnote_id_prefix" => "fn:",
+        ],
+        "heading_permalink" => [
+            "html_class"        => "heading-permalink",
+            "id_prefix"         => "content",
+            "fragment_prefix"   => "content",
+            "insert"            => "before",
+            "min_heading_level" => 1,
+            "max_heading_level" => 6,
+            "title"             => "Permalink",
+            "symbol"            => HeadingPermalinkRenderer::DEFAULT_SYMBOL,
+            "aria_hidden"       => true,
+        ],
+        "table_of_contents" => [
+            "html_class"        => "table-of-contents",
+            "position"          => "top",
+            "style"             => "bullet",
+            "min_heading_level" => 1,
+            "max_heading_level" => 6,
+            "normalize"         => "relative",
+            "placeholder"       => null,
+        ],
+    ],
 
     /*
      * Rendering markdown to HTML can be resource intensive. By default
@@ -57,7 +94,15 @@ return [
      * More info: https://commonmark.thephpleague.com/2.1/extensions/overview/
      */
     'extensions'              => [
-        //
+        \League\CommonMark\Extension\GithubFlavoredMarkdownExtension::class,
+        \League\CommonMark\Extension\Attributes\AttributesExtension::class,
+        \League\CommonMark\Extension\DescriptionList\DescriptionListExtension::class,
+        \League\CommonMark\Extension\Embed\EmbedExtension::class,
+        \League\CommonMark\Extension\Footnote\FootnoteExtension::class,
+        \League\CommonMark\Extension\FrontMatter\FrontMatterExtension::class,
+        \League\CommonMark\Extension\HeadingPermalink\HeadingPermalinkExtension::class,
+        \League\CommonMark\Extension\TableOfContents\TableOfContentsExtension::class,
+        \ElGigi\CommonMarkEmoji\EmojiExtension::class,
     ],
 
     /*

@@ -6,16 +6,19 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Spatie\PrefixedIds\Models\Concerns\HasPrefixedId;
 
 /**
  * App\Models\Activity
  *
  * @property int $id
+ * @property string|null $prefixed_id
  * @property int $event_day_id
  * @property string $title
  * @property string $markup
  * @property \Illuminate\Support\Carbon $starting_at
  * @property \Illuminate\Support\Carbon $ending_at
+ * @property int|null $max_reservation
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \App\Models\EventDay|null $eventDay
@@ -30,13 +33,15 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @method static \Illuminate\Database\Eloquent\Builder|Activity whereEventDayId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Activity whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Activity whereMarkup($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Activity whereMaxReservation($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Activity wherePrefixedId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Activity whereStartingAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Activity whereTitle($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Activity whereUpdatedAt($value)
  * @mixin \Eloquent
  */
 class Activity extends Model {
-    use HasFactory;
+    use HasFactory, HasPrefixedId;
 
     protected $casts = [
         "starting_at" => "datetime",
@@ -52,5 +57,13 @@ class Activity extends Model {
     public
     function reservations(): HasMany {
         return $this->hasMany(Reservation::class);
+    }
+
+    /**
+     * Get the route key for the model.
+     */
+    public
+    function getRouteKeyName(): string {
+        return config("prefixed-ids.prefixed_id_attribute_name");
     }
 }

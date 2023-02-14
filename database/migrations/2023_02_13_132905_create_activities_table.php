@@ -16,11 +16,13 @@ class extends Migration {
             'activities',
             function(Blueprint $table) {
                 $table->id();
+                $table->string(config("prefixed-ids.prefixed_id_attribute_name"))->nullable()->unique();
                 $table->foreignIdFor(EventDay::class)->onDelete("cascade");
                 $table->text("title");
                 $table->longText("markup");
                 $table->dateTime("starting_at");
                 $table->dateTime("ending_at");
+                $table->integer("max_reservation")->nullable();
                 $table->timestamps();
             },
         );

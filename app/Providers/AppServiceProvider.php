@@ -2,6 +2,10 @@
 
 namespace App\Providers;
 
+use App\Models\Activity;
+use App\Models\EventDay;
+use App\Models\Reservation;
+use App\Models\User;
 use App\Service\AuthorizationService;
 use App\Service\BulkService;
 use App\Service\LivewireBannerService;
@@ -11,6 +15,7 @@ use App\Transformers\NullTransformer;
 use Illuminate\Support\Facades\Vite;
 use Illuminate\Support\ServiceProvider;
 use Spatie\Fractal\Fractal;
+use Spatie\PrefixedIds\PrefixedIds;
 
 class AppServiceProvider extends ServiceProvider {
     /**
@@ -19,11 +24,11 @@ class AppServiceProvider extends ServiceProvider {
      * @var array
      */
     public array $singletons = [
-	    AuthorizationService::class  => AuthorizationService::class,
-	    BulkService::class           => BulkService::class,
-	    SettingsService::class       => SettingsService::class,
-	    UserService::class           => UserService::class,
-	    LivewireBannerService::class => LivewireBannerService::class,
+        AuthorizationService::class  => AuthorizationService::class,
+        BulkService::class           => BulkService::class,
+        SettingsService::class       => SettingsService::class,
+        UserService::class           => UserService::class,
+        LivewireBannerService::class => LivewireBannerService::class,
     ];
 
     /**
@@ -62,5 +67,13 @@ class AppServiceProvider extends ServiceProvider {
      */
     public
     function register(): void {
+        PrefixedIds::registerModels(
+            [
+                "usr_"   => User::class,
+                "evt_"   => EventDay::class,
+                "act_"   => Activity::class,
+                "resrv_" => Reservation::class,
+            ],
+        );
     }
 }

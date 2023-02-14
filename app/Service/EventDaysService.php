@@ -4,6 +4,7 @@ namespace App\Service;
 
 use App\Models\EventDay;
 use App\Settings\GeneralSettings;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Spatie\Period\Period;
 use Spatie\Period\Precision;
@@ -27,7 +28,7 @@ class EventDaysService extends BaseService {
         DB::transaction(
             function() use ($period) {
                 // remove all previously defined days
-                EventDay::delete();
+                EventDay::query()->delete();
 
                 $locations = app(GeneralSettings::class)->event_locations;
                 // for each day-location pair create a new event day
@@ -35,7 +36,7 @@ class EventDaysService extends BaseService {
                     foreach ($locations as $location) {
                         EventDay::create(
                             [
-                                "nickname" => fake()->userName(),
+                                "nickname" => format_date(Carbon::createFromImmutable($day)) . " - {$location}",
                                 "date"     => $day,
                                 "location" => $location,
                             ],

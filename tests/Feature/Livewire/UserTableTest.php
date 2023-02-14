@@ -21,7 +21,7 @@ class UserTableTest extends TestCase {
 
         $component->set(
             "selected",
-            [$users[0]->id],
+            [$users[0]->prefixed_id],
         )->call("export");
 
         $component->assertFileDownloaded("users.xlsx");
@@ -36,7 +36,6 @@ class UserTableTest extends TestCase {
 
         $component->call("exportAll");
 
-        // "Identifier,Full name,Email,Created at\n{$users[0]->id},{$users[0]->name},{$users[0]->email},{$users[0]->created_at}"
         $component->assertFileDownloaded("users.xlsx");
     }
 
@@ -72,7 +71,7 @@ class UserTableTest extends TestCase {
         foreach ($users as $key => $user) {
             $this->assertEquals(
                 [
-                    "Identifier" => $user->id,
+                    "Identifier" => $user->prefixed_id,
                     "Full name"  => $user->name,
                     "Email"      => Str::mask(
                         $user->email,
@@ -92,7 +91,7 @@ class UserTableTest extends TestCase {
         $users = User::factory()->count(3)->create();
 
         $user_table = new UserTable();
-        $user_table->selected = [$users[0]->id];
+        $user_table->selected = [$users[0]->prefixed_id];
 
         $response = $user_table->export();
         $response->getFile()->move("/tmp");
@@ -117,7 +116,7 @@ class UserTableTest extends TestCase {
         );
         $this->assertEquals(
             [
-                "Identifier" => $users[0]->id,
+                "Identifier" => $users[0]->prefixed_id,
                 "Full name"  => $users[0]->name,
                 "Email"      => Str::mask(
                     $users[0]->email,

@@ -15,9 +15,11 @@ class extends Migration {
             'event_days',
             function(Blueprint $table) {
                 $table->id();
+                $table->string(config("prefixed-ids.prefixed_id_attribute_name"))->nullable()->unique();
                 $table->string("nickname")->unique();
                 $table->date("date");
                 $table->text("location");
+                $table->integer("max_reservation")->nullable();
                 $table->timestamps();
 
                 $table->unique(["date", "location"]);

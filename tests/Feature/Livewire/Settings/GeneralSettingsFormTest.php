@@ -54,6 +54,14 @@ class GeneralSettingsFormTest extends TestCase {
             "site_name",
             "test",
         );
+        $component->set(
+            "forum_days",
+            "01/01/2023 to 01/02/2023",
+        );
+        $component->set(
+            "locations",
+            "loc1\nloc2",
+        );
 
         $component->call("save");
 
@@ -74,6 +82,26 @@ class GeneralSettingsFormTest extends TestCase {
         $this->assertEquals(
             "test",
             app(GeneralSettings::class)->site_name,
+        );
+        $this->assertEquals(
+            Carbon::create(
+                2023,
+            ),
+            app(GeneralSettings::class)->events_starting_day,
+        );
+        $this->assertEquals(
+            Carbon::create(
+                2023,
+                2,
+            ),
+            app(GeneralSettings::class)->events_ending_day,
+        );
+        $this->assertEquals(
+            [
+                "loc1",
+                "loc2",
+            ],
+            app(GeneralSettings::class)->event_locations,
         );
 
         $component->assertDispatchedBrowserEvent("banner.success");

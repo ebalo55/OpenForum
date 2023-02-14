@@ -15,6 +15,7 @@ class extends Migration {
             'users',
             function(Blueprint $table) {
                 $table->id();
+                $table->string(config("prefixed-ids.prefixed_id_attribute_name"))->nullable()->unique();
                 $table->string('name');
                 $table->string('email')->nullable()->unique();
                 $table->timestamp('email_verified_at')->nullable();

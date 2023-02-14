@@ -24,7 +24,7 @@ class UserTable extends DataTableComponent {
                        "name",
                        "ebalo",
                    )
-                   ->select(["id", "name", "email", "created_at"]); // Select some things
+                   ->select(["prefixed_id", "name", "email", "created_at"]); // Select some things
     }
 
     public
@@ -32,8 +32,14 @@ class UserTable extends DataTableComponent {
         return [
             Column::make(
                 "Identifier",
-                "id",
+                "prefixed_id",
             )
+                  ->format(
+                      fn(string $value) => Str::limit(
+                          $value,
+                          20,
+                      ),
+                  )
                   ->sortable(),
             Column::make(
                 "Full name",
@@ -61,7 +67,7 @@ class UserTable extends DataTableComponent {
 
     public
     function configure(): void {
-        $this->setPrimaryKey('id')->setEmptyMessage("No user found")->setSingleSortingDisabled();
+        $this->setPrimaryKey('prefixed_id')->setEmptyMessage("No user found")->setSingleSortingDisabled();
     }
 
     public
@@ -94,12 +100,12 @@ class UserTable extends DataTableComponent {
                 ->when(
                     fn() => !is_null($selected_ids_override),
                     fn(Builder $builder) => $builder->whereIn(
-                        "id",
+                        "prefixed_id",
                         $selected_ids_override,
                     ),
                 )->select(
                     [
-                        "id",
+                        "prefixed_id",
                         "name",
                         "email",
                         "created_at",
@@ -109,7 +115,7 @@ class UserTable extends DataTableComponent {
                 ->chunkMap(
                     function(User $user) {
                         return [
-                            "Identifier" => $user->id,
+                            "Identifier" => $user->prefixed_id,
                             "Full name"  => $user->name,
                             "Email"      => Str::mask(
                                 $user->email ?? "",

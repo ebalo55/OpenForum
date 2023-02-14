@@ -35,8 +35,14 @@ class IndexTest extends TestCase {
                 [
                     "title"         => "Site name",
                     "content"       => $component->get("siteName"),
-                    "full"          => true,
+                    "full"          => false,
                     "property_name" => "siteName",
+                ],
+                [
+                    "title"         => "Events dates",
+                    "content"       => $component->get("EventsDateRange"),
+                    "full"          => false,
+                    "property_name" => "EventsDateRange",
                 ],
                 [
                     "title"         => "Registration available from",

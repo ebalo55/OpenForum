@@ -14,13 +14,13 @@ class ActivityFactory extends Factory {
     public
     function definition(): array {
         return [
-            'event_day'   => EventDay::factory(),
-            'title'       => $this->faker->sentence(),
-            'markup'      => $this->faker->randomHtml(),
-            'starting_at' => $this->faker->time(),
-            'ending_at'   => $this->faker->time(),
-            'created_at'  => now(),
-            'updated_at'  => now(),
+            'event_day_id' => EventDay::factory(),
+            'title'        => $this->faker->sentence(),
+            'markup'       => $this->faker->randomHtml(),
+            'starting_at'  => $this->faker->time(),
+            'ending_at'    => $this->faker->time(),
+            'created_at'   => now(),
+            'updated_at'   => now(),
         ];
     }
 }

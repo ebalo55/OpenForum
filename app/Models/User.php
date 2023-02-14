@@ -10,11 +10,13 @@ use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
+use Spatie\PrefixedIds\Models\Concerns\HasPrefixedId;
 
 /**
  * App\Models\User
  *
  * @property int $id
+ * @property string|null $prefixed_id
  * @property string $name
  * @property string|null $email
  * @property \Illuminate\Support\Carbon|null $email_verified_at
@@ -51,6 +53,7 @@ use Spatie\Permission\Traits\HasRoles;
  * @method static \Illuminate\Database\Eloquent\Builder|User whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|User whereName($value)
  * @method static \Illuminate\Database\Eloquent\Builder|User wherePassword($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|User wherePrefixedId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|User whereProfilePhotoPath($value)
  * @method static \Illuminate\Database\Eloquent\Builder|User whereRememberToken($value)
  * @method static \Illuminate\Database\Eloquent\Builder|User whereTwoFactorConfirmedAt($value)
@@ -60,12 +63,7 @@ use Spatie\Permission\Traits\HasRoles;
  * @mixin \Eloquent
  */
 class User extends Authenticatable {
-    use HasApiTokens;
-    use HasFactory;
-    use HasProfilePhoto;
-    use Notifiable;
-    use TwoFactorAuthenticatable;
-    use HasRoles;
+    use HasApiTokens, HasFactory, HasProfilePhoto, Notifiable, TwoFactorAuthenticatable, HasRoles, HasPrefixedId;
 
     /**
      * The attributes that should be cast.
@@ -92,5 +90,13 @@ class User extends Authenticatable {
     public
     function reservations(): HasMany {
         return $this->hasMany(Reservation::class);
+    }
+
+    /**
+     * Get the route key for the model.
+     */
+    public
+    function getRouteKeyName(): string {
+        return config("prefixed-ids.prefixed_id_attribute_name");
     }
 }
