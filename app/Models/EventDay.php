@@ -53,6 +53,14 @@ class EventDay extends Model {
         );
     }
 
+    /**
+     * Get the route key for the model.
+     */
+    public
+    function getRouteKeyName(): string {
+        return config("prefixed-ids.prefixed_id_attribute_name");
+    }
+
     public
     function reservations(): HasMany {
         return $this->hasMany(
@@ -60,13 +68,5 @@ class EventDay extends Model {
             "event_day_id",
             "id",
         );
-    }
-
-    /**
-     * Get the route key for the model.
-     */
-    public
-    function getRouteKeyName(): string {
-        return config("prefixed-ids.prefixed_id_attribute_name");
     }
 }

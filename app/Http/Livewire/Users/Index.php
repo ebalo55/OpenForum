@@ -8,13 +8,13 @@ use Illuminate\Contracts\View\View;
 use Livewire\Component;
 
 class Index extends Component {
-	public array $tab_names = [
-		"Imported users",
-		"Import",
-	];
+    public array $tab_names = [
+        "Imported users",
+        "Import",
+    ];
 
-	public
-	function render(): Factory|View|Application {
-		return view('livewire.users.index');
-	}
+    public
+    function render(): Factory|View|Application {
+        return view('livewire.users.index');
+    }
 }

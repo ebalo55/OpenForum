@@ -2,7 +2,6 @@
 
 namespace App\Http\Livewire\Users;
 
-use App\Exceptions\MissingOrInvalidHeadersException;
 use App\Facade\BulkServiceFacade;
 use App\Facade\LivewireBannerServiceFacade;
 use Illuminate\Contracts\Foundation\Application;

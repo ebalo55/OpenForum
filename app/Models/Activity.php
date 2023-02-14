@@ -54,16 +54,16 @@ class Activity extends Model {
         return $this->belongsTo(EventDay::class);
     }
 
-    public
-    function reservations(): HasMany {
-        return $this->hasMany(Reservation::class);
-    }
-
     /**
      * Get the route key for the model.
      */
     public
     function getRouteKeyName(): string {
         return config("prefixed-ids.prefixed_id_attribute_name");
+    }
+
+    public
+    function reservations(): HasMany {
+        return $this->hasMany(Reservation::class);
     }
 }

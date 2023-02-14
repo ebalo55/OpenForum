@@ -25,12 +25,12 @@ class ReservationFactory extends Factory {
     }
 
     public
-    function withUser(
-        User $user,
+    function withActivity(
+        Activity $activity,
     ): Factory {
         return $this->state(
             fn(array $attributes) => [
-                "user_id" => $user->id,
+                "activity_id" => $activity->id,
             ],
         );
     }
@@ -47,12 +47,12 @@ class ReservationFactory extends Factory {
     }
 
     public
-    function withActivity(
-        Activity $activity,
+    function withUser(
+        User $user,
     ): Factory {
         return $this->state(
             fn(array $attributes) => [
-                "activity_id" => $activity->id,
+                "user_id" => $user->id,
             ],
         );
     }

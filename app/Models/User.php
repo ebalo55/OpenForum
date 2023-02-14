@@ -30,7 +30,8 @@ use Spatie\PrefixedIds\Models\Concerns\HasPrefixedId;
  * @property string|null $two_factor_recovery_codes
  * @property string|null $two_factor_confirmed_at
  * @property-read string $profile_photo_url
- * @property-read \Illuminate\Notifications\DatabaseNotificationCollection<int, \Illuminate\Notifications\DatabaseNotification> $notifications
+ * @property-read \Illuminate\Notifications\DatabaseNotificationCollection<int,
+ *                \Illuminate\Notifications\DatabaseNotification> $notifications
  * @property-read int|null $notifications_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \Spatie\Permission\Models\Permission> $permissions
  * @property-read int|null $permissions_count
@@ -87,16 +88,16 @@ class User extends Authenticatable {
         'two_factor_secret',
     ];
 
-    public
-    function reservations(): HasMany {
-        return $this->hasMany(Reservation::class);
-    }
-
     /**
      * Get the route key for the model.
      */
     public
     function getRouteKeyName(): string {
         return config("prefixed-ids.prefixed_id_attribute_name");
+    }
+
+    public
+    function reservations(): HasMany {
+        return $this->hasMany(Reservation::class);
     }
 }

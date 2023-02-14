@@ -9,25 +9,25 @@ use Livewire\Component;
 
 
 class LivewireEventEmittingService extends BaseService {
-	protected ?Component $component = null;
-	protected array $event_parameters = [];
-	protected LivewireEventEmissionMethod $method = LivewireEventEmissionMethod::EVENT;
-	protected array $method_arguments = [];
+    protected ?Component $component = null;
+    protected array $event_parameters = [];
+    protected LivewireEventEmissionMethod $method = LivewireEventEmissionMethod::EVENT;
+    protected array $method_arguments = [];
 
-	public
-	function UNLIMITED_TIMEOUT(): int {
-		return 0x7FFFFFFF;
-	}
+    public
+    function UNLIMITED_TIMEOUT(): int {
+        return 0x7FFFFFFF;
+    }
 
-	/**
-	 * Add the given key-value pair to the list of additional parameter to emit with the event
-	 *
-	 * @param string $key
-	 * @param mixed $value
-	 *
-	 * @return static
-	 */
-	public
+    /**
+     * Add the given key-value pair to the list of additional parameter to emit with the event
+     *
+     * @param string $key
+     * @param mixed $value
+     *
+     * @return static
+     */
+    public
     function addParameter(
         string $key,
         mixed  $value,

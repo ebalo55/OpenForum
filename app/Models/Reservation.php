@@ -48,16 +48,16 @@ class Reservation extends Model {
         return $this->belongsTo(EventDay::class);
     }
 
-    public
-    function user(): BelongsTo {
-        return $this->belongsTo(User::class);
-    }
-
     /**
      * Get the route key for the model.
      */
     public
     function getRouteKeyName(): string {
         return config("prefixed-ids.prefixed_id_attribute_name");
+    }
+
+    public
+    function user(): BelongsTo {
+        return $this->belongsTo(User::class);
     }
 }

@@ -7,22 +7,22 @@ use App\View\Components\AppLayout;
 use Tests\TestCase;
 
 class AppLayoutTest extends TestCase {
-	public
-	function test_can_render_dashboard(): void {
-		$response = $this->actingAs($user = User::factory()->create())->get(route("dashboard"));
+    public
+    function test_can_render(): void {
+        $class = new AppLayout();
 
-		$response->assertOk();
-	}
+        $view = $class->render();
 
-	public
-	function test_can_render(): void {
-		$class = new AppLayout();
+        $this->assertEquals(
+            "layouts.app",
+            $view->getName(),
+        );
+    }
 
-		$view = $class->render();
+    public
+    function test_can_render_dashboard(): void {
+        $response = $this->actingAs($user = User::factory()->create())->get(route("dashboard"));
 
-		$this->assertEquals(
-			"layouts.app",
-			$view->getName(),
-		);
-	}
+        $response->assertOk();
+    }
 }

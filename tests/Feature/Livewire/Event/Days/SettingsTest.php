@@ -4,8 +4,6 @@ namespace Tests\Feature\Livewire\Event\Days;
 
 use App\Http\Livewire\Event\Days\Settings;
 use App\Models\EventDay;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Livewire\Livewire;
 use Tests\TestCase;
 

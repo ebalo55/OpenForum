@@ -4,8 +4,6 @@ namespace Tests\Feature\Livewire\Event\Activities;
 
 use App\Http\Livewire\Event\Activities\Editor;
 use App\Models\Activity;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Livewire\Livewire;
 use Tests\TestCase;
 

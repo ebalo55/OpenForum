@@ -21,28 +21,6 @@ class LivewireBannerService extends LivewireEventEmittingService {
     protected LivewireEventEmissionMethod $method = LivewireEventEmissionMethod::BROWSER_EVENT;
 
     /**
-     * Publish the client event responsible for the display of the success banner
-     *
-     * @param string $message
-     * @param int|float|null $timeout
-     *
-     * @return void
-     */
-    public
-    function success(
-        string         $message,
-        int|float|null $timeout = null,
-    ): void {
-        $this->withParameters(
-            [
-                "message" => $message,
-                "timeout" => $timeout,
-            ],
-        )->packArguments("banner.success")
-             ->call();
-    }
-
-    /**
      * Publish the client event responsible for the display of the error banner
      *
      * @param string $message
@@ -61,6 +39,28 @@ class LivewireBannerService extends LivewireEventEmittingService {
                 "timeout" => $timeout,
             ],
         )->packArguments("banner.error")
+             ->call();
+    }
+
+    /**
+     * Publish the client event responsible for the display of the success banner
+     *
+     * @param string $message
+     * @param int|float|null $timeout
+     *
+     * @return void
+     */
+    public
+    function success(
+        string         $message,
+        int|float|null $timeout = null,
+    ): void {
+        $this->withParameters(
+            [
+                "message" => $message,
+                "timeout" => $timeout,
+            ],
+        )->packArguments("banner.success")
              ->call();
     }
 

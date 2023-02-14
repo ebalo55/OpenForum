@@ -1,6 +1,6 @@
-const defaultTheme = require('tailwindcss/defaultTheme');
+const defaultTheme = require("tailwindcss/defaultTheme")
 
-/** @type {import('tailwindcss').Config} */
+/** @type {import("tailwindcss").Config} */
 module.exports = {
     content: [
         "./vendor/rappasoft/laravel-livewire-tables/resources/views/**/*.blade.php",
@@ -23,12 +23,12 @@ module.exports = {
             },
             keyframes : {
                 float: {
-                    '0%, 100%': {transform: 'translateY(0)'},
-                    '50%': {transform: 'translateY(.5rem)'},
-                }
+                    "0%, 100%": {transform: "translateY(0)"},
+                    "50%"     : {transform: "translateY(.5rem)"},
+                },
             },
         },
     },
 
-    plugins: [require('@tailwindcss/forms'), require('@tailwindcss/typography')],
-};
+    plugins: [require("@tailwindcss/forms"), require("@tailwindcss/typography")],
+}
