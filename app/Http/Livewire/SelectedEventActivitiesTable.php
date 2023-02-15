@@ -2,10 +2,11 @@
 
 namespace App\Http\Livewire;
 
-use App\Facade\QueryServiceFacade;
 use App\Models\Activity;
 use App\Models\EventDay;
 use App\Models\Reservation;
+use App\Queries\HasNoReservationReferencingActivitiesQuery;
+use App\Queries\HasReservationReferencingActivitiesQuery;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -26,7 +27,6 @@ class SelectedEventActivitiesTable extends DataTableComponent {
         "exportReservations" => "Export reservations",
     ];
     public EventDay $event_day;
-    protected $model = Activity::class;
 
     public
     function builder(): Builder {
@@ -140,24 +140,10 @@ class SelectedEventActivitiesTable extends DataTableComponent {
                             function(Builder $builder, string $value) {
                                 switch ($value) {
                                     case "yes":
-                                        $builder->where(
-                                            fn(
-                                                \Illuminate\Database\Query\Builder $builder,
-                                            ) => QueryServiceFacade::countReservationFromActivities($builder),
-                                            ">",
-                                            0,
-                                        );
+	                                    HasReservationReferencingActivitiesQuery::handle($builder);
                                         break;
                                     case "no":
-                                        $builder->where(
-                                            fn(
-                                                \Illuminate\Database\Query\Builder $builder,
-                                            ) => QueryServiceFacade::countReservationFromActivities($builder),
-                                            "=",
-                                            0,
-                                        );
-                                        break;
-                                    default:
+	                                    HasNoReservationReferencingActivitiesQuery::handle($builder);
                                         break;
                                 }
                             },
@@ -224,33 +210,37 @@ class SelectedEventActivitiesTable extends DataTableComponent {
                     $selected_ids,
                 )
                 ->with(
-                    "reservations",
-                    fn(HasMany $builder) => $builder->select(
-                        [
-                            "reservations.user_id",
-                        ],
-                    ),
+	                "reservations",
+	                fn(HasMany $builder) => $builder->select(
+		                [
+			                "reservations.id",
+			                "reservations.prefixed_id",
+			                "reservations.user_id",
+		                ],
+	                )->orderBy("reservations.id"),
                 )
                 ->with(
-                    "reservations.user",
-                    fn(BelongsTo $builder) => $builder->select(
-                        [
-                            "users.id",
-                            "users.prefixed_id",
-                            "users.name",
-                            "users.email",
-                        ],
-                    ),
+	                "reservations.user",
+	                fn(BelongsTo $builder) => $builder->select(
+		                [
+			                "users.id",
+			                "users.prefixed_id",
+			                "users.name",
+			                "users.email",
+		                ],
+	                )->orderBy("users.id"),
                 )
                 ->select(
-                    [
-                        "activities.id",
-                        "activities.prefixed_id",
-                        "activities.title",
-                        "activities.max_reservation",
-                    ],
+	                [
+		                "activities.id",
+		                "activities.prefixed_id",
+		                "activities.title",
+		                "activities.max_reservation",
+	                ],
                 )
                 ->withCount("reservations")
+                ->groupBy("activities.id")
+                ->orderBy("activities.id")
                 ->chunk(
                     100,
                     function(Collection $activities) use ($excel) {

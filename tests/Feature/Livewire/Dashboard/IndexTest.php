@@ -4,6 +4,7 @@ namespace Tests\Feature\Livewire\Dashboard;
 
 use App\Facade\SettingServiceFacade;
 use App\Http\Livewire\Dashboard\Index;
+use App\Settings\GeneralSettings;
 use Carbon\Carbon;
 use Livewire\Livewire;
 use Tests\TestCase;
@@ -23,6 +24,21 @@ class IndexTest extends TestCase {
         $this->assertEquals(
             format(Carbon::create(2024)),
             $component->get("registrationEnabledTo"),
+        );
+    }
+
+    public
+    function test_automatically_formats_event_date_ranges_if_defined() {
+        $component = Livewire::test(Index::class);
+
+        SettingServiceFacade::setEventsStartingDay(Carbon::create(2023));
+        SettingServiceFacade::setEventsEndingDay(Carbon::create(2024));
+
+        $this->assertEquals(
+            "From " . format_date(
+                app(GeneralSettings::class)->events_starting_day,
+            ) . " to " . format_date(app(GeneralSettings::class)->events_ending_day),
+            $component->get("eventsDateRange"),
         );
     }
 

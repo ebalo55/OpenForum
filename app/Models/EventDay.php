@@ -46,11 +46,7 @@ class EventDay extends Model {
 
     public
     function activities(): HasMany {
-        return $this->hasMany(
-            Activity::class,
-            "event_day_id",
-            "id",
-        );
+        return $this->hasMany(Activity::class);
     }
 
     /**
@@ -63,10 +59,6 @@ class EventDay extends Model {
 
     public
     function reservations(): HasMany {
-        return $this->hasMany(
-            Reservation::class,
-            "event_day_id",
-            "id",
-        );
+	    return $this->hasMany(Reservation::class);
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Event\Days;
 
 use App\Facade\LivewireBannerServiceFacade;
+use App\Facade\LivewireScrollServiceFacade;
 use App\Models\EventDay;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
@@ -32,11 +33,14 @@ class Settings extends Component {
 
     public
     function save() {
-        $this->validate();
+	    $this->validate();
 
-        $this->event_day->save();
+	    $this->event_day->save();
 
-        LivewireBannerServiceFacade::from($this)
-                                   ->success("Event settings modified successfully!");
+	    LivewireBannerServiceFacade::from($this)
+	                               ->success("Event settings modified successfully!");
+
+	    LivewireScrollServiceFacade::from($this)
+	                               ->scrollToTop();
     }
 }

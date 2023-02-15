@@ -19,22 +19,30 @@ class GeneralSettingsFormTest extends TestCase {
             $component->get("registration_available_from"),
         );
 
-        $component->set(
-            "registration_available_from",
-            "02/02/2023 18:00:00",
-        );
+	    $component->set(
+		    "registration_available_from",
+		    "02/02/2023 18:00:00",
+	    );
 
-        $this->assertEquals(
-            "02/02/2023 18:00:00",
-            $component->get("registration_available_from"),
-        );
+	    $this->assertEquals(
+		    "02/02/2023 18:00:00",
+		    $component->get("registration_available_from"),
+	    );
 
-        $component->call("resetForm");
+	    app(GeneralSettings::class)->events_starting_day = now();
+	    app(GeneralSettings::class)->events_ending_day = now();
 
-        $this->assertEquals(
-            format(Carbon::create(2023)),
-            $component->get("registration_available_from"),
-        );
+	    $component->call("resetForm");
+
+	    $this->assertEquals(
+		    format(Carbon::create(2023)),
+		    $component->get("registration_available_from"),
+	    );
+
+	    $this->assertEquals(
+		    format_date(now()) . " to " . format_date(now()),
+		    $component->get("forum_days"),
+	    );
     }
 
     public

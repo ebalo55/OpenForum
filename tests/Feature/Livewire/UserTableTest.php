@@ -129,11 +129,10 @@ class UserTableTest extends TestCase {
         );
     }
 
-    /** @test */
     public
-    function the_component_can_render() {
-        $component = Livewire::test(Index::class);
+    function test_can_render() {
+	    $component = Livewire::test(UserTable::class);
 
-        $component->assertStatus(200);
+	    $component->assertStatus(200);
     }
 }
