@@ -559,26 +559,26 @@
         },
         {
             "name": "archtechx/enums",
-            "version": "v0.3.1",
+            "version": "v0.3.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/archtechx/enums.git",
-                "reference": "373a86a16e7233a56dd942d422af2cc59a2becb3"
+                "reference": "475f45e682b0771253707f9403b704759a08da5f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/archtechx/enums/zipball/373a86a16e7233a56dd942d422af2cc59a2becb3",
-                "reference": "373a86a16e7233a56dd942d422af2cc59a2becb3",
+                "url": "https://api.github.com/repos/archtechx/enums/zipball/475f45e682b0771253707f9403b704759a08da5f",
+                "reference": "475f45e682b0771253707f9403b704759a08da5f",
                 "shasum": ""
             },
             "require": {
                 "php": "^8.1"
             },
             "require-dev": {
-                "nunomaduro/larastan": "^1.0|^2.0",
-                "orchestra/testbench": "^6.9|^7.0",
-                "pestphp/pest": "^1.2",
-                "pestphp/pest-plugin-laravel": "^1.0"
+                "nunomaduro/larastan": "^1.0|^2.4",
+                "orchestra/testbench": "^6.9|^7.0|^8.0",
+                "pestphp/pest": "^1.2|^2.0",
+                "pestphp/pest-plugin-laravel": "^1.0|^2.0"
             },
             "type": "library",
             "autoload": {
@@ -599,9 +599,9 @@
             "description": "Helpers for making PHP enums more lovable.",
             "support": {
                 "issues": "https://github.com/archtechx/enums/issues",
-                "source": "https://github.com/archtechx/enums/tree/v0.3.1"
+                "source": "https://github.com/archtechx/enums/tree/v0.3.2"
             },
-            "time": "2022-08-24T22:27:44+00:00"
+            "time": "2023-02-15T13:05:41+00:00"
         },
         {
             "name": "bacon/bacon-qr-code",
@@ -2770,16 +2770,16 @@
         },
         {
             "name": "laravel/jetstream",
-            "version": "v2.16.1",
+            "version": "v2.16.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/jetstream.git",
-                "reference": "16cafeb0965c7332c8cda8d63a965e887ddab334"
+                "reference": "1b95df05aac85caffdbba9aeb6d22a49fc598dff"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/jetstream/zipball/16cafeb0965c7332c8cda8d63a965e887ddab334",
-                "reference": "16cafeb0965c7332c8cda8d63a965e887ddab334",
+                "url": "https://api.github.com/repos/laravel/jetstream/zipball/1b95df05aac85caffdbba9aeb6d22a49fc598dff",
+                "reference": "1b95df05aac85caffdbba9aeb6d22a49fc598dff",
                 "shasum": ""
             },
             "require": {
@@ -2836,7 +2836,7 @@
                 "issues": "https://github.com/laravel/jetstream/issues",
                 "source": "https://github.com/laravel/jetstream"
             },
-            "time": "2023-02-03T14:19:22+00:00"
+            "time": "2023-02-14T19:28:38+00:00"
         },
         {
             "name": "laravel/octane",
@@ -3109,16 +3109,16 @@
         },
         {
             "name": "league/commonmark",
-            "version": "2.3.8",
+            "version": "2.3.9",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/commonmark.git",
-                "reference": "c493585c130544c4e91d2e0e131e6d35cb0cbc47"
+                "reference": "c1e114f74e518daca2729ea8c4bf1167038fa4b5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/commonmark/zipball/c493585c130544c4e91d2e0e131e6d35cb0cbc47",
-                "reference": "c493585c130544c4e91d2e0e131e6d35cb0cbc47",
+                "url": "https://api.github.com/repos/thephpleague/commonmark/zipball/c1e114f74e518daca2729ea8c4bf1167038fa4b5",
+                "reference": "c1e114f74e518daca2729ea8c4bf1167038fa4b5",
                 "shasum": ""
             },
             "require": {
@@ -3211,7 +3211,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-12-10T16:02:17+00:00"
+            "time": "2023-02-15T14:07:24+00:00"
         },
         {
             "name": "league/config",
@@ -5621,12 +5621,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/laravel-fractal.git",
-                "reference": "28ea9803d2cba7a7144336a2ba62275316c122c8"
+                "reference": "6fc7b9f18b6269dac3f8aefefad3411c181f3344"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/laravel-fractal/zipball/28ea9803d2cba7a7144336a2ba62275316c122c8",
-                "reference": "28ea9803d2cba7a7144336a2ba62275316c122c8",
+                "url": "https://api.github.com/repos/spatie/laravel-fractal/zipball/6fc7b9f18b6269dac3f8aefefad3411c181f3344",
+                "reference": "6fc7b9f18b6269dac3f8aefefad3411c181f3344",
                 "shasum": ""
             },
             "require": {
@@ -5695,7 +5695,7 @@
                     "type": "custom"
                 }
             ],
-            "time": "2023-01-30T22:11:18+00:00"
+            "time": "2023-02-15T07:25:26+00:00"
         },
         {
             "name": "spatie/laravel-markdown",
