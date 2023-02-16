@@ -2,13 +2,14 @@
 
 namespace App\Exceptions;
 
+use App\Trait\SerializableEnum;
 use RuntimeException;
 
-class LivewireComponentNotInitialized extends RuntimeException {
+class UnserializableBackedEnumException extends RuntimeException {
     public
     function __construct() {
         parent::__construct(
-            message: "Livewire component not initialized or missing during dynamic call.",
+            message: "Unserializable backed enum detected, you're missing the " . SerializableEnum::class . ".",
             code:    config("student-forum.exception_codes." . static::class),
         );
     }

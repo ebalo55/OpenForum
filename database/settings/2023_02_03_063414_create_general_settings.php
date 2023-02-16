@@ -25,5 +25,9 @@ class CreateGeneralSettings extends SettingsMigration {
             "general.import_errors",
             0,
         );
+        $this->migrator->add(
+            "general.front_end_domain",
+            "www.example.com",
+        );
     }
 }

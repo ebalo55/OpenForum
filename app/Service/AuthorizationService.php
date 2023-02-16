@@ -91,7 +91,7 @@ class AuthorizationService extends BaseService {
                 ...PermissionClasses::EVENT->collect(),
             ],
             InternalRoles::USER()        => [
-                ...PermissionClasses::EVENT->collect()->only([Event::REGISTER()]),
+	            ...PermissionClasses::EVENT->collect()->only([Event::RESERVE()]),
             ],
         ];
     }

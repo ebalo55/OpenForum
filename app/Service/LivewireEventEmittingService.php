@@ -3,7 +3,7 @@
 namespace App\Service;
 
 use App\Enum\LivewireEventEmissionMethod;
-use App\Exceptions\LivewireComponentNotInitialized;
+use App\Exceptions\LivewireComponentNotInitializedException;
 use Illuminate\Support\Arr;
 use Livewire\Component;
 
@@ -160,13 +160,13 @@ class LivewireEventEmittingService extends BaseService {
      * Spread the defined arguments on the method definition calling it, then reset the data
      *
      * @return void
-     * @throws LivewireComponentNotInitialized
+     * @throws LivewireComponentNotInitializedException
      */
     protected
     function call(): void {
         throw_if(
             !$this->component,
-            LivewireComponentNotInitialized::class,
+            LivewireComponentNotInitializedException::class,
         );
 
         $this->component->{($this->method)()}(

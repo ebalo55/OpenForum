@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Contracts\ReservableModelContract;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -36,29 +38,73 @@ use Spatie\PrefixedIds\Models\Concerns\HasPrefixedId;
  * @method static \Illuminate\Database\Eloquent\Builder|EventDay whereUpdatedAt($value)
  * @mixin \Eloquent
  */
-class EventDay extends Model {
-    use HasFactory, HasPrefixedId;
+class EventDay extends Model implements ReservableModelContract {
+	use HasFactory, HasPrefixedId;
 
-    protected $casts = [
-        "date" => "date",
-    ];
-    protected $guarded = [];
+	protected $casts = [
+		"date" => "date",
+	];
+	protected $guarded = [];
 
-    public
-    function activities(): HasMany {
-        return $this->hasMany(Activity::class);
-    }
+	public
+	function activities(): HasMany {
+		return $this->hasMany(Activity::class);
+	}
 
-    /**
-     * Get the route key for the model.
-     */
-    public
-    function getRouteKeyName(): string {
-        return config("prefixed-ids.prefixed_id_attribute_name");
-    }
+	/**
+	 * Get the route key for the model.
+	 */
+	public
+	function getRouteKeyName(): string {
+		return config("prefixed-ids.prefixed_id_attribute_name");
+	}
 
-    public
-    function reservations(): HasMany {
-	    return $this->hasMany(Reservation::class);
-    }
+	/**
+	 * Get the number of maximum reservation number associated with the model
+	 *
+	 * @return int
+	 */
+	public
+	function maxReservations(): int {
+		return $this->max_reservation;
+	}
+
+	/**
+	 * Get the current reservation number of the model
+	 *
+	 * @return int
+	 */
+	public
+	function reservationCount(): int {
+		return $this->reservations_count ?? 0;
+	}
+
+	public
+	function reservations(): HasMany {
+		return $this->hasMany(Reservation::class);
+	}
+
+	/**
+	 * Get the activities_count attribute, loading it if not already done
+	 *
+	 * @return Attribute
+	 */
+	protected
+	function activitiesCount(): Attribute {
+		return Attribute::make(
+			get: fn(?int $value) => $value ?? $this->activities_count = $this->activities()->count(),
+		);
+	}
+
+	/**
+	 * Get the reservations_count attribute, loading it if not already done
+	 *
+	 * @return Attribute
+	 */
+	protected
+	function reservationsCount(): Attribute {
+		return Attribute::make(
+			get: fn(?int $value) => $value ?? $this->reservations_count = $this->reservations()->count(),
+		);
+	}
 }

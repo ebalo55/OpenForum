@@ -2,7 +2,7 @@
 
 namespace Tests\Feature\Service;
 
-use App\Exceptions\LivewireComponentNotInitialized;
+use App\Exceptions\LivewireComponentNotInitializedException;
 use App\Facade\LivewireScrollServiceFacade;
 use Livewire\Component;
 use Livewire\Livewire;
@@ -39,7 +39,7 @@ class LivewireScrollServiceTest extends TestCase {
 
     public
     function test_throws_if_calling_component_is_undefined(): void {
-        $this->expectException(LivewireComponentNotInitialized::class);
+        $this->expectException(LivewireComponentNotInitializedException::class);
 
         LivewireScrollServiceFacade::scrollToBottom();
     }

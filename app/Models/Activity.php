@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Contracts\ReservableModelContract;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -40,7 +42,7 @@ use Spatie\PrefixedIds\Models\Concerns\HasPrefixedId;
  * @method static \Illuminate\Database\Eloquent\Builder|Activity whereUpdatedAt($value)
  * @mixin \Eloquent
  */
-class Activity extends Model {
+class Activity extends Model implements ReservableModelContract {
     use HasFactory, HasPrefixedId;
 
     protected $casts = [
@@ -52,6 +54,39 @@ class Activity extends Model {
     public
     function eventDay(): BelongsTo {
         return $this->belongsTo(EventDay::class);
+    }
+
+    /**
+     * Get the number of maximum reservation number associated with the model
+     *
+     * @return int
+     */
+    public
+    function maxReservations(): int {
+        return $this->max_reservation;
+    }
+
+    /**
+     * Get the current reservation number of the model
+     *
+     * @return int
+     */
+    public
+    function reservationCount(): int {
+        return $this->reservations_count ?? 0;
+    }
+
+
+    /**
+     * Get the reservations_count attribute, loading it if not already done
+     *
+     * @return Attribute
+     */
+    protected
+    function reservationsCount(): Attribute {
+        return Attribute::make(
+            get: fn(?int $value) => $value ?? $this->reservations_count = $this->reservations()->count(),
+        );
     }
 
     /**

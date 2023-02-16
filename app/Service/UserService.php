@@ -3,12 +3,15 @@
 namespace App\Service;
 
 use App\Enum\PasswordGenerationRules;
+use App\Models\PersonalAccessToken;
 use App\Models\User;
 use App\Settings\GeneralSettings;
 use App\Settings\PasswordGenerationSettings;
 use Carbon\Carbon;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
+use App\Enum\Permissions\Classes\User as UserPermissions;
 
 final
 class UserService extends BaseService {
@@ -107,24 +110,76 @@ class UserService extends BaseService {
                                                                       ??
                                                                       now()->format("Y"),
                 PasswordGenerationRules::DASH                      => "-",
-                PasswordGenerationRules::UNDERSCORE                => "_",
-                PasswordGenerationRules::AT                        => "@",
-                PasswordGenerationRules::DOT                       => ".",
-                PasswordGenerationRules::AND                       => "&",
-                PasswordGenerationRules::PIPE                      => "|",
-                PasswordGenerationRules::PLUS                      => "+",
-                PasswordGenerationRules::STAR                      => "*",
-                PasswordGenerationRules::COMMA                     => ",",
-                PasswordGenerationRules::DOLLAR                    => "$",
-                PasswordGenerationRules::DOUBLE_QUOTE              => "\"",
-                PasswordGenerationRules::QUOTE                     => "'",
-                PasswordGenerationRules::EXCLAMATION_MARK          => "!",
-                PasswordGenerationRules::QUESTION_MARK             => "?",
-                PasswordGenerationRules::EQUAL                     => "=",
+                PasswordGenerationRules::UNDERSCORE       => "_",
+                PasswordGenerationRules::AT               => "@",
+                PasswordGenerationRules::DOT              => ".",
+                PasswordGenerationRules::AND              => "&",
+                PasswordGenerationRules::PIPE             => "|",
+                PasswordGenerationRules::PLUS             => "+",
+                PasswordGenerationRules::STAR             => "*",
+                PasswordGenerationRules::COMMA            => ",",
+                PasswordGenerationRules::DOLLAR           => "$",
+                PasswordGenerationRules::DOUBLE_QUOTE     => "\"",
+                PasswordGenerationRules::QUOTE            => "'",
+                PasswordGenerationRules::EXCLAMATION_MARK => "!",
+                PasswordGenerationRules::QUESTION_MARK    => "?",
+                PasswordGenerationRules::EQUAL            => "=",
             };
         }
 
         return $psw;
+    }
+
+    /**
+     * Gets or creates and return the token that can be sent to external front-ends in order to authenticate as the user
+     *
+     * @param User $user
+     *
+     * @return string
+     */
+    public
+    function getFrontEndAccessToken(
+        User $user,
+    ): string {
+        // check if an external front-end token is already defined, if it is return its plaintext representation
+        if ($token = $user->tokens()->whereName("front-end")->first()) {
+            /** @var PersonalAccessToken $token */
+            return $token->plain_token;
+        }
+
+        // if no front-end token is defined then create a new one and return it
+        $token = $user->createToken(
+            "front-end",
+            [
+                UserPermissions::READ_CURRENT(),
+            ],
+        );
+
+        // as this is an external front-end token store its plaintext representation in the db
+        /** @var PersonalAccessToken $model */
+        $model = $token->accessToken;
+        $model->plain_token = $token->plainTextToken;
+        $model->save();
+
+        return $token->plainTextToken;
+    }
+
+    /**
+     * Returns a standardized masked representation of the user email
+     *
+     * @param User $user
+     *
+     * @return string
+     */
+    public
+    function maskEmail(
+        User $user,
+    ): string {
+        return Str::mask(
+            $user->email,
+            "*",
+            3,
+        );
     }
 
     public

@@ -93,3 +93,15 @@ Route::middleware(
         )->name('events.activities.edit');
     },
 );
+
+Route::get(
+    "/email/verify/{id}/{hash}",
+    [PagesController::class, "emailVerificationRedirect"],
+)->middleware(
+    [
+        config(
+            "fortify.auth_middleware",
+            "auth",
+        ) . ":" . config("fortify.guard"),
+    ],
+)->name("verification.verify");

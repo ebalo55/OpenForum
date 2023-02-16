@@ -23,28 +23,29 @@ class CreateApiTokenTest extends TestCase {
         $this->actingAs($user = User::factory()->withPersonalTeam()->create());
 
         Livewire::test(ApiTokenManager::class)
-                ->set(
+	        ->set(
                     [
                         'createApiTokenForm' => [
                             'name'        => 'Test Token',
                             'permissions' => [
-                                'read',
-                                'update',
+	                            \App\Enum\Permissions\Classes\User::READ_CURRENT(),
+	                            'update',
                             ],
                         ],
                     ],
                 )
-                ->call('createApiToken');
+	        ->call('createApiToken');
 
-        $this->assertCount(
-            1,
-            $user->fresh()->tokens,
-        );
-        $this->assertEquals(
-            'Test Token',
-            $user->fresh()->tokens->first()->name,
-        );
-        $this->assertTrue($user->fresh()->tokens->first()->can('read'));
-        $this->assertFalse($user->fresh()->tokens->first()->can('delete'));
+	    $this->assertCount(
+		    1,
+		    $user->fresh()->tokens,
+	    );
+	    $this->assertEquals(
+		    'Test Token',
+		    $user->fresh()->tokens->first()->name,
+	    );
+
+	    $this->assertTrue($user->fresh()->tokens->first()->can(\App\Enum\Permissions\Classes\User::READ_CURRENT()));
+	    $this->assertFalse($user->fresh()->tokens->first()->can('delete'));
     }
 }
