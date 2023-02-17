@@ -21,7 +21,7 @@ By requiring the CSRF token, the API can protect against malicious attacks that 
 Obtain a valid CSRF cookie.
 {% endswagger-description %}
 
-{% swagger-response status="204: No Content" description="Empty response with `XSRF-TOKEN` cookie set" %}
+{% swagger-response status="204: No Content" description="Empty response with XSRF-TOKEN cookie set" %}
 ```http
 Set-Cookie: XSRF-TOKEN=[CSRF cookie value]; expires=[date]; Max-Age=7200; path=/; samesite=lax
 ```
