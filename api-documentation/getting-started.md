@@ -16,9 +16,9 @@ It's important to note that the CSRF token must be requested before each `POST`,
 
 By requiring the CSRF token, the API can protect against malicious attacks that try to trick users into submitting forms or making API calls without their knowledge. This security measure helps ensure that only legitimate users are able to access and modify the data within the system.
 
-{% swagger method="get" path="/sanctum/csrf-cookie" baseUrl="http(s)://[host]" summary="Summary" expanded="false" %}
+{% swagger method="get" path="/sanctum/csrf-cookie" baseUrl="http(s)://[host]" summary="Obtain a valid CSRF cookie." expanded="false" %}
 {% swagger-description %}
-Obtain a valid CSRF cookie.
+
 {% endswagger-description %}
 
 {% swagger-response status="204: No Content" description="Empty response with XSRF-TOKEN cookie set" %}
