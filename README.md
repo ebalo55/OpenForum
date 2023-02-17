@@ -1,8 +1,6 @@
 # Introduction
 
-![Student Forum - Full Administration Panel](https://github.com/ebalo55/student-forum-full-backend/raw/main/resources/assets/images/cover.svg)
-
-![Coverage: 100%](https://img.shields.io/badge/Coverage-86.9%-brightgreen)
+![OpenForum - Full Administration Panel](https://github.com/ebalo55/student-forum-full-backend/raw/main/resources/assets/images/cover.svg)
 
 ### Why does this repository exists?
 
