@@ -1,40 +1,36 @@
-<p align="center">
-    <img src="https://github.com/ebalo55/student-forum-full-backend/raw/main/resources/assets/images/cover.svg" alt="Student Forum - Full Administration Panel"/>
-</p>
-<p align="center">
-    <img src="https://img.shields.io/badge/Coverage-86.9%25-brightgreen" alt="Coverage: 100%"/>
-</p>
+# Introduction
 
-## Why does this repository exists?
+![Student Forum - Full Administration Panel](https://github.com/ebalo55/student-forum-full-backend/raw/main/resources/assets/images/cover.svg)
+
+![Coverage: 100%](https://img.shields.io/badge/Coverage-86.9%-brightgreen)
+
+### Why does this repository exists?
 
 Why does this repository exists? The answer may be difficult to understand at first but let's try...
 
-This repository have been created by me, Ebalo, in order to help with the creation of fully functional platforms that
-non technician can use to create and develop the informative plan for a student forum.
+This repository have been created in order to help with the creation of fully functional platforms that non technician can use to create and develop the promotional plan with activities for events especially, OpenForum targets Forums.
 
-This was especially needed as not everyone is able to build something that works easily and is fully configurable,
-unless not in high schools.
+### What does this project offer?
 
-## What does this repo offers?
+This project comes with some features out of the box:
 
-The answer's pretty easy, this repo offers a fully featured source code for the admin and client side of a web app whose
-final goal is to display scheduled events and let people register in one of many sites.
+* Dynamic event days and location definition
+* Reservation date-time range restriction
+* Whitelisted users
+* Dynamic, predictable, password generation for whitelisted users
+* Email verification and reservation confirmation notification
 
-The main goal here is to provide the highest configurable application and the easiest front-end integration.
+Some functionality may be accessed only within the attached frontend while other can be accessed via API.\
+To access the API specification please refer to the appropriate section.
 
-## Ending notes
+### Ending notes
 
-This application offers only the administration side of the full final application needed in a typical Student Forum
-app.
+This is not a bootstraped complete forum creation platform, it is instead an administrative panel implementation that can be easily integrated with any frontend technology (via API) in order to create a fully featured event promotional with reservation capabilities platform.
 
-#### Why?
+**Why no end-user frontend is provided?**
 
-The answer's easy, the front-end is where the users will land for registration, multiple front-end can be developed and
-attached to an administration api without any effort, while creating a predefined one will reduce the possibility of
-changes and customization.
+The answer's easy, the front-end is where the users will land for reservation, event and activity information retrieval, multiple front-end can be developed and attached to an administration API without much effort, while creating a predefined one will reduce the possibility of customization.
 
-## Documentation
+### Documentation
 
-This repo comes with an online documentation hosted on the administration panel itself.
-
-[This is the official documentation link](????)
+This repo comes with an online documentation hosted on [this official documentation link](https://app.gitbook.com/s/EqPTxBs77BdlGcGLn0U0/).
