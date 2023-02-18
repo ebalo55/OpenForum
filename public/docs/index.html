@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1" name="viewport">
-    <title>Student Forum - Administrative Backend Documentation</title>
+    <title>OpenForum - API documentation</title>
 
     <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet">
 
@@ -79,22 +79,6 @@
                     <a href="#endpoints-GETsanctum-csrf-cookie">Return an empty response simply to trigger the storage
                         of the CSRF cookie in the browser.</a>
                 </li>
-                <li class="tocify-item level-2" data-unique="endpoints-GETapi-users">
-                    <a href="#endpoints-GETapi-users">Returns the current user instance with publishable data</a>
-                </li>
-                <li class="tocify-item level-2" data-unique="endpoints-POSTapi-users-login">
-                    <a href="#endpoints-POSTapi-users-login">Handle the login of a pre-registered account via API, this
-                        method forwards the login logic to the default
-                        Fortify controller but adds a layer of indirection.</a>
-                </li>
-                <li class="tocify-item level-2" data-unique="endpoints-POSTapi-users-email-verify-request-new">
-                    <a href="#endpoints-POSTapi-users-email-verify-request-new">Send a new email verification link once
-                        requested or return the current user instance if already verified</a>
-                </li>
-                <li class="tocify-item level-2" data-unique="endpoints-POSTapi-users-email-verify--id---hash-">
-                    <a href="#endpoints-POSTapi-users-email-verify--id---hash-">Handle the email verification,
-                        forwarding the verification call to Fortify's default controller</a>
-                </li>
                 <li class="tocify-item level-2" data-unique="endpoints-GETapi-events">
                     <a href="#endpoints-GETapi-events">Lists all events and return their representation, via Fractal's
                         auto `include` features via this endpoint
@@ -102,6 +86,29 @@
                 </li>
                 <li class="tocify-item level-2" data-unique="endpoints-POSTapi-events-reserve">
                     <a href="#endpoints-POSTapi-events-reserve">Handle the reservation request of a user</a>
+                </li>
+            </ul>
+        </ul>
+        <ul class="tocify-header" id="tocify-header-user-management">
+            <li class="tocify-item level-1" data-unique="user-management">
+                <a href="#user-management">User management</a>
+            </li>
+            <ul class="tocify-subheader" id="tocify-subheader-user-management">
+                <li class="tocify-item level-2" data-unique="user-management-GETapi-users">
+                    <a href="#user-management-GETapi-users">Get the current user instance</a>
+                </li>
+                <li class="tocify-item level-2" data-unique="user-management-POSTapi-users-login">
+                    <a href="#user-management-POSTapi-users-login">Handle the login of a pre-registered account via API,
+                        this method forwards the login logic to the default
+                        Fortify controller but adds a layer of indirection.</a>
+                </li>
+                <li class="tocify-item level-2" data-unique="user-management-POSTapi-users-email-verify-request-new">
+                    <a href="#user-management-POSTapi-users-email-verify-request-new">Send a new email verification link
+                        once requested or return the current user instance if already verified</a>
+                </li>
+                <li class="tocify-item level-2" data-unique="user-management-POSTapi-users-email-verify--id---hash-">
+                    <a href="#user-management-POSTapi-users-email-verify--id---hash-">Handle the email verification,
+                        forwarding the verification call to Fortify's default controller</a>
                 </li>
             </ul>
         </ul>
@@ -114,7 +121,7 @@
     </ul>
 
     <ul class="toc-footer" id="last-updated">
-        <li>Last updated: February 17, 2023</li>
+        <li>Last updated: February 18, 2023</li>
     </ul>
 </div>
 
@@ -146,6 +153,7 @@
             cookie in the browser.</h2>
 
         <p>
+            <small class="badge badge-darkred">requires authentication</small>
         </p>
 
 
@@ -155,17 +163,19 @@
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://localhost:8000/sanctum/csrf-cookie" \
+    --get "http(s)://[host]/sanctum/csrf-cookie" \
+    --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost:8000/sanctum/csrf-cookie"
+    "http(s)://[host]/sanctum/csrf-cookie"
 );
 
 const headers = {
+    "Authorization": "Bearer {YOUR_AUTH_KEY}",
     "Content-Type": "application/json",
     "Accept": "application/json",
 };
@@ -180,8 +190,9 @@ fetch(url, {
     <pre><code class="language-python">import requests
 import json
 
-url = 'http://localhost:8000/sanctum/csrf-cookie'
+url = 'http(s)://[host]/sanctum/csrf-cookie'
 headers = {
+  'Authorization': 'Bearer {YOUR_AUTH_KEY}',
   'Content-Type': 'application/json',
   'Accept': 'application/json'
 }
@@ -204,11 +215,11 @@ response.json()</code></pre></div>
     <blockquote>Request failed with error:</blockquote>
     <pre><code id="execution-error-message-GETsanctum-csrf-cookie"></code></pre>
 </span>
-        <form autocomplete="off" data-authed="0"
-              data-hasfiles="0"
-              data-isarraybody="0"
+        <form autocomplete="off" data-authed="1"
               data-method="GET"
               data-path="sanctum/csrf-cookie"
+              data-hasfiles="0"
+              data-isarraybody="0"
               id="form-GETsanctum-csrf-cookie"
               onsubmit="event.preventDefault(); executeTryOut('GETsanctum-csrf-cookie', this);">
             <h3>
@@ -220,6 +231,17 @@ response.json()</code></pre></div>
             </p>
             <h4 class="fancy-heading-panel"><b>Headers</b></h4>
             <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+                &nbsp;
+                &nbsp;
+                <input class="auth-value" data-component="header"
+                       data-endpoint="GETsanctum-csrf-cookie" name="Authorization" style="display: none"
+                       type="text"
+                       value="Bearer {YOUR_AUTH_KEY}">
+                <br>
+                <p>Example: <code>Bearer {YOUR_AUTH_KEY}</code></p>
+            </div>
+            <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
                 &nbsp;
                 &nbsp;
@@ -240,478 +262,6 @@ response.json()</code></pre></div>
                        value="application/json">
                 <br>
                 <p>Example: <code>application/json</code></p>
-            </div>
-        </form>
-
-        <h2 id="endpoints-GETapi-users">Returns the current user instance with publishable data</h2>
-
-        <p>
-        </p>
-
-
-        <span id="example-requests-GETapi-users">
-<blockquote>Example request:</blockquote>
-
-
-<div class="bash-example">
-    <pre><code class="language-bash">curl --request GET \
-    --get "http://localhost:8000/api/users" \
-    --header "Content-Type: application/json" \
-    --header "Accept: application/json"</code></pre></div>
-
-
-<div class="javascript-example">
-    <pre><code class="language-javascript">const url = new URL(
-    "http://localhost:8000/api/users"
-);
-
-const headers = {
-    "Content-Type": "application/json",
-    "Accept": "application/json",
-};
-
-fetch(url, {
-    method: "GET",
-    headers,
-}).then(response =&gt; response.json());</code></pre></div>
-
-
-<div class="python-example">
-    <pre><code class="language-python">import requests
-import json
-
-url = 'http://localhost:8000/api/users'
-headers = {
-  'Content-Type': 'application/json',
-  'Accept': 'application/json'
-}
-
-response = requests.request('GET', url, headers=headers)
-response.json()</code></pre></div>
-
-</span>
-
-        <span id="example-responses-GETapi-users">
-    </span>
-        <span hidden id="execution-results-GETapi-users">
-    <blockquote>Received response<span
-        id="execution-response-status-GETapi-users"></span>:
-    </blockquote>
-    <pre class="json"><code id="execution-response-content-GETapi-users" style="max-height: 400px;"></code></pre>
-</span>
-        <span hidden id="execution-error-GETapi-users">
-    <blockquote>Request failed with error:</blockquote>
-    <pre><code id="execution-error-message-GETapi-users"></code></pre>
-</span>
-        <form autocomplete="off" data-authed="0"
-              data-hasfiles="0"
-              data-isarraybody="0"
-              data-method="GET"
-              data-path="api/users"
-              id="form-GETapi-users"
-              onsubmit="event.preventDefault(); executeTryOut('GETapi-users', this);">
-            <h3>
-                Request&nbsp;&nbsp;&nbsp;
-            </h3>
-            <p>
-                <small class="badge badge-green">GET</small>
-                <b><code>api/users</code></b>
-            </p>
-            <h4 class="fancy-heading-panel"><b>Headers</b></h4>
-            <div style="padding-left: 28px; clear: unset;">
-                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
-                &nbsp;
-                &nbsp;
-                <input data-component="header" data-endpoint="GETapi-users"
-                       name="Content-Type" style="display: none"
-                       type="text"
-                       value="application/json">
-                <br>
-                <p>Example: <code>application/json</code></p>
-            </div>
-            <div style="padding-left: 28px; clear: unset;">
-                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
-                &nbsp;
-                &nbsp;
-                <input data-component="header" data-endpoint="GETapi-users"
-                       name="Accept" style="display: none"
-                       type="text"
-                       value="application/json">
-                <br>
-                <p>Example: <code>application/json</code></p>
-            </div>
-        </form>
-
-        <h2 id="endpoints-POSTapi-users-login">Handle the login of a pre-registered account via API, this method
-            forwards the login logic to the default
-            Fortify controller but adds a layer of indirection.</h2>
-
-        <p>
-        </p>
-
-        <p>The forwarded call is received and analyzed, if the login request was successful a JSON:API response is
-            created
-            with the newly logged-in user.
-            NOTE: The user is not authenticated in the current request, the user should be authenticated by subsequent
-            front-end requests.</p>
-        <p>If the login was not successful based on the exception type an appropriate JSON:API response is created and
-            returned to the client.</p>
-
-        <span id="example-requests-POSTapi-users-login">
-<blockquote>Example request:</blockquote>
-
-
-<div class="bash-example">
-    <pre><code class="language-bash">curl --request POST \
-    "http://localhost:8000/api/users/login" \
-    --header "Content-Type: application/json" \
-    --header "Accept: application/json" \
-    --data "{
-    \"name\": \"quis\",
-    \"password\": \"k:\\/I=ArO%b4G5HCX&amp;b\"
-}"
-</code></pre></div>
-
-
-<div class="javascript-example">
-    <pre><code class="language-javascript">const url = new URL(
-    "http://localhost:8000/api/users/login"
-);
-
-const headers = {
-    "Content-Type": "application/json",
-    "Accept": "application/json",
-};
-
-let body = {
-    "name": "quis",
-    "password": "k:\/I=ArO%b4G5HCX&amp;b"
-};
-
-fetch(url, {
-    method: "POST",
-    headers,
-    body: JSON.stringify(body),
-}).then(response =&gt; response.json());</code></pre></div>
-
-
-<div class="python-example">
-    <pre><code class="language-python">import requests
-import json
-
-url = 'http://localhost:8000/api/users/login'
-payload = {
-    "name": "quis",
-    "password": "k:\/I=ArO%b4G5HCX&amp;b"
-}
-headers = {
-  'Content-Type': 'application/json',
-  'Accept': 'application/json'
-}
-
-response = requests.request('POST', url, headers=headers, json=payload)
-response.json()</code></pre></div>
-
-</span>
-
-        <span id="example-responses-POSTapi-users-login">
-</span>
-        <span hidden id="execution-results-POSTapi-users-login">
-    <blockquote>Received response<span
-        id="execution-response-status-POSTapi-users-login"></span>:
-    </blockquote>
-    <pre class="json"><code id="execution-response-content-POSTapi-users-login" style="max-height: 400px;"></code></pre>
-</span>
-        <span hidden id="execution-error-POSTapi-users-login">
-    <blockquote>Request failed with error:</blockquote>
-    <pre><code id="execution-error-message-POSTapi-users-login"></code></pre>
-</span>
-        <form autocomplete="off" data-authed="0"
-              data-hasfiles="0"
-              data-isarraybody="0"
-              data-method="POST"
-              data-path="api/users/login"
-              id="form-POSTapi-users-login"
-              onsubmit="event.preventDefault(); executeTryOut('POSTapi-users-login', this);">
-            <h3>
-                Request&nbsp;&nbsp;&nbsp;
-            </h3>
-            <p>
-                <small class="badge badge-black">POST</small>
-                <b><code>api/users/login</code></b>
-            </p>
-            <h4 class="fancy-heading-panel"><b>Headers</b></h4>
-            <div style="padding-left: 28px; clear: unset;">
-                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
-                &nbsp;
-                &nbsp;
-                <input data-component="header" data-endpoint="POSTapi-users-login"
-                       name="Content-Type" style="display: none"
-                       type="text"
-                       value="application/json">
-                <br>
-                <p>Example: <code>application/json</code></p>
-            </div>
-            <div style="padding-left: 28px; clear: unset;">
-                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
-                &nbsp;
-                &nbsp;
-                <input data-component="header" data-endpoint="POSTapi-users-login"
-                       name="Accept" style="display: none"
-                       type="text"
-                       value="application/json">
-                <br>
-                <p>Example: <code>application/json</code></p>
-            </div>
-            <h4 class="fancy-heading-panel"><b>Body Parameters</b></h4>
-            <div style=" padding-left: 28px;  clear: unset;">
-                <b style="line-height: 2;"><code>name</code></b>&nbsp;&nbsp;
-                <small>string</small>&nbsp;
-                &nbsp;
-                <input data-component="body" data-endpoint="POSTapi-users-login"
-                       name="name" style="display: none"
-                       type="text"
-                       value="quis">
-                <br>
-                <p>Example: <code>quis</code></p>
-            </div>
-            <div style=" padding-left: 28px;  clear: unset;">
-                <b style="line-height: 2;"><code>password</code></b>&nbsp;&nbsp;
-                <small>string</small>&nbsp;
-                &nbsp;
-                <input data-component="body" data-endpoint="POSTapi-users-login"
-                       name="password" style="display: none"
-                       type="text"
-                       value="k:/I=ArO%b4G5HCX&b">
-                <br>
-                <p>Example: <code>k:/I=ArO%b4G5HCX&amp;b</code></p>
-            </div>
-        </form>
-
-        <h2 id="endpoints-POSTapi-users-email-verify-request-new">Send a new email verification link once requested or
-            return the current user instance if already verified</h2>
-
-        <p>
-        </p>
-
-
-        <span id="example-requests-POSTapi-users-email-verify-request-new">
-<blockquote>Example request:</blockquote>
-
-
-<div class="bash-example">
-    <pre><code class="language-bash">curl --request POST \
-    "http://localhost:8000/api/users/email/verify/request-new" \
-    --header "Content-Type: application/json" \
-    --header "Accept: application/json"</code></pre></div>
-
-
-<div class="javascript-example">
-    <pre><code class="language-javascript">const url = new URL(
-    "http://localhost:8000/api/users/email/verify/request-new"
-);
-
-const headers = {
-    "Content-Type": "application/json",
-    "Accept": "application/json",
-};
-
-fetch(url, {
-    method: "POST",
-    headers,
-}).then(response =&gt; response.json());</code></pre></div>
-
-
-<div class="python-example">
-    <pre><code class="language-python">import requests
-import json
-
-url = 'http://localhost:8000/api/users/email/verify/request-new'
-headers = {
-  'Content-Type': 'application/json',
-  'Accept': 'application/json'
-}
-
-response = requests.request('POST', url, headers=headers)
-response.json()</code></pre></div>
-
-</span>
-
-        <span id="example-responses-POSTapi-users-email-verify-request-new">
-</span>
-        <span hidden id="execution-results-POSTapi-users-email-verify-request-new">
-    <blockquote>Received response<span
-        id="execution-response-status-POSTapi-users-email-verify-request-new"></span>:
-    </blockquote>
-    <pre class="json"><code id="execution-response-content-POSTapi-users-email-verify-request-new"
-                            style="max-height: 400px;"></code></pre>
-</span>
-        <span hidden id="execution-error-POSTapi-users-email-verify-request-new">
-    <blockquote>Request failed with error:</blockquote>
-    <pre><code id="execution-error-message-POSTapi-users-email-verify-request-new"></code></pre>
-</span>
-        <form autocomplete="off" data-authed="0"
-              data-hasfiles="0"
-              data-isarraybody="0"
-              data-method="POST"
-              data-path="api/users/email/verify/request-new"
-              id="form-POSTapi-users-email-verify-request-new"
-              onsubmit="event.preventDefault(); executeTryOut('POSTapi-users-email-verify-request-new', this);">
-            <h3>
-                Request&nbsp;&nbsp;&nbsp;
-            </h3>
-            <p>
-                <small class="badge badge-black">POST</small>
-                <b><code>api/users/email/verify/request-new</code></b>
-            </p>
-            <h4 class="fancy-heading-panel"><b>Headers</b></h4>
-            <div style="padding-left: 28px; clear: unset;">
-                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
-                &nbsp;
-                &nbsp;
-                <input data-component="header" data-endpoint="POSTapi-users-email-verify-request-new"
-                       name="Content-Type" style="display: none"
-                       type="text"
-                       value="application/json">
-                <br>
-                <p>Example: <code>application/json</code></p>
-            </div>
-            <div style="padding-left: 28px; clear: unset;">
-                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
-                &nbsp;
-                &nbsp;
-                <input data-component="header" data-endpoint="POSTapi-users-email-verify-request-new"
-                       name="Accept" style="display: none"
-                       type="text"
-                       value="application/json">
-                <br>
-                <p>Example: <code>application/json</code></p>
-            </div>
-        </form>
-
-        <h2 id="endpoints-POSTapi-users-email-verify--id---hash-">Handle the email verification, forwarding the
-            verification call to Fortify&#039;s default controller</h2>
-
-        <p>
-        </p>
-
-        <p>The same result can be achieved by implementing the \Laravel\Fortify\Contracts\VerifyEmailResponse, anyway,
-            creating a new route we have changed the calling method from GET to POST</p>
-
-        <span id="example-requests-POSTapi-users-email-verify--id---hash-">
-<blockquote>Example request:</blockquote>
-
-
-<div class="bash-example">
-    <pre><code class="language-bash">curl --request POST \
-    "http://localhost:8000/api/users/email/verify/autem/quisquam" \
-    --header "Content-Type: application/json" \
-    --header "Accept: application/json"</code></pre></div>
-
-
-<div class="javascript-example">
-    <pre><code class="language-javascript">const url = new URL(
-    "http://localhost:8000/api/users/email/verify/autem/quisquam"
-);
-
-const headers = {
-    "Content-Type": "application/json",
-    "Accept": "application/json",
-};
-
-fetch(url, {
-    method: "POST",
-    headers,
-}).then(response =&gt; response.json());</code></pre></div>
-
-
-<div class="python-example">
-    <pre><code class="language-python">import requests
-import json
-
-url = 'http://localhost:8000/api/users/email/verify/autem/quisquam'
-headers = {
-  'Content-Type': 'application/json',
-  'Accept': 'application/json'
-}
-
-response = requests.request('POST', url, headers=headers)
-response.json()</code></pre></div>
-
-</span>
-
-        <span id="example-responses-POSTapi-users-email-verify--id---hash-">
-</span>
-        <span hidden id="execution-results-POSTapi-users-email-verify--id---hash-">
-    <blockquote>Received response<span
-        id="execution-response-status-POSTapi-users-email-verify--id---hash-"></span>:
-    </blockquote>
-    <pre class="json"><code id="execution-response-content-POSTapi-users-email-verify--id---hash-"
-                            style="max-height: 400px;"></code></pre>
-</span>
-        <span hidden id="execution-error-POSTapi-users-email-verify--id---hash-">
-    <blockquote>Request failed with error:</blockquote>
-    <pre><code id="execution-error-message-POSTapi-users-email-verify--id---hash-"></code></pre>
-</span>
-        <form autocomplete="off" data-authed="0"
-              data-hasfiles="0"
-              data-isarraybody="0"
-              data-method="POST"
-              data-path="api/users/email/verify/{id}/{hash}"
-              id="form-POSTapi-users-email-verify--id---hash-"
-              onsubmit="event.preventDefault(); executeTryOut('POSTapi-users-email-verify--id---hash-', this);">
-            <h3>
-                Request&nbsp;&nbsp;&nbsp;
-            </h3>
-            <p>
-                <small class="badge badge-black">POST</small>
-                <b><code>api/users/email/verify/{id}/{hash}</code></b>
-            </p>
-            <h4 class="fancy-heading-panel"><b>Headers</b></h4>
-            <div style="padding-left: 28px; clear: unset;">
-                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
-                &nbsp;
-                &nbsp;
-                <input data-component="header" data-endpoint="POSTapi-users-email-verify--id---hash-"
-                       name="Content-Type" style="display: none"
-                       type="text"
-                       value="application/json">
-                <br>
-                <p>Example: <code>application/json</code></p>
-            </div>
-            <div style="padding-left: 28px; clear: unset;">
-                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
-                &nbsp;
-                &nbsp;
-                <input data-component="header" data-endpoint="POSTapi-users-email-verify--id---hash-"
-                       name="Accept" style="display: none"
-                       type="text"
-                       value="application/json">
-                <br>
-                <p>Example: <code>application/json</code></p>
-            </div>
-            <h4 class="fancy-heading-panel"><b>URL Parameters</b></h4>
-            <div style="padding-left: 28px; clear: unset;">
-                <b style="line-height: 2;"><code>id</code></b>&nbsp;&nbsp;
-                <small>string</small>&nbsp;
-                &nbsp;
-                <input data-component="url" data-endpoint="POSTapi-users-email-verify--id---hash-"
-                       name="id" style="display: none"
-                       type="text"
-                       value="autem">
-                <br>
-                <p>The ID of the verify. Example: <code>autem</code></p>
-            </div>
-            <div style="padding-left: 28px; clear: unset;">
-                <b style="line-height: 2;"><code>hash</code></b>&nbsp;&nbsp;
-                <small>string</small>&nbsp;
-                &nbsp;
-                <input data-component="url" data-endpoint="POSTapi-users-email-verify--id---hash-"
-                       name="hash" style="display: none"
-                       type="text"
-                       value="quisquam">
-                <br>
-                <p>Example: <code>quisquam</code></p>
             </div>
         </form>
 
@@ -720,6 +270,7 @@ response.json()</code></pre></div>
             activities can be easily retrieved.</h2>
 
         <p>
+            <small class="badge badge-darkred">requires authentication</small>
         </p>
 
         <p>EXAMPLE:
@@ -734,17 +285,19 @@ response.json()</code></pre></div>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://localhost:8000/api/events" \
+    --get "http(s)://[host]/api/events" \
+    --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost:8000/api/events"
+    "http(s)://[host]/api/events"
 );
 
 const headers = {
+    "Authorization": "Bearer {YOUR_AUTH_KEY}",
     "Content-Type": "application/json",
     "Accept": "application/json",
 };
@@ -759,8 +312,9 @@ fetch(url, {
     <pre><code class="language-python">import requests
 import json
 
-url = 'http://localhost:8000/api/events'
+url = 'http(s)://[host]/api/events'
 headers = {
+  'Authorization': 'Bearer {YOUR_AUTH_KEY}',
   'Content-Type': 'application/json',
   'Accept': 'application/json'
 }
@@ -782,7 +336,7 @@ response.json()</code></pre></div>
     <blockquote>Request failed with error:</blockquote>
     <pre><code id="execution-error-message-GETapi-events"></code></pre>
 </span>
-                <form autocomplete="off" data-authed="0"
+                <form autocomplete="off" data-authed="1"
                       data-hasfiles="0"
                       data-isarraybody="0"
                       data-method="GET"
@@ -797,6 +351,17 @@ response.json()</code></pre></div>
                         <b><code>api/events</code></b>
                     </p>
                     <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                    <div style="padding-left: 28px; clear: unset;">
+                        <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+                        &nbsp;
+                        &nbsp;
+                        <input class="auth-value" data-component="header"
+                               data-endpoint="GETapi-events" name="Authorization" style="display: none"
+                               type="text"
+                               value="Bearer {YOUR_AUTH_KEY}">
+                        <br>
+                        <p>Example: <code>Bearer {YOUR_AUTH_KEY}</code></p>
+                    </div>
                     <div style="padding-left: 28px; clear: unset;">
                         <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
                         &nbsp;
@@ -824,6 +389,7 @@ response.json()</code></pre></div>
                 <h2 id="endpoints-POSTapi-events-reserve">Handle the reservation request of a user</h2>
 
                 <p>
+                    <small class="badge badge-darkred">requires authentication</small>
                 </p>
 
 
@@ -833,27 +399,29 @@ response.json()</code></pre></div>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request POST \
-    "http://localhost:8000/api/events/reserve" \
+    "http(s)://[host]/api/events/reserve" \
+    --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
     --data "{
-    \"reservations\": \"ut\"
+    \"reservations\": \"cum\"
 }"
 </code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost:8000/api/events/reserve"
+    "http(s)://[host]/api/events/reserve"
 );
 
 const headers = {
+    "Authorization": "Bearer {YOUR_AUTH_KEY}",
     "Content-Type": "application/json",
     "Accept": "application/json",
 };
 
 let body = {
-    "reservations": "ut"
+    "reservations": "cum"
 };
 
 fetch(url, {
@@ -867,11 +435,12 @@ fetch(url, {
     <pre><code class="language-python">import requests
 import json
 
-url = 'http://localhost:8000/api/events/reserve'
+url = 'http(s)://[host]/api/events/reserve'
 payload = {
-    "reservations": "ut"
+    "reservations": "cum"
 }
 headers = {
+  'Authorization': 'Bearer {YOUR_AUTH_KEY}',
   'Content-Type': 'application/json',
   'Accept': 'application/json'
 }
@@ -894,7 +463,7 @@ response.json()</code></pre></div>
     <blockquote>Request failed with error:</blockquote>
     <pre><code id="execution-error-message-POSTapi-events-reserve"></code></pre>
 </span>
-                <form autocomplete="off" data-authed="0"
+                <form autocomplete="off" data-authed="1"
                       data-hasfiles="0"
                       data-isarraybody="0"
                       data-method="POST"
@@ -909,6 +478,17 @@ response.json()</code></pre></div>
                         <b><code>api/events/reserve</code></b>
                     </p>
                     <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                    <div style="padding-left: 28px; clear: unset;">
+                        <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+                        &nbsp;
+                        &nbsp;
+                        <input class="auth-value" data-component="header"
+                               data-endpoint="POSTapi-events-reserve" name="Authorization" style="display: none"
+                               type="text"
+                               value="Bearer {YOUR_AUTH_KEY}">
+                        <br>
+                        <p>Example: <code>Bearer {YOUR_AUTH_KEY}</code></p>
+                    </div>
                     <div style="padding-left: 28px; clear: unset;">
                         <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
                         &nbsp;
@@ -939,7 +519,7 @@ response.json()</code></pre></div>
                                 <small>string[]</small>&nbsp;
                                 &nbsp;
                                 <br>
-                                <p>This field must contain 0 items. Example: <code>ut</code></p>
+                                <p>This field must contain 0 items. Example: <code>cum</code></p>
                             </summary>
                             <div style="margin-left: 14px; clear: unset;">
                                 <b style="line-height: 2;"><code>date</code></b>&nbsp;&nbsp;
@@ -948,10 +528,10 @@ response.json()</code></pre></div>
                                 <input data-component="body" data-endpoint="POSTapi-events-reserve"
                                        name="reservations.0.date" style="display: none"
                                        type="text"
-                                       value="17/02/2023">
+                                       value="18/02/2023">
                                 <br>
                                 <p>Must be a valid date in the format <code>d/m/Y</code>. Example:
-                                    <code>17/02/2023</code></p>
+                                    <code>18/02/2023</code></p>
                             </div>
                             <div style="margin-left: 14px; clear: unset;">
                                 <b style="line-height: 2;"><code>location</code></b>&nbsp;&nbsp;
@@ -960,9 +540,9 @@ response.json()</code></pre></div>
                                 <input data-component="body" data-endpoint="POSTapi-events-reserve"
                                        name="reservations.0.location" style="display: none"
                                        type="text"
-                                       value="et">
+                                       value="earum">
                                 <br>
-                                <p>Example: <code>et</code></p>
+                                <p>Example: <code>earum</code></p>
                             </div>
                             <div style="margin-left: 14px; clear: unset;">
                                 <b style="line-height: 2;"><code>absent</code></b>&nbsp;&nbsp;
@@ -984,7 +564,7 @@ response.json()</code></pre></div>
                                 </label>
                                 <br>
                                 <p>This field is required when <code>reservations.*.activity_reservations</code> is not
-                                    present. Example: <code>false</code></p>
+                                    present. Example: <code>true</code></p>
                             </div>
                             <div style="margin-left: 14px; clear: unset;">
                                 <b style="line-height: 2;"><code>activity_reservations</code></b>&nbsp;&nbsp;
@@ -1002,6 +582,814 @@ response.json()</code></pre></div>
 
                             </div>
                         </details>
+                    </div>
+                </form>
+
+                <h1 id="user-management">User management</h1>
+
+                <p>Activities related to the management of the currently authenticated user</p>
+
+                <h2 id="user-management-GETapi-users">Get the current user instance</h2>
+
+                <p>
+                    <small class="badge badge-darkred">requires authentication</small>
+                </p>
+
+                <p>Returns a censored representation of the current user instance.
+                    The response will always include the plain representation of the token used to authenticate the
+                    user</p>
+
+                <span id="example-requests-GETapi-users">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request GET \
+    --get "http(s)://[host]/api/users?includes=reservations" \
+    --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json"</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http(s)://[host]/api/users"
+);
+
+const params = {
+    "includes": "reservations",
+};
+Object.keys(params)
+    .forEach(key =&gt; url.searchParams.append(key, params[key]));
+
+const headers = {
+    "Authorization": "Bearer {YOUR_AUTH_KEY}",
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+fetch(url, {
+    method: "GET",
+    headers,
+}).then(response =&gt; response.json());</code></pre></div>
+
+
+<div class="python-example">
+    <pre><code class="language-python">import requests
+import json
+
+url = 'http(s)://[host]/api/users'
+params = {
+  'includes': 'reservations',
+}
+headers = {
+  'Authorization': 'Bearer {YOUR_AUTH_KEY}',
+  'Content-Type': 'application/json',
+  'Accept': 'application/json'
+}
+
+response = requests.request('GET', url, headers=headers, params=params)
+response.json()</code></pre></div>
+
+</span>
+
+                <span id="example-responses-GETapi-users">
+            <blockquote>
+            <p>Example response (200):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;data&quot;: {
+        &quot;type&quot;: &quot;user&quot;,
+        &quot;id&quot;: &quot;usr_10833034c4dd47849af8ed8ea4a68a1b&quot;,
+        &quot;attributes&quot;: {
+            &quot;name&quot;: &quot;Devonte Goldner&quot;,
+            &quot;email&quot;: &quot;imo********************&quot;,
+            &quot;email_verified_at&quot;: &quot;18/02/2023 11:05:51&quot;,
+            &quot;token&quot;: &quot;2|aFGHN9Ox9Uc42XfLqrXlY2xAzNwhQLDb7kIf3rjN&quot;
+        },
+        &quot;relationships&quot;: {
+            &quot;reservations&quot;: {
+                &quot;data&quot;: [
+                    {
+                        &quot;type&quot;: &quot;reservation&quot;,
+                        &quot;id&quot;: &quot;resrv_1e302893c3cd4dcd8c7810ef1a07c180&quot;
+                    }
+                ]
+            }
+        }
+    },
+    &quot;included&quot;: [
+        {
+            &quot;type&quot;: &quot;reservation&quot;,
+            &quot;id&quot;: &quot;resrv_1e302893c3cd4dcd8c7810ef1a07c180&quot;,
+            &quot;attributes&quot;: {
+                &quot;user&quot;: &quot;usr_10833034c4dd47849af8ed8ea4a68a1b&quot;,
+                &quot;event&quot;: &quot;evt_d7e868f3083344f6bec2548db7979d6b&quot;,
+                &quot;activity&quot;: &quot;act_4c0158279c0148439fb285ebc7ad8c12&quot;
+            }
+        }
+    ],
+    &quot;meta&quot;: {
+        &quot;success&quot;: true,
+        &quot;errors&quot;: null
+    }
+}</code>
+ </pre>
+    </span>
+                <span hidden id="execution-results-GETapi-users">
+    <blockquote>Received response<span
+        id="execution-response-status-GETapi-users"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-GETapi-users" style="max-height: 400px;"></code></pre>
+</span>
+                <span hidden id="execution-error-GETapi-users">
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-GETapi-users"></code></pre>
+</span>
+                <form autocomplete="off" data-authed="1"
+                      data-hasfiles="0"
+                      data-isarraybody="0"
+                      data-method="GET"
+                      data-path="api/users"
+                      id="form-GETapi-users"
+                      onsubmit="event.preventDefault(); executeTryOut('GETapi-users', this);">
+                    <h3>
+                        Request&nbsp;&nbsp;&nbsp;
+                    </h3>
+                    <p>
+                        <small class="badge badge-green">GET</small>
+                        <b><code>api/users</code></b>
+                    </p>
+                    <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                    <div style="padding-left: 28px; clear: unset;">
+                        <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+                        &nbsp;
+                        &nbsp;
+                        <input class="auth-value" data-component="header"
+                               data-endpoint="GETapi-users" name="Authorization" style="display: none"
+                               type="text"
+                               value="Bearer {YOUR_AUTH_KEY}">
+                        <br>
+                        <p>Example: <code>Bearer {YOUR_AUTH_KEY}</code></p>
+                    </div>
+                    <div style="padding-left: 28px; clear: unset;">
+                        <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+                        &nbsp;
+                        &nbsp;
+                        <input data-component="header" data-endpoint="GETapi-users"
+                               name="Content-Type" style="display: none"
+                               type="text"
+                               value="application/json">
+                        <br>
+                        <p>Example: <code>application/json</code></p>
+                    </div>
+                    <div style="padding-left: 28px; clear: unset;">
+                        <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+                        &nbsp;
+                        &nbsp;
+                        <input data-component="header" data-endpoint="GETapi-users"
+                               name="Accept" style="display: none"
+                               type="text"
+                               value="application/json">
+                        <br>
+                        <p>Example: <code>application/json</code></p>
+                    </div>
+                    <h4 class="fancy-heading-panel"><b>Query Parameters</b></h4>
+                    <div style="padding-left: 28px; clear: unset;">
+                        <b style="line-height: 2;"><code>includes</code></b>&nbsp;&nbsp;
+                        <small>string</small>&nbsp;
+                        <i>optional</i> &nbsp;
+                        <input data-component="query" data-endpoint="GETapi-users"
+                               name="includes" style="display: none"
+                               type="text"
+                               value="reservations">
+                        <br>
+                        <p>Comma separated list of user relation to include Example: <code>reservations</code></p>
+                    </div>
+                </form>
+
+                <h3>Response</h3>
+                <h4 class="fancy-heading-panel"><b>Response Fields</b></h4>
+                <div style=" padding-left: 28px;  clear: unset;">
+                    <details>
+                        <summary style="padding-bottom: 10px;">
+                            <b style="line-height: 2;"><code>data</code></b>&nbsp;&nbsp;
+                            <small>object</small>&nbsp;
+                            &nbsp;
+                            <br>
+                            <p>Container for resource.</p>
+                        </summary>
+                        <div style="margin-left: 14px; clear: unset;">
+                            <b style="line-height: 2;"><code>type</code></b>&nbsp;&nbsp;
+                            <small>string</small>&nbsp;
+                            &nbsp;
+                            <br>
+                            <p>Resource return type as of JSON:API standard, always equal to <code>user</code>.</p>
+                        </div>
+                        <div style="margin-left: 14px; clear: unset;">
+                            <b style="line-height: 2;"><code>id</code></b>&nbsp;&nbsp;
+                            <small>string</small>&nbsp;
+                            &nbsp;
+                            <br>
+                            <p>Resource unique identifier, always starts with <code>usr_</code>.</p>
+                        </div>
+                        <div style=" margin-left: 14px; clear: unset;">
+                            <details>
+                                <summary style="padding-bottom: 10px;">
+                                    <b style="line-height: 2;"><code>attributes</code></b>&nbsp;&nbsp;
+                                    <small>object</small>&nbsp;
+                                    &nbsp;
+                                    <br>
+                                    <p>Resource attributes container.</p>
+                                </summary>
+                                <div style="margin-left: 28px; clear: unset;">
+                                    <b style="line-height: 2;"><code>name</code></b>&nbsp;&nbsp;
+                                    <small>string</small>&nbsp;
+                                    &nbsp;
+                                    <br>
+                                    <p>Current user full name.</p>
+                                </div>
+                                <div style="margin-left: 28px; clear: unset;">
+                                    <b style="line-height: 2;"><code>email</code></b>&nbsp;&nbsp;
+                                    <small>string</small>&nbsp;
+                                    &nbsp;
+                                    <br>
+                                    <p>Current user censored email.</p>
+                                </div>
+                                <div style="margin-left: 28px; clear: unset;">
+                                    <b style="line-height: 2;"><code>email_verified_at</code></b>&nbsp;&nbsp;
+                                    <small>?string</small>&nbsp;
+                                    &nbsp;
+                                    <br>
+                                    <p>Email verification datetime or null, if this field is
+                                        null for a given user he won't be allowed to reserve any spot.</p>
+                                </div>
+                                <div style="margin-left: 28px; clear: unset;">
+                                    <b style="line-height: 2;"><code>token</code></b>&nbsp;&nbsp;
+                                    <small>string</small>&nbsp;
+                                    &nbsp;
+                                    <br>
+                                    <p>Current user authentication token.</p>
+                                </div>
+                            </details>
+                        </div>
+                        <div style=" margin-left: 14px; clear: unset;">
+                            <details>
+                                <summary style="padding-bottom: 10px;">
+                                    <b style="line-height: 2;"><code>relationships</code></b>&nbsp;&nbsp;
+                                    <small>?object</small>&nbsp;
+                                    &nbsp;
+                                    <br>
+                                    <p>Wrapper for included relationships.</p>
+                                </summary>
+                                <div style=" margin-left: 28px; clear: unset;">
+                                    <details>
+                                        <summary style="padding-bottom: 10px;">
+                                            <b style="line-height: 2;"><code>reservations</code></b>&nbsp;&nbsp;
+                                            <small>?object</small>&nbsp;
+                                            &nbsp;
+                                            <br>
+                                            <p>Wrapper for reservation identification data.</p>
+                                        </summary>
+                                        <div style=" margin-left: 42px; clear: unset;">
+                                            <details>
+                                                <summary style="padding-bottom: 10px;">
+                                                    <b style="line-height: 2;"><code>data</code></b>&nbsp;&nbsp;
+                                                    <small>object[]</small>&nbsp;
+                                                    &nbsp;
+                                                    <br>
+                                                    <p>Reservations identifier data container.</p>
+                                                </summary>
+                                                <div style="margin-left: 56px; clear: unset;">
+                                                    <b style="line-height: 2;"><code>type</code></b>&nbsp;&nbsp;
+                                                    <small>string</small>&nbsp;
+                                                    &nbsp;
+                                                    <br>
+                                                    <p>Resource return type as of JSON:API standard,
+                                                        always equal to <code>reservation</code></p>
+                                                </div>
+                                                <div style="margin-left: 56px; clear: unset;">
+                                                    <b style="line-height: 2;"><code>id</code></b>&nbsp;&nbsp;
+                                                    <small>string</small>&nbsp;
+                                                    &nbsp;
+                                                    <br>
+                                                    <p>Resource unique identifier, always starts with
+                                                        <code>resrv_</code>.</p>
+                                                </div>
+                                            </details>
+                                        </div>
+                                    </details>
+                                </div>
+                            </details>
+                        </div>
+                    </details>
+                </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+                    <details>
+                        <summary style="padding-bottom: 10px;">
+                            <b style="line-height: 2;"><code>included</code></b>&nbsp;&nbsp;
+                            <small>?object[]</small>&nbsp;
+                            &nbsp;
+                            <br>
+                            <p>Container for included relationships.</p>
+                        </summary>
+                        <div style="margin-left: 14px; clear: unset;">
+                            <b style="line-height: 2;"><code>type</code></b>&nbsp;&nbsp;
+                            <small>string</small>&nbsp;
+                            &nbsp;
+                            <br>
+                            <p>Resource return type as of JSON:API standard.</p>
+                        </div>
+                        <div style="margin-left: 14px; clear: unset;">
+                            <b style="line-height: 2;"><code>id</code></b>&nbsp;&nbsp;
+                            <small>string</small>&nbsp;
+                            &nbsp;
+                            <br>
+                            <p>Resource unique identifier.</p>
+                        </div>
+                        <div style="margin-left: 14px; clear: unset;">
+                            <b style="line-height: 2;"><code>attributes</code></b>&nbsp;&nbsp;
+                            <small>object</small>&nbsp;
+                            &nbsp;
+                            <br>
+                            <p>Resource attributes container.</p>
+                        </div>
+                    </details>
+                </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+                    <details>
+                        <summary style="padding-bottom: 10px;">
+                            <b style="line-height: 2;"><code>meta</code></b>&nbsp;&nbsp;
+                            <small>object</small>&nbsp;
+                            &nbsp;
+                            <br>
+                            <p>Container for metadata.</p>
+                        </summary>
+                        <div style="margin-left: 14px; clear: unset;">
+                            <b style="line-height: 2;"><code>success</code></b>&nbsp;&nbsp;
+                            <small>boolean</small>&nbsp;
+                            &nbsp;
+                            <br>
+                            <p>Response status summary, if <code>true</code> the call was successful.</p>
+                        </div>
+                        <div style=" margin-left: 14px; clear: unset;">
+                            <details>
+                                <summary style="padding-bottom: 10px;">
+                                    <b style="line-height: 2;"><code>errors</code></b>&nbsp;&nbsp;
+                                    &nbsp;
+                                    &nbsp;
+                                    <br>
+                                    <p>null|object[] If one or more errors occur this field will be filled with
+                                        errors.</p>
+                                </summary>
+                                <div style="margin-left: 28px; clear: unset;">
+                                    <b style="line-height: 2;"><code>reference_code</code></b>&nbsp;&nbsp;
+                                    <small>integer</small>&nbsp;
+                                    &nbsp;
+                                    <br>
+                                    <p>Error reference code for easy front-end retrieval.</p>
+                                </div>
+                                <div style="margin-left: 28px; clear: unset;">
+                                    <b style="line-height: 2;"><code>field</code></b>&nbsp;&nbsp;
+                                    &nbsp;
+                                    &nbsp;
+                                    <br>
+                                    <p>null|string If an error occur linked to a form field this field will handle
+                                        the field name the error references to.</p>
+                                </div>
+                                <div style="margin-left: 28px; clear: unset;">
+                                    <b style="line-height: 2;"><code>message</code></b>&nbsp;&nbsp;
+                                    <small>string</small>&nbsp;
+                                    &nbsp;
+                                    <br>
+                                    <p>The ending error message.</p>
+                                </div>
+                            </details>
+                        </div>
+                    </details>
+                </div>
+                <h2 id="user-management-POSTapi-users-login">Handle the login of a pre-registered account via API, this
+                    method forwards the login logic to the default
+                    Fortify controller but adds a layer of indirection.</h2>
+
+                <p>
+                    <small class="badge badge-darkred">requires authentication</small>
+                </p>
+
+                <p>The forwarded call is received and analyzed, if the login request was successful a JSON:API response
+                    is created
+                    with the newly logged-in user.
+                    NOTE: The user is not authenticated in the current request, the user should be authenticated by
+                    subsequent
+                    front-end requests.</p>
+                <p>If the login was not successful based on the exception type an appropriate JSON:API response is
+                    created and
+                    returned to the client.</p>
+
+                <span id="example-requests-POSTapi-users-login">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request POST \
+    "http(s)://[host]/api/users/login" \
+    --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json" \
+    --data "{
+    \"name\": \"quod\",
+    \"password\": \"H0=z]-\\\"ewh7^AI;cD*\"
+}"
+</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http(s)://[host]/api/users/login"
+);
+
+const headers = {
+    "Authorization": "Bearer {YOUR_AUTH_KEY}",
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+let body = {
+    "name": "quod",
+    "password": "H0=z]-\"ewh7^AI;cD*"
+};
+
+fetch(url, {
+    method: "POST",
+    headers,
+    body: JSON.stringify(body),
+}).then(response =&gt; response.json());</code></pre></div>
+
+
+<div class="python-example">
+    <pre><code class="language-python">import requests
+import json
+
+url = 'http(s)://[host]/api/users/login'
+payload = {
+    "name": "quod",
+    "password": "H0=z]-\"ewh7^AI;cD*"
+}
+headers = {
+  'Authorization': 'Bearer {YOUR_AUTH_KEY}',
+  'Content-Type': 'application/json',
+  'Accept': 'application/json'
+}
+
+response = requests.request('POST', url, headers=headers, json=payload)
+response.json()</code></pre></div>
+
+</span>
+
+                <span id="example-responses-POSTapi-users-login">
+</span>
+                <span hidden id="execution-results-POSTapi-users-login">
+    <blockquote>Received response<span
+        id="execution-response-status-POSTapi-users-login"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-POSTapi-users-login" style="max-height: 400px;"></code></pre>
+</span>
+                <span hidden id="execution-error-POSTapi-users-login">
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-POSTapi-users-login"></code></pre>
+</span>
+                <form autocomplete="off" data-authed="1"
+                      data-hasfiles="0"
+                      data-isarraybody="0"
+                      data-method="POST"
+                      data-path="api/users/login"
+                      id="form-POSTapi-users-login"
+                      onsubmit="event.preventDefault(); executeTryOut('POSTapi-users-login', this);">
+                    <h3>
+                        Request&nbsp;&nbsp;&nbsp;
+                    </h3>
+                    <p>
+                        <small class="badge badge-black">POST</small>
+                        <b><code>api/users/login</code></b>
+                    </p>
+                    <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                    <div style="padding-left: 28px; clear: unset;">
+                        <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+                        &nbsp;
+                        &nbsp;
+                        <input class="auth-value" data-component="header"
+                               data-endpoint="POSTapi-users-login" name="Authorization" style="display: none"
+                               type="text"
+                               value="Bearer {YOUR_AUTH_KEY}">
+                        <br>
+                        <p>Example: <code>Bearer {YOUR_AUTH_KEY}</code></p>
+                    </div>
+                    <div style="padding-left: 28px; clear: unset;">
+                        <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+                        &nbsp;
+                        &nbsp;
+                        <input data-component="header" data-endpoint="POSTapi-users-login"
+                               name="Content-Type" style="display: none"
+                               type="text"
+                               value="application/json">
+                        <br>
+                        <p>Example: <code>application/json</code></p>
+                    </div>
+                    <div style="padding-left: 28px; clear: unset;">
+                        <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+                        &nbsp;
+                        &nbsp;
+                        <input data-component="header" data-endpoint="POSTapi-users-login"
+                               name="Accept" style="display: none"
+                               type="text"
+                               value="application/json">
+                        <br>
+                        <p>Example: <code>application/json</code></p>
+                    </div>
+                    <h4 class="fancy-heading-panel"><b>Body Parameters</b></h4>
+                    <div style=" padding-left: 28px;  clear: unset;">
+                        <b style="line-height: 2;"><code>name</code></b>&nbsp;&nbsp;
+                        <small>string</small>&nbsp;
+                        &nbsp;
+                        <input data-component="body" data-endpoint="POSTapi-users-login"
+                               name="name" style="display: none"
+                               type="text"
+                               value="quod">
+                        <br>
+                        <p>Example: <code>quod</code></p>
+                    </div>
+                    <div style=" padding-left: 28px;  clear: unset;">
+                        <b style="line-height: 2;"><code>password</code></b>&nbsp;&nbsp;
+                        <small>string</small>&nbsp;
+                        &nbsp;
+                        <input data-endpoint="POSTapi-users-login" ewh7^AI;cD*
+                               name="password" style="display: none"
+                               type="text" value="H0=z]-""
+                        data-component="body">
+                        <br>
+                        <p>Example: <code>H0=z]-"ewh7^AI;cD*</code></p>
+                    </div>
+                </form>
+
+                <h2 id="user-management-POSTapi-users-email-verify-request-new">Send a new email verification link once
+                    requested or return the current user instance if already verified</h2>
+
+                <p>
+                    <small class="badge badge-darkred">requires authentication</small>
+                </p>
+
+
+                <span id="example-requests-POSTapi-users-email-verify-request-new">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request POST \
+    "http(s)://[host]/api/users/email/verify/request-new" \
+    --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json"</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http(s)://[host]/api/users/email/verify/request-new"
+);
+
+const headers = {
+    "Authorization": "Bearer {YOUR_AUTH_KEY}",
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+fetch(url, {
+    method: "POST",
+    headers,
+}).then(response =&gt; response.json());</code></pre></div>
+
+
+<div class="python-example">
+    <pre><code class="language-python">import requests
+import json
+
+url = 'http(s)://[host]/api/users/email/verify/request-new'
+headers = {
+  'Authorization': 'Bearer {YOUR_AUTH_KEY}',
+  'Content-Type': 'application/json',
+  'Accept': 'application/json'
+}
+
+response = requests.request('POST', url, headers=headers)
+response.json()</code></pre></div>
+
+</span>
+
+                <span id="example-responses-POSTapi-users-email-verify-request-new">
+</span>
+                <span hidden id="execution-results-POSTapi-users-email-verify-request-new">
+    <blockquote>Received response<span
+        id="execution-response-status-POSTapi-users-email-verify-request-new"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-POSTapi-users-email-verify-request-new"
+                            style="max-height: 400px;"></code></pre>
+</span>
+                <span hidden id="execution-error-POSTapi-users-email-verify-request-new">
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-POSTapi-users-email-verify-request-new"></code></pre>
+</span>
+                <form autocomplete="off" data-authed="1"
+                      data-method="POST"
+                      data-path="api/users/email/verify/request-new"
+                      data-hasfiles="0"
+                      data-isarraybody="0"
+                      id="form-POSTapi-users-email-verify-request-new"
+                      onsubmit="event.preventDefault(); executeTryOut('POSTapi-users-email-verify-request-new', this);">
+                    <h3>
+                        Request&nbsp;&nbsp;&nbsp;
+                    </h3>
+                    <p>
+                        <small class="badge badge-black">POST</small>
+                        <b><code>api/users/email/verify/request-new</code></b>
+                    </p>
+                    <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                    <div style="padding-left: 28px; clear: unset;">
+                        <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+                        &nbsp;
+                        &nbsp;
+                        <input class="auth-value" data-component="header"
+                               data-endpoint="POSTapi-users-email-verify-request-new" name="Authorization"
+                               style="display: none"
+                               type="text"
+                               value="Bearer {YOUR_AUTH_KEY}">
+                        <br>
+                        <p>Example: <code>Bearer {YOUR_AUTH_KEY}</code></p>
+                    </div>
+                    <div style="padding-left: 28px; clear: unset;">
+                        <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+                        &nbsp;
+                        &nbsp;
+                        <input data-component="header" data-endpoint="POSTapi-users-email-verify-request-new"
+                               name="Content-Type" style="display: none"
+                               type="text"
+                               value="application/json">
+                        <br>
+                        <p>Example: <code>application/json</code></p>
+                    </div>
+                    <div style="padding-left: 28px; clear: unset;">
+                        <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+                        &nbsp;
+                        &nbsp;
+                        <input data-component="header" data-endpoint="POSTapi-users-email-verify-request-new"
+                               name="Accept" style="display: none"
+                               type="text"
+                               value="application/json">
+                        <br>
+                        <p>Example: <code>application/json</code></p>
+                    </div>
+                </form>
+
+                <h2 id="user-management-POSTapi-users-email-verify--id---hash-">Handle the email verification,
+                    forwarding the verification call to Fortify&#039;s default controller</h2>
+
+                <p>
+                    <small class="badge badge-darkred">requires authentication</small>
+                </p>
+
+                <p>The same result can be achieved by implementing the \Laravel\Fortify\Contracts\VerifyEmailResponse,
+                    anyway,
+                    creating a new route we have changed the calling method from GET to POST</p>
+
+                <span id="example-requests-POSTapi-users-email-verify--id---hash-">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request POST \
+    "http(s)://[host]/api/users/email/verify/eum/qui" \
+    --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json"</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http(s)://[host]/api/users/email/verify/eum/qui"
+);
+
+const headers = {
+    "Authorization": "Bearer {YOUR_AUTH_KEY}",
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+fetch(url, {
+    method: "POST",
+    headers,
+}).then(response =&gt; response.json());</code></pre></div>
+
+
+<div class="python-example">
+    <pre><code class="language-python">import requests
+import json
+
+url = 'http(s)://[host]/api/users/email/verify/eum/qui'
+headers = {
+  'Authorization': 'Bearer {YOUR_AUTH_KEY}',
+  'Content-Type': 'application/json',
+  'Accept': 'application/json'
+}
+
+response = requests.request('POST', url, headers=headers)
+response.json()</code></pre></div>
+
+</span>
+
+                <span id="example-responses-POSTapi-users-email-verify--id---hash-">
+</span>
+                <span hidden id="execution-results-POSTapi-users-email-verify--id---hash-">
+    <blockquote>Received response<span
+        id="execution-response-status-POSTapi-users-email-verify--id---hash-"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-POSTapi-users-email-verify--id---hash-"
+                            style="max-height: 400px;"></code></pre>
+</span>
+                <span hidden id="execution-error-POSTapi-users-email-verify--id---hash-">
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-POSTapi-users-email-verify--id---hash-"></code></pre>
+</span>
+                <form autocomplete="off" data-authed="1"
+                      data-method="POST"
+                      data-path="api/users/email/verify/{id}/{hash}"
+                      data-hasfiles="0"
+                      data-isarraybody="0"
+                      id="form-POSTapi-users-email-verify--id---hash-"
+                      onsubmit="event.preventDefault(); executeTryOut('POSTapi-users-email-verify--id---hash-', this);">
+                    <h3>
+                        Request&nbsp;&nbsp;&nbsp;
+                    </h3>
+                    <p>
+                        <small class="badge badge-black">POST</small>
+                        <b><code>api/users/email/verify/{id}/{hash}</code></b>
+                    </p>
+                    <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                    <div style="padding-left: 28px; clear: unset;">
+                        <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+                        &nbsp;
+                        &nbsp;
+                        <input class="auth-value" data-component="header"
+                               data-endpoint="POSTapi-users-email-verify--id---hash-" name="Authorization"
+                               style="display: none"
+                               type="text"
+                               value="Bearer {YOUR_AUTH_KEY}">
+                        <br>
+                        <p>Example: <code>Bearer {YOUR_AUTH_KEY}</code></p>
+                    </div>
+                    <div style="padding-left: 28px; clear: unset;">
+                        <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+                        &nbsp;
+                        &nbsp;
+                        <input data-component="header" data-endpoint="POSTapi-users-email-verify--id---hash-"
+                               name="Content-Type" style="display: none"
+                               type="text"
+                               value="application/json">
+                        <br>
+                        <p>Example: <code>application/json</code></p>
+                    </div>
+                    <div style="padding-left: 28px; clear: unset;">
+                        <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+                        &nbsp;
+                        &nbsp;
+                        <input data-component="header" data-endpoint="POSTapi-users-email-verify--id---hash-"
+                               name="Accept" style="display: none"
+                               type="text"
+                               value="application/json">
+                        <br>
+                        <p>Example: <code>application/json</code></p>
+                    </div>
+                    <h4 class="fancy-heading-panel"><b>URL Parameters</b></h4>
+                    <div style="padding-left: 28px; clear: unset;">
+                        <b style="line-height: 2;"><code>id</code></b>&nbsp;&nbsp;
+                        <small>string</small>&nbsp;
+                        &nbsp;
+                        <input data-component="url" data-endpoint="POSTapi-users-email-verify--id---hash-"
+                               name="id" style="display: none"
+                               type="text"
+                               value="eum">
+                        <br>
+                        <p>The ID of the verify. Example: <code>eum</code></p>
+                    </div>
+                    <div style="padding-left: 28px; clear: unset;">
+                        <b style="line-height: 2;"><code>hash</code></b>&nbsp;&nbsp;
+                        <small>string</small>&nbsp;
+                        &nbsp;
+                        <input data-component="url" data-endpoint="POSTapi-users-email-verify--id---hash-"
+                               name="hash" style="display: none"
+                               type="text"
+                               value="qui">
+                        <br>
+                        <p>Example: <code>qui</code></p>
                     </div>
                 </form>
 

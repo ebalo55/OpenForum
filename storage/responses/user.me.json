@@ -1,0 +1,37 @@
+{
+    "data": {
+        "type": "user",
+        "id": "usr_10833034c4dd47849af8ed8ea4a68a1b",
+        "attributes": {
+            "name": "Devonte Goldner",
+            "email": "imo********************",
+            "email_verified_at": "18\/02\/2023 11:05:51",
+            "token": "2|aFGHN9Ox9Uc42XfLqrXlY2xAzNwhQLDb7kIf3rjN"
+        },
+        "relationships": {
+            "reservations": {
+                "data": [
+                    {
+                        "type": "reservation",
+                        "id": "resrv_1e302893c3cd4dcd8c7810ef1a07c180"
+                    }
+                ]
+            }
+        }
+    },
+    "included": [
+        {
+            "type": "reservation",
+            "id": "resrv_1e302893c3cd4dcd8c7810ef1a07c180",
+            "attributes": {
+                "user": "usr_10833034c4dd47849af8ed8ea4a68a1b",
+                "event": "evt_d7e868f3083344f6bec2548db7979d6b",
+                "activity": "act_4c0158279c0148439fb285ebc7ad8c12"
+            }
+        }
+    ],
+    "meta": {
+        "success": true,
+        "errors": null
+    }
+}

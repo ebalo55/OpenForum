@@ -85,6 +85,34 @@ class UserControllerTest extends TestCase {
     }
 
     public
+    function test_correctly_retrieves_current_user_data(): void {
+        $user = User::factory()->create();
+
+        $response = $this->actingAs($user)->get(
+            route("user.me"),
+        );
+
+        $response->assertJson(
+            [
+                "data" => [
+                    "type"       => "user",
+                    "id"         => $user->prefixed_id,
+                    "attributes" => [
+                        "name"              => $user->name,
+                        "email"             => UserServiceFacade::maskEmail($user),
+                        "email_verified_at" => $user->email_verified_at ? format($user->email_verified_at) : null,
+                        "token"             => UserServiceFacade::getFrontEndAccessToken($user),
+                    ],
+                ],
+                "meta" => [
+                    "success" => true,
+                    "errors"  => null,
+                ],
+            ],
+        );
+    }
+
+    public
     function test_correctly_returns_access_data_for_user_if_authenticated(): void {
         $admin = User::first();
         $user = User::factory()->create();
@@ -172,32 +200,5 @@ class UserControllerTest extends TestCase {
         );
 
         Notification::assertNothingSent();
-    }
-
-    public
-    function test_correctly_retrieves_current_user_data(): void {
-        $user = User::factory()->create();
-
-        $response = $this->actingAs($user)->get(
-            route("user.me"),
-        );
-
-        $response->assertJson(
-            [
-                "data" => [
-                    "id"         => $user->prefixed_id,
-                    "attributes" => [
-                        "name"              => $user->name,
-                        "email"             => UserServiceFacade::maskEmail($user),
-                        "email_verified_at" => $user->email_verified_at ? format($user->email_verified_at) : null,
-                        "token"             => UserServiceFacade::getFrontEndAccessToken($user),
-                    ],
-                ],
-                "meta" => [
-                    "success" => true,
-                    "errors"  => null,
-                ],
-            ],
-        );
     }
 }

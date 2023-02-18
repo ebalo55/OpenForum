@@ -137,4 +137,4 @@ document.addEventListener("DOMContentLoaded", function () {
     window.addEventListener("hashchange", hashChange, false)
 
     hashChange()
-})
+});

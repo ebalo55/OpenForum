@@ -1097,7 +1097,6 @@ button {
     /* Foreground, Background */
     scrollbar-color: #3c4c67 transparent;
 }
-
 *::-webkit-scrollbar { /* Background */
     width: 10px;
     height: 10px;

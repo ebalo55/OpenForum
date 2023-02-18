@@ -1,7 +1,8 @@
 name: Endpoints
 description: ''
 endpoints:
-  - httpMethods:
+  -
+    httpMethods:
       - GET
     uri: sanctum/csrf-cookie
     metadata:
@@ -11,185 +12,31 @@ endpoints:
       subgroupDescription: ''
       title: 'Return an empty response simply to trigger the storage of the CSRF cookie in the browser.'
       description: ''
-      authenticated: false
-      custom: [ ]
+      authenticated: true
+      custom: []
     headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
       Content-Type: application/json
       Accept: application/json
-    urlParameters: [ ]
-    cleanUrlParameters: [ ]
-    queryParameters: [ ]
-    cleanQueryParameters: [ ]
-    bodyParameters: [ ]
-    cleanBodyParameters: [ ]
-    fileParameters: [ ]
-    responses: [ ]
-    responseFields: [ ]
-    auth: [ ]
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses: []
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer a3v45ZbVaefg8c6h6d1kPDE'
     controller: null
     method: null
     route: null
-    custom: [ ]
-  - httpMethods:
-      - GET
-    uri: api/users
-    metadata:
-      groupName: Endpoints
-      groupDescription: ''
-      subgroup: ''
-      subgroupDescription: ''
-      title: 'Returns the current user instance with publishable data'
-      description: ''
-      authenticated: false
-      custom: [ ]
-    headers:
-      Content-Type: application/json
-      Accept: application/json
-    urlParameters: [ ]
-    cleanUrlParameters: [ ]
-    queryParameters: [ ]
-    cleanQueryParameters: [ ]
-    bodyParameters: [ ]
-    cleanBodyParameters: [ ]
-    fileParameters: [ ]
-    responses: [ ]
-    responseFields: [ ]
-    auth: [ ]
-    controller: null
-    method: null
-    route: null
-    custom: [ ]
-  - httpMethods:
-      - POST
-    uri: api/users/login
-    metadata:
-      groupName: Endpoints
-      groupDescription: ''
-      subgroup: ''
-      subgroupDescription: ''
-      title: |-
-        Handle the login of a pre-registered account via API, this method forwards the login logic to the default
-        Fortify controller but adds a layer of indirection.
-      description: |-
-        The forwarded call is received and analyzed, if the login request was successful a JSON:API response is created
-        with the newly logged-in user.
-        NOTE: The user is not authenticated in the current request, the user should be authenticated by subsequent
-             front-end requests.
-
-        If the login was not successful based on the exception type an appropriate JSON:API response is created and
-        returned to the client.
-      authenticated: false
-      custom: [ ]
-    headers:
-      Content-Type: application/json
-      Accept: application/json
-    urlParameters: [ ]
-    cleanUrlParameters: [ ]
-    queryParameters: [ ]
-    cleanQueryParameters: [ ]
-    bodyParameters:
-      name:
-        name: name
-        description: ''
-        required: true
-        example: quis
-        type: string
-        custom: [ ]
-      password:
-        name: password
-        description: ''
-        required: true
-        example: 'k:/I=ArO%b4G5HCX&b'
-        type: string
-        custom: [ ]
-    cleanBodyParameters:
-      name: quis
-      password: 'k:/I=ArO%b4G5HCX&b'
-    fileParameters: [ ]
-    responses: [ ]
-    responseFields: [ ]
-    auth: [ ]
-    controller: null
-    method: null
-    route: null
-    custom: [ ]
-  - httpMethods:
-      - POST
-    uri: api/users/email/verify/request-new
-    metadata:
-      groupName: Endpoints
-      groupDescription: ''
-      subgroup: ''
-      subgroupDescription: ''
-      title: 'Send a new email verification link once requested or return the current user instance if already verified'
-      description: ''
-      authenticated: false
-      custom: [ ]
-    headers:
-      Content-Type: application/json
-      Accept: application/json
-    urlParameters: [ ]
-    cleanUrlParameters: [ ]
-    queryParameters: [ ]
-    cleanQueryParameters: [ ]
-    bodyParameters: [ ]
-    cleanBodyParameters: [ ]
-    fileParameters: [ ]
-    responses: [ ]
-    responseFields: [ ]
-    auth: [ ]
-    controller: null
-    method: null
-    route: null
-    custom: [ ]
-  - httpMethods:
-      - POST
-    uri: 'api/users/email/verify/{id}/{hash}'
-    metadata:
-      groupName: Endpoints
-      groupDescription: ''
-      subgroup: ''
-      subgroupDescription: ''
-      title: "Handle the email verification, forwarding the verification call to Fortify's default controller"
-      description: |-
-        The same result can be achieved by implementing the \Laravel\Fortify\Contracts\VerifyEmailResponse, anyway,
-        creating a new route we have changed the calling method from GET to POST
-      authenticated: false
-      custom: [ ]
-    headers:
-      Content-Type: application/json
-      Accept: application/json
-    urlParameters:
-      id:
-        name: id
-        description: 'The ID of the verify.'
-        required: true
-        example: autem
-        type: string
-        custom: [ ]
-      hash:
-        name: hash
-        description: ''
-        required: true
-        example: quisquam
-        type: string
-        custom: [ ]
-    cleanUrlParameters:
-      id: autem
-      hash: quisquam
-    queryParameters: [ ]
-    cleanQueryParameters: [ ]
-    bodyParameters: [ ]
-    cleanBodyParameters: [ ]
-    fileParameters: [ ]
-    responses: [ ]
-    responseFields: [ ]
-    auth: [ ]
-    controller: null
-    method: null
-    route: null
-    custom: [ ]
-  - httpMethods:
+    custom: []
+  -
+    httpMethods:
       - GET
     uri: api/events
     metadata:
@@ -206,26 +53,31 @@ endpoints:
              <endpoint> -> returns all events
              <endpoint>?include=activities -> returns all events and activities for each event
         </code>
-      authenticated: false
-      custom: [ ]
+      authenticated: true
+      custom: []
     headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
       Content-Type: application/json
       Accept: application/json
-    urlParameters: [ ]
-    cleanUrlParameters: [ ]
-    queryParameters: [ ]
-    cleanQueryParameters: [ ]
-    bodyParameters: [ ]
-    cleanBodyParameters: [ ]
-    fileParameters: [ ]
-    responses: [ ]
-    responseFields: [ ]
-    auth: [ ]
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses: []
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6Egdch64a8fVevDZ35Pkab1'
     controller: null
     method: null
     route: null
-    custom: [ ]
-  - httpMethods:
+    custom: []
+  -
+    httpMethods:
       - POST
     uri: api/events/reserve
     metadata:
@@ -235,59 +87,63 @@ endpoints:
       subgroupDescription: ''
       title: 'Handle the reservation request of a user'
       description: ''
-      authenticated: false
-      custom: [ ]
+      authenticated: true
+      custom: []
     headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
       Content-Type: application/json
       Accept: application/json
-    urlParameters: [ ]
-    cleanUrlParameters: [ ]
-    queryParameters: [ ]
-    cleanQueryParameters: [ ]
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
     bodyParameters:
       reservations:
         name: reservations
         description: 'This field must contain 0 items.'
         required: true
-        example: ut
+        example: cum
         type: 'string[]'
-        custom: [ ]
+        custom: []
       'reservations[].date':
         name: 'reservations[].date'
         description: 'Must be a valid date in the format <code>d/m/Y</code>.'
         required: true
-        example: 17/02/2023
+        example: 18/02/2023
         type: string
-        custom: [ ]
+        custom: []
       'reservations[].location':
         name: 'reservations[].location'
         description: ''
         required: true
-        example: et
+        example: earum
         type: string
-        custom: [ ]
+        custom: []
       'reservations[].absent':
         name: 'reservations[].absent'
         description: 'This field is required when <code>reservations.*.activity_reservations</code> is not present.'
         required: false
-        example: false
+        example: true
         type: boolean
-        custom: [ ]
+        custom: []
       'reservations[].activity_reservations':
         name: 'reservations[].activity_reservations'
         description: ''
         required: false
         example:
-          - sit
+          - deleniti
         type: 'string[]'
-        custom: [ ]
+        custom: []
     cleanBodyParameters:
-      reservations: ut
-    fileParameters: [ ]
-    responses: [ ]
-    responseFields: [ ]
-    auth: [ ]
+      reservations: cum
+    fileParameters: []
+    responses: []
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 86Pvae4daZfgb53V6EDck1h'
     controller: null
     method: null
     route: null
-    custom: [ ]
+    custom: []

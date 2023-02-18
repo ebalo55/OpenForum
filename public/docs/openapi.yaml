@@ -1,10 +1,10 @@
 openapi: 3.0.3
 info:
-  title: 'Student Forum - Administrative Backend'
-  description: ''
+  title: 'OpenForum - API documentation'
+  description: 'OpenForum default API documentation'
   version: 1.0.0
 servers:
-  - url: 'http://localhost:8000'
+  - url: 'http(s)://[host]'
 paths:
   /sanctum/csrf-cookie:
     get:
@@ -13,27 +13,11 @@ paths:
       description: ''
       parameters:
         - in: header
-          name: Content-Type
+          name: Authorization
           description: ''
-          example: application/json
+          example: 'Bearer {YOUR_AUTH_KEY}'
           schema:
             type: string
-        - in: header
-          name: Accept
-          description: ''
-          example: application/json
-          schema:
-            type: string
-      responses: { }
-      tags:
-        - Endpoints
-      security: [ ]
-  /api/users:
-    get:
-      summary: 'Returns the current user instance with publishable data'
-      operationId: returnsTheCurrentUserInstanceWithPublishableData
-      description: ''
-      parameters:
         - in: header
           name: Content-Type
           description: ''
@@ -49,106 +33,6 @@ paths:
       responses: { }
       tags:
         - Endpoints
-      security: [ ]
-  /api/users/login:
-    post:
-      summary: "Handle the login of a pre-registered account via API, this method forwards the login logic to the default\nFortify controller but adds a layer of indirection."
-      operationId: handleTheLoginOfAPreRegisteredAccountViaAPIThisMethodForwardsTheLoginLogicToTheDefaultFortifyControllerButAddsALayerOfIndirection
-      description: "The forwarded call is received and analyzed, if the login request was successful a JSON:API response is created\nwith the newly logged-in user.\nNOTE: The user is not authenticated in the current request, the user should be authenticated by subsequent\n     front-end requests.\n\nIf the login was not successful based on the exception type an appropriate JSON:API response is created and\nreturned to the client."
-      parameters:
-        - in: header
-          name: Content-Type
-          description: ''
-          example: application/json
-          schema:
-            type: string
-        - in: header
-          name: Accept
-          description: ''
-          example: application/json
-          schema:
-            type: string
-      responses: { }
-      tags:
-        - Endpoints
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                name:
-                  type: string
-                  description: ''
-                  example: quis
-                password:
-                  type: string
-                  description: ''
-                  example: 'k:/I=ArO%b4G5HCX&b'
-              required:
-                - name
-                - password
-      security: [ ]
-  /api/users/email/verify/request-new:
-    post:
-      summary: 'Send a new email verification link once requested or return the current user instance if already verified'
-      operationId: sendANewEmailVerificationLinkOnceRequestedOrReturnTheCurrentUserInstanceIfAlreadyVerified
-      description: ''
-      parameters:
-        - in: header
-          name: Content-Type
-          description: ''
-          example: application/json
-          schema:
-            type: string
-        - in: header
-          name: Accept
-          description: ''
-          example: application/json
-          schema:
-            type: string
-      responses: { }
-      tags:
-        - Endpoints
-      security: [ ]
-  '/api/users/email/verify/{id}/{hash}':
-    post:
-      summary: "Handle the email verification, forwarding the verification call to Fortify's default controller"
-      operationId: handleTheEmailVerificationForwardingTheVerificationCallToFortifysDefaultController
-      description: "The same result can be achieved by implementing the \\Laravel\\Fortify\\Contracts\\VerifyEmailResponse, anyway,\ncreating a new route we have changed the calling method from GET to POST"
-      parameters:
-        - in: header
-          name: Content-Type
-          description: ''
-          example: application/json
-          schema:
-            type: string
-        - in: header
-          name: Accept
-          description: ''
-          example: application/json
-          schema:
-            type: string
-      responses: { }
-      tags:
-        - Endpoints
-      security: [ ]
-    parameters:
-      - in: path
-        name: id
-        description: 'The ID of the verify.'
-        example: autem
-        required: true
-        schema:
-          type: string
-      - in: path
-        name: hash
-        description: ''
-        example: quisquam
-        required: true
-        schema:
-          type: string
   /api/events:
     get:
       summary: "Lists all events and return their representation, via Fractal's auto `include` features via this endpoint\nactivities can be easily retrieved."
@@ -156,6 +40,12 @@ paths:
       description: "EXAMPLE:\n<code>\n     <endpoint> -> returns all events\n     <endpoint>?include=activities -> returns all events and activities for each event\n</code>"
       parameters:
         - in: header
+          name: Authorization
+          description: ''
+          example: 'Bearer {YOUR_AUTH_KEY}'
+          schema:
+            type: string
+        - in: header
           name: Content-Type
           description: ''
           example: application/json
@@ -170,13 +60,18 @@ paths:
       responses: { }
       tags:
         - Endpoints
-      security: [ ]
   /api/events/reserve:
     post:
       summary: 'Handle the reservation request of a user'
       operationId: handleTheReservationRequestOfAUser
       description: ''
       parameters:
+        - in: header
+          name: Authorization
+          description: ''
+          example: 'Bearer {YOUR_AUTH_KEY}'
+          schema:
+            type: string
         - in: header
           name: Content-Type
           description: ''
@@ -202,15 +97,290 @@ paths:
                 reservations:
                   type: array
                   description: 'This field must contain 0 items.'
-                  example: ut
+                  example: cum
                   items:
                     type: string
               required:
                 - reservations
-      security: [ ]
+  /api/users:
+    get:
+      summary: 'Get the current user instance'
+      operationId: getTheCurrentUserInstance
+      description: "Returns a censored representation of the current user instance.\nThe response will always include the plain representation of the token used to authenticate the user"
+      parameters:
+        - in: query
+          name: includes
+          description: 'Comma separated list of user relation to include'
+          example: reservations
+          required: false
+          schema:
+            type: string
+            description: 'Comma separated list of user relation to include'
+            example: reservations
+        - in: header
+          name: Authorization
+          description: ''
+          example: 'Bearer {YOUR_AUTH_KEY}'
+          schema:
+            type: string
+        - in: header
+          name: Content-Type
+          description: ''
+          example: application/json
+          schema:
+            type: string
+        - in: header
+          name: Accept
+          description: ''
+          example: application/json
+          schema:
+            type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  data:
+                    type: user
+                    id: usr_10833034c4dd47849af8ed8ea4a68a1b
+                    attributes:
+                      name: 'Devonte Goldner'
+                      email: 'imo********************'
+                      email_verified_at: '18/02/2023 11:05:51'
+                      token: 2|aFGHN9Ox9Uc42XfLqrXlY2xAzNwhQLDb7kIf3rjN
+                    relationships:
+                      reservations:
+                        data:
+                          - type: reservation
+                            id: resrv_1e302893c3cd4dcd8c7810ef1a07c180
+                  included:
+                    - type: reservation
+                      id: resrv_1e302893c3cd4dcd8c7810ef1a07c180
+                      attributes:
+                        user: usr_10833034c4dd47849af8ed8ea4a68a1b
+                        event: evt_d7e868f3083344f6bec2548db7979d6b
+                        activity: act_4c0158279c0148439fb285ebc7ad8c12
+                  meta:
+                    success: true
+                    errors: null
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      type:
+                        type: string
+                        example: user
+                        description: 'Resource return type as of JSON:API standard, always equal to `user`.'
+                      id:
+                        type: string
+                        example: usr_10833034c4dd47849af8ed8ea4a68a1b
+                        description: 'Resource unique identifier, always starts with `usr_`.'
+                      attributes:
+                        type: object
+                        properties:
+                          name:
+                            type: string
+                            example: 'Devonte Goldner'
+                            description: 'Current user full name.'
+                          email:
+                            type: string
+                            example: 'imo********************'
+                            description: 'Current user censored email.'
+                          email_verified_at:
+                            type: string
+                            example: '18/02/2023 11:05:51'
+                            description: "Email verification datetime or null, if this field is\n               null for a given user he won't be allowed to reserve any spot."
+                          token:
+                            type: string
+                            example: 2|aFGHN9Ox9Uc42XfLqrXlY2xAzNwhQLDb7kIf3rjN
+                            description: 'Current user authentication token.'
+                      relationships:
+                        type: object
+                        properties:
+                          reservations:
+                            type: object
+                            properties:
+                              data:
+                                type: array
+                                example:
+                                  - type: reservation
+                                    id: resrv_1e302893c3cd4dcd8c7810ef1a07c180
+                                description: 'Reservations identifier data container.'
+                                items:
+                                  type: object
+                                  properties:
+                                    type:
+                                      type: string
+                                      example: reservation
+                                    id:
+                                      type: string
+                                      example: resrv_1e302893c3cd4dcd8c7810ef1a07c180
+                  included:
+                    type: array
+                    example:
+                      - type: reservation
+                        id: resrv_1e302893c3cd4dcd8c7810ef1a07c180
+                        attributes:
+                          user: usr_10833034c4dd47849af8ed8ea4a68a1b
+                          event: evt_d7e868f3083344f6bec2548db7979d6b
+                          activity: act_4c0158279c0148439fb285ebc7ad8c12
+                    description: 'Container for included relationships.'
+                    items:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          example: reservation
+                        id:
+                          type: string
+                          example: resrv_1e302893c3cd4dcd8c7810ef1a07c180
+                        attributes:
+                          type: object
+                          properties:
+                            user:
+                              type: string
+                              example: usr_10833034c4dd47849af8ed8ea4a68a1b
+                            event:
+                              type: string
+                              example: evt_d7e868f3083344f6bec2548db7979d6b
+                            activity:
+                              type: string
+                              example: act_4c0158279c0148439fb285ebc7ad8c12
+                  meta:
+                    type: object
+                    properties:
+                      success:
+                        type: boolean
+                        example: true
+                        description: 'Response status summary, if `true` the call was successful.'
+                      errors:
+                        type: string
+                        example: null
+                        description: 'null|object[] If one or more errors occur this field will be filled with errors.'
+      tags:
+        - 'User management'
+  /api/users/login:
+    post:
+      summary: "Handle the login of a pre-registered account via API, this method forwards the login logic to the default\nFortify controller but adds a layer of indirection."
+      operationId: handleTheLoginOfAPreRegisteredAccountViaAPIThisMethodForwardsTheLoginLogicToTheDefaultFortifyControllerButAddsALayerOfIndirection
+      description: "The forwarded call is received and analyzed, if the login request was successful a JSON:API response is created\nwith the newly logged-in user.\nNOTE: The user is not authenticated in the current request, the user should be authenticated by subsequent\n     front-end requests.\n\nIf the login was not successful based on the exception type an appropriate JSON:API response is created and\nreturned to the client."
+      parameters:
+        - in: header
+          name: Authorization
+          description: ''
+          example: 'Bearer {YOUR_AUTH_KEY}'
+          schema:
+            type: string
+        - in: header
+          name: Content-Type
+          description: ''
+          example: application/json
+          schema:
+            type: string
+        - in: header
+          name: Accept
+          description: ''
+          example: application/json
+          schema:
+            type: string
+      responses: { }
+      tags:
+        - 'User management'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: ''
+                  example: quod
+                password:
+                  type: string
+                  description: ''
+                  example: 'H0=z]-"ewh7^AI;cD*'
+              required:
+                - name
+                - password
+  /api/users/email/verify/request-new:
+    post:
+      summary: 'Send a new email verification link once requested or return the current user instance if already verified'
+      operationId: sendANewEmailVerificationLinkOnceRequestedOrReturnTheCurrentUserInstanceIfAlreadyVerified
+      description: ''
+      parameters:
+        - in: header
+          name: Authorization
+          description: ''
+          example: 'Bearer {YOUR_AUTH_KEY}'
+          schema:
+            type: string
+        - in: header
+          name: Content-Type
+          description: ''
+          example: application/json
+          schema:
+            type: string
+        - in: header
+          name: Accept
+          description: ''
+          example: application/json
+          schema:
+            type: string
+      responses: { }
+      tags:
+        - 'User management'
+  '/api/users/email/verify/{id}/{hash}':
+    post:
+      summary: "Handle the email verification, forwarding the verification call to Fortify's default controller"
+      operationId: handleTheEmailVerificationForwardingTheVerificationCallToFortifysDefaultController
+      description: "The same result can be achieved by implementing the \\Laravel\\Fortify\\Contracts\\VerifyEmailResponse, anyway,\ncreating a new route we have changed the calling method from GET to POST"
+      parameters:
+        - in: header
+          name: Authorization
+          description: ''
+          example: 'Bearer {YOUR_AUTH_KEY}'
+          schema:
+            type: string
+        - in: header
+          name: Content-Type
+          description: ''
+          example: application/json
+          schema:
+            type: string
+        - in: header
+          name: Accept
+          description: ''
+          example: application/json
+          schema:
+            type: string
+      responses: { }
+      tags:
+        - 'User management'
+    parameters:
+      - in: path
+        name: id
+        description: 'The ID of the verify.'
+        example: eum
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: hash
+        description: ''
+        example: qui
+        required: true
+        schema:
+          type: string
 tags:
   - name: Endpoints
     description: ''
+  - name: 'User management'
+    description: "\nActivities related to the management of the currently authenticated user"
 components:
   securitySchemes:
     default:

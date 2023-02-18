@@ -5,13 +5,13 @@
             "key": "baseUrl",
             "type": "string",
             "name": "string",
-            "value": "http:\/\/localhost:8000"
+            "value": "http(s):\/\/[host]"
         }
     ],
     "info": {
-        "name": "Student Forum - Administrative Backend",
-        "_postman_id": "5491aeee-3380-49dd-b6c0-4c34d59109b6",
-        "description": "",
+        "name": "OpenForum - API documentation",
+        "_postman_id": "2bdb52a8-e9b6-4b0a-82b1-6f2e9e11c9bd",
+        "description": "OpenForum default API documentation",
         "schema": "https:\/\/schema.getpostman.com\/json\/collection\/v2.1.0\/collection.json"
     },
     "item": [
@@ -40,139 +40,7 @@
                             }
                         ],
                         "body": null,
-                        "description": "",
-                        "auth": {
-                            "type": "noauth"
-                        }
-                    },
-                    "response": []
-                },
-                {
-                    "name": "Returns the current user instance with publishable data",
-                    "request": {
-                        "url": {
-                            "host": "{{baseUrl}}",
-                            "path": "api\/users",
-                            "query": [],
-                            "raw": "{{baseUrl}}\/api\/users"
-                        },
-                        "method": "GET",
-                        "header": [
-                            {
-                                "key": "Content-Type",
-                                "value": "application\/json"
-                            },
-                            {
-                                "key": "Accept",
-                                "value": "application\/json"
-                            }
-                        ],
-                        "body": null,
-                        "description": "",
-                        "auth": {
-                            "type": "noauth"
-                        }
-                    },
-                    "response": []
-                },
-                {
-                    "name": "Handle the login of a pre-registered account via API, this method forwards the login logic to the default\nFortify controller but adds a layer of indirection.",
-                    "request": {
-                        "url": {
-                            "host": "{{baseUrl}}",
-                            "path": "api\/users\/login",
-                            "query": [],
-                            "raw": "{{baseUrl}}\/api\/users\/login"
-                        },
-                        "method": "POST",
-                        "header": [
-                            {
-                                "key": "Content-Type",
-                                "value": "application\/json"
-                            },
-                            {
-                                "key": "Accept",
-                                "value": "application\/json"
-                            }
-                        ],
-                        "body": {
-                            "mode": "raw",
-                            "raw": "{\"name\":\"quis\",\"password\":\"k:\\\/I=ArO%b4G5HCX&b\"}"
-                        },
-                        "description": "The forwarded call is received and analyzed, if the login request was successful a JSON:API response is created\nwith the newly logged-in user.\nNOTE: The user is not authenticated in the current request, the user should be authenticated by subsequent\n     front-end requests.\n\nIf the login was not successful based on the exception type an appropriate JSON:API response is created and\nreturned to the client.",
-                        "auth": {
-                            "type": "noauth"
-                        }
-                    },
-                    "response": []
-                },
-                {
-                    "name": "Send a new email verification link once requested or return the current user instance if already verified",
-                    "request": {
-                        "url": {
-                            "host": "{{baseUrl}}",
-                            "path": "api\/users\/email\/verify\/request-new",
-                            "query": [],
-                            "raw": "{{baseUrl}}\/api\/users\/email\/verify\/request-new"
-                        },
-                        "method": "POST",
-                        "header": [
-                            {
-                                "key": "Content-Type",
-                                "value": "application\/json"
-                            },
-                            {
-                                "key": "Accept",
-                                "value": "application\/json"
-                            }
-                        ],
-                        "body": null,
-                        "description": "",
-                        "auth": {
-                            "type": "noauth"
-                        }
-                    },
-                    "response": []
-                },
-                {
-                    "name": "Handle the email verification, forwarding the verification call to Fortify's default controller",
-                    "request": {
-                        "url": {
-                            "host": "{{baseUrl}}",
-                            "path": "api\/users\/email\/verify\/:id\/:hash",
-                            "query": [],
-                            "raw": "{{baseUrl}}\/api\/users\/email\/verify\/:id\/:hash",
-                            "variable": [
-                                {
-                                    "id": "id",
-                                    "key": "id",
-                                    "value": "autem",
-                                    "description": "The ID of the verify."
-                                },
-                                {
-                                    "id": "hash",
-                                    "key": "hash",
-                                    "value": "quisquam",
-                                    "description": ""
-                                }
-                            ]
-                        },
-                        "method": "POST",
-                        "header": [
-                            {
-                                "key": "Content-Type",
-                                "value": "application\/json"
-                            },
-                            {
-                                "key": "Accept",
-                                "value": "application\/json"
-                            }
-                        ],
-                        "body": null,
-                        "description": "The same result can be achieved by implementing the \\Laravel\\Fortify\\Contracts\\VerifyEmailResponse, anyway,\ncreating a new route we have changed the calling method from GET to POST",
-                        "auth": {
-                            "type": "noauth"
-                        }
+                        "description": ""
                     },
                     "response": []
                 },
@@ -197,10 +65,7 @@
                             }
                         ],
                         "body": null,
-                        "description": "EXAMPLE:\n<code>\n     <endpoint> -> returns all events\n     <endpoint>?include=activities -> returns all events and activities for each event\n<\/code>",
-                        "auth": {
-                            "type": "noauth"
-                        }
+                        "description": "EXAMPLE:\n<code>\n     <endpoint> -> returns all events\n     <endpoint>?include=activities -> returns all events and activities for each event\n<\/code>"
                     },
                     "response": []
                 },
@@ -226,12 +91,146 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"reservations\":\"ut\"}"
+                            "raw": "{\"reservations\":\"cum\"}"
                         },
-                        "description": "",
-                        "auth": {
-                            "type": "noauth"
+                        "description": ""
+                    },
+                    "response": []
+                }
+            ]
+        },
+        {
+            "name": "User management",
+            "description": "\nActivities related to the management of the currently authenticated user",
+            "item": [
+                {
+                    "name": "Get the current user instance",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/users",
+                            "query": [
+                                {
+                                    "key": "includes",
+                                    "value": "reservations",
+                                    "description": "Comma separated list of user relation to include",
+                                    "disabled": false
+                                }
+                            ],
+                            "raw": "{{baseUrl}}\/api\/users?includes=reservations"
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "Returns a censored representation of the current user instance.\nThe response will always include the plain representation of the token used to authenticate the user"
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\n    \"data\": {\n        \"type\": \"user\",\n        \"id\": \"usr_10833034c4dd47849af8ed8ea4a68a1b\",\n        \"attributes\": {\n            \"name\": \"Devonte Goldner\",\n            \"email\": \"imo********************\",\n            \"email_verified_at\": \"18\\\/02\\\/2023 11:05:51\",\n            \"token\": \"2|aFGHN9Ox9Uc42XfLqrXlY2xAzNwhQLDb7kIf3rjN\"\n        },\n        \"relationships\": {\n            \"reservations\": {\n                \"data\": [\n                    {\n                        \"type\": \"reservation\",\n                        \"id\": \"resrv_1e302893c3cd4dcd8c7810ef1a07c180\"\n                    }\n                ]\n            }\n        }\n    },\n    \"included\": [\n        {\n            \"type\": \"reservation\",\n            \"id\": \"resrv_1e302893c3cd4dcd8c7810ef1a07c180\",\n            \"attributes\": {\n                \"user\": \"usr_10833034c4dd47849af8ed8ea4a68a1b\",\n                \"event\": \"evt_d7e868f3083344f6bec2548db7979d6b\",\n                \"activity\": \"act_4c0158279c0148439fb285ebc7ad8c12\"\n            }\n        }\n    ],\n    \"meta\": {\n        \"success\": true,\n        \"errors\": null\n    }\n}\n",
+                            "name": ""
                         }
+                    ]
+                },
+                {
+                    "name": "Handle the login of a pre-registered account via API, this method forwards the login logic to the default\nFortify controller but adds a layer of indirection.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/users\/login",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/users\/login"
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"name\":\"quod\",\"password\":\"H0=z]-\\\"ewh7^AI;cD*\"}"
+                        },
+                        "description": "The forwarded call is received and analyzed, if the login request was successful a JSON:API response is created\nwith the newly logged-in user.\nNOTE: The user is not authenticated in the current request, the user should be authenticated by subsequent\n     front-end requests.\n\nIf the login was not successful based on the exception type an appropriate JSON:API response is created and\nreturned to the client."
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Send a new email verification link once requested or return the current user instance if already verified",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/users\/email\/verify\/request-new",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/users\/email\/verify\/request-new"
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": ""
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Handle the email verification, forwarding the verification call to Fortify's default controller",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/users\/email\/verify\/:id\/:hash",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/users\/email\/verify\/:id\/:hash",
+                            "variable": [
+                                {
+                                    "id": "id",
+                                    "key": "id",
+                                    "value": "eum",
+                                    "description": "The ID of the verify."
+                                },
+                                {
+                                    "id": "hash",
+                                    "key": "hash",
+                                    "value": "qui",
+                                    "description": ""
+                                }
+                            ]
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "The same result can be achieved by implementing the \\Laravel\\Fortify\\Contracts\\VerifyEmailResponse, anyway,\ncreating a new route we have changed the calling method from GET to POST"
                     },
                     "response": []
                 }
