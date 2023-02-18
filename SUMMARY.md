@@ -9,3 +9,5 @@
   * [Email verification and reservation confirmation notification](features/email-verification-and-reservation-confirmation-notification.md)
 * [API documentation](api-documentation/README.md)
   * [Getting started](api-documentation/getting-started.md)
+  * [User management](api-documentation/user-management.md)
+  * [Event interaction](api-documentation/event-interaction.md)

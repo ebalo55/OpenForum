@@ -1,0 +1,1328 @@
+openapi: 3.0.3
+info:
+  title: 'OpenForum - API documentation'
+  description: 'OpenForum default API documentation'
+  version: 1.0.0
+servers:
+  -
+    url: 'http(s)://[current-host]'
+paths:
+  /sanctum/csrf-cookie:
+    get:
+      summary: 'Return an empty response simply to trigger the storage of the CSRF cookie in the browser.'
+      operationId: returnAnEmptyResponseSimplyToTriggerTheStorageOfTheCSRFCookieInTheBrowser
+      description: ''
+      parameters:
+        -
+          in: header
+          name: Authorization
+          description: ''
+          example: 'Bearer {YOUR_AUTH_KEY}'
+          schema:
+            type: string
+        -
+          in: header
+          name: Content-Type
+          description: ''
+          example: application/json
+          schema:
+            type: string
+        -
+          in: header
+          name: Accept
+          description: ''
+          example: application/json
+          schema:
+            type: string
+      responses: {  }
+      tags:
+        - Endpoints
+  /api/events:
+    get:
+      summary: 'Events index'
+      operationId: eventsIndex
+      description: 'Lists all events and optionally on or many of their relations.'
+      parameters:
+        -
+          in: header
+          name: Authorization
+          description: ''
+          example: 'Bearer {YOUR_AUTH_KEY}'
+          schema:
+            type: string
+        -
+          in: header
+          name: Content-Type
+          description: ''
+          example: application/json
+          schema:
+            type: string
+        -
+          in: header
+          name: Accept
+          description: ''
+          example: application/json
+          schema:
+            type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  data:
+                    -
+                      type: event_day
+                      id: evt_fe42d9d6092f4cde86d67e4fca313a49
+                      attributes:
+                        available_reservations: 9
+                        date: 01/01/2023
+                        location: Smithfort
+                      relationships:
+                        reservations:
+                          data:
+                            -
+                              type: reservation
+                              id: resrv_fac88ea6628a466f8f3ff4464c12130c
+                        activities:
+                          data:
+                            -
+                              type: activity
+                              id: act_04a71df315ec4fe8b0ab555200c83935
+                            -
+                              type: activity
+                              id: act_07972666e17a4ac69de2f152fd75e03d
+                    -
+                      type: event_day
+                      id: evt_316046ad43bc4750b1ce65f8a09658f1
+                      attributes:
+                        available_reservations: 9
+                        date: 02/02/2023
+                        location: Windlerstad
+                      relationships:
+                        reservations:
+                          data:
+                            -
+                              type: reservation
+                              id: resrv_f85e6c770ec2473cb9047eeed2bfc2c2
+                        activities:
+                          data:
+                            -
+                              type: activity
+                              id: act_b9f4d227bcfb49f79e1481e3f2e7d893
+                            -
+                              type: activity
+                              id: act_5c2eefd3bf814837b81eba07769121d3
+                  included:
+                    -
+                      type: activity
+                      id: act_04a71df315ec4fe8b0ab555200c83935
+                      attributes:
+                        starting_at: '12:30:00'
+                        ending_at: '14:23:23'
+                        title: 'Fuga et dignissimos accusamus quibusdam vel.'
+                        available_reservations: 0
+                        description: 'Compiled description markdown'
+                    -
+                      type: activity
+                      id: act_07972666e17a4ac69de2f152fd75e03d
+                      attributes:
+                        starting_at: '15:30:00'
+                        ending_at: '06:02:26'
+                        title: 'Maiores et laborum enim dolor repellendus et.'
+                        available_reservations: 0
+                        description: 'Compiled description markdown'
+                    -
+                      type: reservation
+                      id: resrv_fac88ea6628a466f8f3ff4464c12130c
+                      attributes:
+                        user: usr_7fb676db17324097a29eefcfbd611cf1
+                        event: evt_fe42d9d6092f4cde86d67e4fca313a49
+                        activity: act_875df90f7fb84c6ea32fffb21d200ab4
+                    -
+                      type: activity
+                      id: act_b9f4d227bcfb49f79e1481e3f2e7d893
+                      attributes:
+                        starting_at: '12:30:00'
+                        ending_at: '21:34:51'
+                        title: 'Ea eum cupiditate eos.'
+                        available_reservations: 0
+                        description: 'Compiled description markdown'
+                    -
+                      type: activity
+                      id: act_5c2eefd3bf814837b81eba07769121d3
+                      attributes:
+                        starting_at: '15:30:00'
+                        ending_at: '15:52:24'
+                        title: 'Dolorum non dolorem deleniti ullam.'
+                        available_reservations: 0
+                        description: 'Compiled description markdown'
+                    -
+                      type: reservation
+                      id: resrv_f85e6c770ec2473cb9047eeed2bfc2c2
+                      attributes:
+                        user: usr_119167e659424661bb98b5402281ec17
+                        event: evt_316046ad43bc4750b1ce65f8a09658f1
+                        activity: act_1da71ee2d61d4851bbe641ed6bd1a13c
+                  meta:
+                    success: true
+                    errors: null
+                properties:
+                  data:
+                    type: array
+                    example:
+                      -
+                        type: event_day
+                        id: evt_fe42d9d6092f4cde86d67e4fca313a49
+                        attributes:
+                          available_reservations: 9
+                          date: 01/01/2023
+                          location: Smithfort
+                        relationships:
+                          reservations:
+                            data:
+                              -
+                                type: reservation
+                                id: resrv_fac88ea6628a466f8f3ff4464c12130c
+                          activities:
+                            data:
+                              -
+                                type: activity
+                                id: act_04a71df315ec4fe8b0ab555200c83935
+                              -
+                                type: activity
+                                id: act_07972666e17a4ac69de2f152fd75e03d
+                      -
+                        type: event_day
+                        id: evt_316046ad43bc4750b1ce65f8a09658f1
+                        attributes:
+                          available_reservations: 9
+                          date: 02/02/2023
+                          location: Windlerstad
+                        relationships:
+                          reservations:
+                            data:
+                              -
+                                type: reservation
+                                id: resrv_f85e6c770ec2473cb9047eeed2bfc2c2
+                          activities:
+                            data:
+                              -
+                                type: activity
+                                id: act_b9f4d227bcfb49f79e1481e3f2e7d893
+                              -
+                                type: activity
+                                id: act_5c2eefd3bf814837b81eba07769121d3
+                    description: 'Container for resources.'
+                    items:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          example: event_day
+                          description: 'Resource return type as of JSON:API standard, always equal to `event_day`.'
+                        id:
+                          type: string
+                          example: evt_fe42d9d6092f4cde86d67e4fca313a49
+                          description: 'Resource unique identifier, always starts with `evt_`.'
+                        attributes:
+                          type: object
+                          properties:
+                            available_reservations:
+                              type: integer
+                              example: 9
+                              description: 'Number of available reservation spot for the event.'
+                            date:
+                              type: string
+                              example: 01/01/2023
+                              description: 'Event date, formatted as day/month/year.'
+                            location:
+                              type: string
+                              example: Smithfort
+                              description: 'Event location.'
+                        relationships:
+                          type: object
+                          properties:
+                            reservations:
+                              type: object
+                              properties:
+                                data:
+                                  type: array
+                                  example:
+                                    -
+                                      type: reservation
+                                      id: resrv_fac88ea6628a466f8f3ff4464c12130c
+                                  description: 'Reservations identifier data container.'
+                                  items:
+                                    type: object
+                                    properties:
+                                      type: { type: string, example: reservation }
+                                      id: { type: string, example: resrv_fac88ea6628a466f8f3ff4464c12130c }
+                            activities:
+                              type: object
+                              properties:
+                                data:
+                                  type: array
+                                  example:
+                                    -
+                                      type: activity
+                                      id: act_04a71df315ec4fe8b0ab555200c83935
+                                    -
+                                      type: activity
+                                      id: act_07972666e17a4ac69de2f152fd75e03d
+                                  description: 'Activities identifier data container.'
+                                  items:
+                                    type: object
+                                    properties:
+                                      type: { type: string, example: activity }
+                                      id: { type: string, example: act_04a71df315ec4fe8b0ab555200c83935 }
+                  included:
+                    type: array
+                    example:
+                      -
+                        type: activity
+                        id: act_04a71df315ec4fe8b0ab555200c83935
+                        attributes:
+                          starting_at: '12:30:00'
+                          ending_at: '14:23:23'
+                          title: 'Fuga et dignissimos accusamus quibusdam vel.'
+                          available_reservations: 0
+                          description: 'Compiled description markdown'
+                      -
+                        type: activity
+                        id: act_07972666e17a4ac69de2f152fd75e03d
+                        attributes:
+                          starting_at: '15:30:00'
+                          ending_at: '06:02:26'
+                          title: 'Maiores et laborum enim dolor repellendus et.'
+                          available_reservations: 0
+                          description: 'Compiled description markdown'
+                      -
+                        type: reservation
+                        id: resrv_fac88ea6628a466f8f3ff4464c12130c
+                        attributes:
+                          user: usr_7fb676db17324097a29eefcfbd611cf1
+                          event: evt_fe42d9d6092f4cde86d67e4fca313a49
+                          activity: act_875df90f7fb84c6ea32fffb21d200ab4
+                      -
+                        type: activity
+                        id: act_b9f4d227bcfb49f79e1481e3f2e7d893
+                        attributes:
+                          starting_at: '12:30:00'
+                          ending_at: '21:34:51'
+                          title: 'Ea eum cupiditate eos.'
+                          available_reservations: 0
+                          description: 'Compiled description markdown'
+                      -
+                        type: activity
+                        id: act_5c2eefd3bf814837b81eba07769121d3
+                        attributes:
+                          starting_at: '15:30:00'
+                          ending_at: '15:52:24'
+                          title: 'Dolorum non dolorem deleniti ullam.'
+                          available_reservations: 0
+                          description: 'Compiled description markdown'
+                      -
+                        type: reservation
+                        id: resrv_f85e6c770ec2473cb9047eeed2bfc2c2
+                        attributes:
+                          user: usr_119167e659424661bb98b5402281ec17
+                          event: evt_316046ad43bc4750b1ce65f8a09658f1
+                          activity: act_1da71ee2d61d4851bbe641ed6bd1a13c
+                    description: 'Container for included relationships.'
+                    items:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          example: activity
+                        id:
+                          type: string
+                          example: act_04a71df315ec4fe8b0ab555200c83935
+                        attributes:
+                          type: object
+                          properties:
+                            starting_at:
+                              type: string
+                              example: '12:30:00'
+                            ending_at:
+                              type: string
+                              example: '14:23:23'
+                            title:
+                              type: string
+                              example: 'Fuga et dignissimos accusamus quibusdam vel.'
+                            available_reservations:
+                              type: integer
+                              example: 0
+                            description:
+                              type: string
+                              example: 'Compiled description markdown'
+                  meta:
+                    type: object
+                    properties:
+                      success:
+                        type: boolean
+                        example: true
+                        description: 'Response status summary, if `true` the call was successful.'
+                      errors:
+                        type: string
+                        example: null
+                        description: 'null|object[] If one or more errors occur this field will be filled with errors.'
+      tags:
+        - 'Events interactions'
+  /api/events/reserve:
+    post:
+      summary: 'Reserve spots'
+      operationId: reserveSpots
+      description: "Handle the reservation request of a user reserving the provided spots\n<aside class=\"notice\">\n     This call must be executed using the logged-in user token in order to subscribe the user.\n     The authentication token will the ALWAYS be different from the authorization token used to retrieve the\n     data and authenticate the user.\n</aside>"
+      parameters:
+        -
+          in: header
+          name: Authorization
+          description: ''
+          example: 'Bearer {YOUR_AUTH_KEY}'
+          schema:
+            type: string
+        -
+          in: header
+          name: Content-Type
+          description: ''
+          example: application/json
+          schema:
+            type: string
+        -
+          in: header
+          name: Accept
+          description: ''
+          example: application/json
+          schema:
+            type: string
+      responses:
+        200:
+          description: 'Reservation successful'
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  data:
+                    type: user
+                    id: usr_10833034c4dd47849af8ed8ea4a68a1b
+                    attributes:
+                      name: 'Devonte Goldner'
+                      email: 'imo********************'
+                      email_verified_at: '18/02/2023 11:05:51'
+                      token: 2|aFGHN9Ox9Uc42XfLqrXlY2xAzNwhQLDb7kIf3rjN
+                    relationships:
+                      reservations:
+                        data:
+                          -
+                            type: reservation
+                            id: resrv_1e302893c3cd4dcd8c7810ef1a07c180
+                  included:
+                    -
+                      type: reservation
+                      id: resrv_1e302893c3cd4dcd8c7810ef1a07c180
+                      attributes:
+                        user: usr_10833034c4dd47849af8ed8ea4a68a1b
+                        event: evt_d7e868f3083344f6bec2548db7979d6b
+                        activity: act_4c0158279c0148439fb285ebc7ad8c12
+                  meta:
+                    success: true
+                    errors: null
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      type:
+                        type: string
+                        example: user
+                        description: 'Resource return type as of JSON:API standard, always equal to `user`.'
+                      id:
+                        type: string
+                        example: usr_10833034c4dd47849af8ed8ea4a68a1b
+                        description: 'Resource unique identifier, always starts with `usr_`.'
+                      attributes:
+                        type: object
+                        properties:
+                          name:
+                            type: string
+                            example: 'Devonte Goldner'
+                            description: 'Current user full name.'
+                          email:
+                            type: string
+                            example: 'imo********************'
+                            description: 'Current user censored email.'
+                          email_verified_at:
+                            type: string
+                            example: '18/02/2023 11:05:51'
+                            description: "Email verification datetime or null, if this field is\n               null for a given user he won't be allowed to reserve any spot."
+                          token:
+                            type: string
+                            example: 2|aFGHN9Ox9Uc42XfLqrXlY2xAzNwhQLDb7kIf3rjN
+                            description: 'Current user authentication token.'
+                      relationships:
+                        type: object
+                        properties:
+                          reservations:
+                            type: object
+                            properties:
+                              data:
+                                type: array
+                                example:
+                                  -
+                                    type: reservation
+                                    id: resrv_1e302893c3cd4dcd8c7810ef1a07c180
+                                description: 'Reservations identifier data container.'
+                                items:
+                                  type: object
+                                  properties:
+                                    type:
+                                      type: string
+                                      example: reservation
+                                    id:
+                                      type: string
+                                      example: resrv_1e302893c3cd4dcd8c7810ef1a07c180
+                  included:
+                    type: array
+                    example:
+                      -
+                        type: reservation
+                        id: resrv_1e302893c3cd4dcd8c7810ef1a07c180
+                        attributes:
+                          user: usr_10833034c4dd47849af8ed8ea4a68a1b
+                          event: evt_d7e868f3083344f6bec2548db7979d6b
+                          activity: act_4c0158279c0148439fb285ebc7ad8c12
+                    description: 'Container for included relationships.'
+                    items:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          example: reservation
+                        id:
+                          type: string
+                          example: resrv_1e302893c3cd4dcd8c7810ef1a07c180
+                        attributes:
+                          type: object
+                          properties:
+                            user:
+                              type: string
+                              example: usr_10833034c4dd47849af8ed8ea4a68a1b
+                            event:
+                              type: string
+                              example: evt_d7e868f3083344f6bec2548db7979d6b
+                            activity:
+                              type: string
+                              example: act_4c0158279c0148439fb285ebc7ad8c12
+                  meta:
+                    type: object
+                    properties:
+                      success:
+                        type: boolean
+                        example: true
+                        description: 'Response status summary, if `true` the call was successful.'
+                      errors:
+                        type: string
+                        example: null
+                        description: 'null|object[] If one or more errors occur this field will be filled with errors.'
+        409:
+          description: 'One or more conflicts arised while reserving'
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  data: []
+                  meta:
+                    success: false
+                    errors:
+                      -
+                        reference_code: 0
+                        field: null
+                        message: ''
+                properties:
+                  data:
+                    type: array
+                    example: []
+                    description: 'Container for resource.'
+                  meta:
+                    type: object
+                    properties:
+                      success:
+                        type: boolean
+                        example: false
+                        description: 'Response status summary, if `true` the call was successful.'
+                      errors:
+                        type: array
+                        example:
+                          -
+                            reference_code: 0
+                            field: null
+                            message: ''
+                        description: 'null|object[] If one or more errors occur this field will be filled with errors.'
+                        items:
+                          type: object
+                          properties:
+                            reference_code:
+                              type: integer
+                              example: 0
+                            field:
+                              type: string
+                              example: null
+                            message:
+                              type: string
+                              example: ''
+        404:
+          description: 'Event/Activity not found'
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  data: []
+                  meta:
+                    errors:
+                      reference_code: 0
+                      field: null
+                      message: 'No query results for model <model-name>'
+                properties:
+                  data:
+                    type: array
+                    example: []
+                    description: 'Container for resource.'
+                  meta:
+                    type: object
+                    properties:
+                      errors:
+                        type: object
+                        properties:
+                          reference_code:
+                            type: integer
+                            example: 0
+                          field:
+                            type: string
+                            example: null
+                          message:
+                            type: string
+                            example: 'No query results for model <model-name>'
+      tags:
+        - 'Events interactions'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                reservations:
+                  type: array
+                  description: "Contains the reservation preferences of the user. Must contain\n               exactly the same number of objects as the event days."
+                  example: null
+                  items:
+                    type: object
+                    properties:
+                      date:
+                        type: string
+                        description: "Must be a valid date in the format `day/month/year`, together\n               with the date uniquely identifies the event day."
+                        example: 18/02/2023
+                      location:
+                        type: string
+                        description: "Must be a valid location, together with the date uniquely\n               identifies the event day."
+                        example: Florence
+                      absent:
+                        type: boolean
+                        description: "Required if `activity_reservations` is not provided, states that a\n               user\n               will not participate in the event in a given day, can be `true`/`false` but only true-ish value\n               is\n               significant."
+                        example: false
+                      activity_reservations:
+                        type: array
+                        description: "Required if `absent` is not provided or is falsy,\n               defines the list of activities identifier a user want to reserve for a given day. All activities\n               must exist in the unique date-location pair."
+                        example:
+                          - act_b9f4d227bcfb49f79e1481e3f2e7d893
+                          - act_5c2eefd3bf814837b81eba07769121d3
+                        items:
+                          type: string
+                    required:
+                      - date
+                      - location
+              required:
+                - reservations
+  /api/users:
+    get:
+      summary: 'Current user'
+      operationId: currentUser
+      description: "Returns a censored representation of the current user instance.\nThe response will always include the plain representation of the token used to authenticate the user"
+      parameters:
+        -
+          in: query
+          name: includes
+          description: 'Comma separated list of user relation to include'
+          example: reservations
+          required: false
+          schema:
+            type: string
+            description: 'Comma separated list of user relation to include'
+            example: reservations
+        -
+          in: header
+          name: Authorization
+          description: ''
+          example: 'Bearer {YOUR_AUTH_KEY}'
+          schema:
+            type: string
+        -
+          in: header
+          name: Content-Type
+          description: ''
+          example: application/json
+          schema:
+            type: string
+        -
+          in: header
+          name: Accept
+          description: ''
+          example: application/json
+          schema:
+            type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  data:
+                    type: user
+                    id: usr_10833034c4dd47849af8ed8ea4a68a1b
+                    attributes:
+                      name: 'Devonte Goldner'
+                      email: 'imo********************'
+                      email_verified_at: '18/02/2023 11:05:51'
+                      token: 2|aFGHN9Ox9Uc42XfLqrXlY2xAzNwhQLDb7kIf3rjN
+                    relationships:
+                      reservations:
+                        data:
+                          -
+                            type: reservation
+                            id: resrv_1e302893c3cd4dcd8c7810ef1a07c180
+                  included:
+                    -
+                      type: reservation
+                      id: resrv_1e302893c3cd4dcd8c7810ef1a07c180
+                      attributes:
+                        user: usr_10833034c4dd47849af8ed8ea4a68a1b
+                        event: evt_d7e868f3083344f6bec2548db7979d6b
+                        activity: act_4c0158279c0148439fb285ebc7ad8c12
+                  meta:
+                    success: true
+                    errors: null
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      type:
+                        type: string
+                        example: user
+                        description: 'Resource return type as of JSON:API standard, always equal to `user`.'
+                      id:
+                        type: string
+                        example: usr_10833034c4dd47849af8ed8ea4a68a1b
+                        description: 'Resource unique identifier, always starts with `usr_`.'
+                      attributes:
+                        type: object
+                        properties:
+                          name:
+                            type: string
+                            example: 'Devonte Goldner'
+                            description: 'Current user full name.'
+                          email:
+                            type: string
+                            example: 'imo********************'
+                            description: 'Current user censored email.'
+                          email_verified_at:
+                            type: string
+                            example: '18/02/2023 11:05:51'
+                            description: "Email verification datetime or null, if this field is\n               null for a given user he won't be allowed to reserve any spot."
+                          token:
+                            type: string
+                            example: 2|aFGHN9Ox9Uc42XfLqrXlY2xAzNwhQLDb7kIf3rjN
+                            description: 'Current user authentication token.'
+                      relationships:
+                        type: object
+                        properties:
+                          reservations:
+                            type: object
+                            properties:
+                              data:
+                                type: array
+                                example:
+                                  -
+                                    type: reservation
+                                    id: resrv_1e302893c3cd4dcd8c7810ef1a07c180
+                                description: 'Reservations identifier data container.'
+                                items:
+                                  type: object
+                                  properties:
+                                    type:
+                                      type: string
+                                      example: reservation
+                                    id:
+                                      type: string
+                                      example: resrv_1e302893c3cd4dcd8c7810ef1a07c180
+                  included:
+                    type: array
+                    example:
+                      -
+                        type: reservation
+                        id: resrv_1e302893c3cd4dcd8c7810ef1a07c180
+                        attributes:
+                          user: usr_10833034c4dd47849af8ed8ea4a68a1b
+                          event: evt_d7e868f3083344f6bec2548db7979d6b
+                          activity: act_4c0158279c0148439fb285ebc7ad8c12
+                    description: 'Container for included relationships.'
+                    items:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          example: reservation
+                        id:
+                          type: string
+                          example: resrv_1e302893c3cd4dcd8c7810ef1a07c180
+                        attributes:
+                          type: object
+                          properties:
+                            user:
+                              type: string
+                              example: usr_10833034c4dd47849af8ed8ea4a68a1b
+                            event:
+                              type: string
+                              example: evt_d7e868f3083344f6bec2548db7979d6b
+                            activity:
+                              type: string
+                              example: act_4c0158279c0148439fb285ebc7ad8c12
+                  meta:
+                    type: object
+                    properties:
+                      success:
+                        type: boolean
+                        example: true
+                        description: 'Response status summary, if `true` the call was successful.'
+                      errors:
+                        type: string
+                        example: null
+                        description: 'null|object[] If one or more errors occur this field will be filled with errors.'
+      tags:
+        - 'User management'
+  /api/users/login:
+    post:
+      summary: Login
+      operationId: login
+      description: "Handle the login of a pre-registered account via API, this method forwards the login logic to the default\nFortify controller but adds a layer of indirection.\n\nThe forwarded call is received and analyzed, if the login request was successful a JSON:API response is created\nwith the newly logged-in user.\n\n<aside class=\"notice\">\nNote that the user is not authenticated in the current request, the user should be authenticated by subsequent\nfront-end requests.\n</aside>\n\nIf the login was not successful based on the exception type an appropriate JSON:API response is created and\nreturned to the client."
+      parameters:
+        -
+          in: query
+          name: includes
+          description: 'Comma separated list of user relation to include'
+          example: reservations
+          required: false
+          schema:
+            type: string
+            description: 'Comma separated list of user relation to include'
+            example: reservations
+        -
+          in: header
+          name: Authorization
+          description: ''
+          example: 'Bearer {YOUR_AUTH_KEY}'
+          schema:
+            type: string
+        -
+          in: header
+          name: Content-Type
+          description: ''
+          example: application/json
+          schema:
+            type: string
+        -
+          in: header
+          name: Accept
+          description: ''
+          example: application/json
+          schema:
+            type: string
+      responses:
+        200:
+          description: 'Login successful'
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  data:
+                    type: user
+                    id: usr_10833034c4dd47849af8ed8ea4a68a1b
+                    attributes:
+                      name: 'Devonte Goldner'
+                      email: 'imo********************'
+                      email_verified_at: '18/02/2023 11:05:51'
+                      token: 2|aFGHN9Ox9Uc42XfLqrXlY2xAzNwhQLDb7kIf3rjN
+                    relationships:
+                      reservations:
+                        data:
+                          -
+                            type: reservation
+                            id: resrv_1e302893c3cd4dcd8c7810ef1a07c180
+                  included:
+                    -
+                      type: reservation
+                      id: resrv_1e302893c3cd4dcd8c7810ef1a07c180
+                      attributes:
+                        user: usr_10833034c4dd47849af8ed8ea4a68a1b
+                        event: evt_d7e868f3083344f6bec2548db7979d6b
+                        activity: act_4c0158279c0148439fb285ebc7ad8c12
+                  meta:
+                    success: true
+                    errors: null
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      type:
+                        type: string
+                        example: user
+                        description: 'Resource return type as of JSON:API standard, always equal to `user`.'
+                      id:
+                        type: string
+                        example: usr_10833034c4dd47849af8ed8ea4a68a1b
+                        description: 'Resource unique identifier, always starts with `usr_`.'
+                      attributes:
+                        type: object
+                        properties:
+                          name:
+                            type: string
+                            example: 'Devonte Goldner'
+                            description: 'Current user full name.'
+                          email:
+                            type: string
+                            example: 'imo********************'
+                            description: 'Current user censored email.'
+                          email_verified_at:
+                            type: string
+                            example: '18/02/2023 11:05:51'
+                            description: "Email verification datetime or null, if this field is\n               null for a given user he won't be allowed to reserve any spot."
+                          token:
+                            type: string
+                            example: 2|aFGHN9Ox9Uc42XfLqrXlY2xAzNwhQLDb7kIf3rjN
+                            description: 'Current user authentication token.'
+                      relationships:
+                        type: object
+                        properties:
+                          reservations:
+                            type: object
+                            properties:
+                              data:
+                                type: array
+                                example:
+                                  -
+                                    type: reservation
+                                    id: resrv_1e302893c3cd4dcd8c7810ef1a07c180
+                                description: 'Reservations identifier data container.'
+                                items:
+                                  type: object
+                                  properties:
+                                    type:
+                                      type: string
+                                      example: reservation
+                                    id:
+                                      type: string
+                                      example: resrv_1e302893c3cd4dcd8c7810ef1a07c180
+                  included:
+                    type: array
+                    example:
+                      -
+                        type: reservation
+                        id: resrv_1e302893c3cd4dcd8c7810ef1a07c180
+                        attributes:
+                          user: usr_10833034c4dd47849af8ed8ea4a68a1b
+                          event: evt_d7e868f3083344f6bec2548db7979d6b
+                          activity: act_4c0158279c0148439fb285ebc7ad8c12
+                    description: 'Container for included relationships.'
+                    items:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          example: reservation
+                        id:
+                          type: string
+                          example: resrv_1e302893c3cd4dcd8c7810ef1a07c180
+                        attributes:
+                          type: object
+                          properties:
+                            user:
+                              type: string
+                              example: usr_10833034c4dd47849af8ed8ea4a68a1b
+                            event:
+                              type: string
+                              example: evt_d7e868f3083344f6bec2548db7979d6b
+                            activity:
+                              type: string
+                              example: act_4c0158279c0148439fb285ebc7ad8c12
+                  meta:
+                    type: object
+                    properties:
+                      success:
+                        type: boolean
+                        example: true
+                        description: 'Response status summary, if `true` the call was successful.'
+                      errors:
+                        type: string
+                        example: null
+                        description: 'null|object[] If one or more errors occur this field will be filled with errors.'
+        422:
+          description: 'Login error'
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  data: []
+                  meta:
+                    success: false
+                    errors:
+                      -
+                        reference_code: 0
+                        field: name
+                        message:
+                          - 'These credentials do not match our records.'
+                properties:
+                  data:
+                    type: array
+                    example: []
+                    description: 'Container for resource.'
+                  meta:
+                    type: object
+                    properties:
+                      success:
+                        type: boolean
+                        example: false
+                        description: 'Response status summary, if `true` the call was successful.'
+                      errors:
+                        type: array
+                        example:
+                          -
+                            reference_code: 0
+                            field: name
+                            message:
+                              - 'These credentials do not match our records.'
+                        description: 'null|object[] If one or more errors occur this field will be filled with errors.'
+                        items:
+                          type: object
+                          properties:
+                            reference_code:
+                              type: integer
+                              example: 0
+                            field:
+                              type: string
+                              example: name
+                            message:
+                              type: array
+                              example:
+                                - 'These credentials do not match our records.'
+                              items:
+                                type: string
+      tags:
+        - 'User management'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: ''
+                  example: beatae
+                password:
+                  type: string
+                  description: ''
+                  example: '+V90BtZ`A;V]'
+              required:
+                - name
+                - password
+  /api/users/email/verify/request-new:
+    post:
+      summary: 'Request new verification email'
+      operationId: requestNewVerificationEmail
+      description: 'Send a new email verification link once requested or return the current user instance if already verified'
+      parameters:
+        -
+          in: header
+          name: Authorization
+          description: ''
+          example: 'Bearer {YOUR_AUTH_KEY}'
+          schema:
+            type: string
+        -
+          in: header
+          name: Content-Type
+          description: ''
+          example: application/json
+          schema:
+            type: string
+        -
+          in: header
+          name: Accept
+          description: ''
+          example: application/json
+          schema:
+            type: string
+      responses:
+        200:
+          description: 'Verification email sent'
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  data: []
+                  meta:
+                    success: true
+                    errors: null
+                properties:
+                  data:
+                    type: array
+                    example: []
+                    description: 'Container for resource.'
+                  meta:
+                    type: object
+                    properties:
+                      success:
+                        type: boolean
+                        example: true
+                        description: 'Response status summary, if `true` the call was successful.'
+                      errors:
+                        type: string
+                        example: null
+                        description: 'null|object[] If one or more errors occur this field will be filled with errors.'
+      tags:
+        - 'User management'
+  '/api/users/email/verify/{id}/{hash}':
+    post:
+      summary: 'Verify email'
+      operationId: verifyEmail
+      description: "Handle the email verification, forwarding the verification call to Fortify's default controller."
+      parameters:
+        -
+          in: query
+          name: expires
+          description: 'expiration timestamp of the verification link.'
+          example: 1676736522
+          required: true
+          schema:
+            type: integer
+            description: 'expiration timestamp of the verification link.'
+            example: 1676736522
+        -
+          in: query
+          name: signature
+          description: 'Url signature hash.'
+          example: 2e99a9278bcba67a7b52acbb6f2fb822c72c6d4b1d63fb059033439059d9f250
+          required: true
+          schema:
+            type: string
+            description: 'Url signature hash.'
+            example: 2e99a9278bcba67a7b52acbb6f2fb822c72c6d4b1d63fb059033439059d9f250
+        -
+          in: header
+          name: Authorization
+          description: ''
+          example: 'Bearer {YOUR_AUTH_KEY}'
+          schema:
+            type: string
+        -
+          in: header
+          name: Content-Type
+          description: ''
+          example: application/json
+          schema:
+            type: string
+        -
+          in: header
+          name: Accept
+          description: ''
+          example: application/json
+          schema:
+            type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  data:
+                    type: user
+                    id: usr_10833034c4dd47849af8ed8ea4a68a1b
+                    attributes:
+                      name: 'Devonte Goldner'
+                      email: 'imo********************'
+                      email_verified_at: '18/02/2023 11:05:51'
+                      token: 2|aFGHN9Ox9Uc42XfLqrXlY2xAzNwhQLDb7kIf3rjN
+                    relationships:
+                      reservations:
+                        data:
+                          -
+                            type: reservation
+                            id: resrv_1e302893c3cd4dcd8c7810ef1a07c180
+                  included:
+                    -
+                      type: reservation
+                      id: resrv_1e302893c3cd4dcd8c7810ef1a07c180
+                      attributes:
+                        user: usr_10833034c4dd47849af8ed8ea4a68a1b
+                        event: evt_d7e868f3083344f6bec2548db7979d6b
+                        activity: act_4c0158279c0148439fb285ebc7ad8c12
+                  meta:
+                    success: true
+                    errors: null
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      type:
+                        type: string
+                        example: user
+                        description: 'Resource return type as of JSON:API standard, always equal to `user`.'
+                      id:
+                        type: string
+                        example: usr_10833034c4dd47849af8ed8ea4a68a1b
+                        description: 'Resource unique identifier, always starts with `usr_`.'
+                      attributes:
+                        type: object
+                        properties:
+                          name:
+                            type: string
+                            example: 'Devonte Goldner'
+                            description: 'Current user full name.'
+                          email:
+                            type: string
+                            example: 'imo********************'
+                            description: 'Current user censored email.'
+                          email_verified_at:
+                            type: string
+                            example: '18/02/2023 11:05:51'
+                            description: "Email verification datetime or null, if this field is\n               null for a given user he won't be allowed to reserve any spot."
+                          token:
+                            type: string
+                            example: 2|aFGHN9Ox9Uc42XfLqrXlY2xAzNwhQLDb7kIf3rjN
+                            description: 'Current user authentication token.'
+                      relationships:
+                        type: object
+                        properties:
+                          reservations:
+                            type: object
+                            properties:
+                              data:
+                                type: array
+                                example:
+                                  -
+                                    type: reservation
+                                    id: resrv_1e302893c3cd4dcd8c7810ef1a07c180
+                                description: 'Reservations identifier data container.'
+                                items:
+                                  type: object
+                                  properties:
+                                    type:
+                                      type: string
+                                      example: reservation
+                                    id:
+                                      type: string
+                                      example: resrv_1e302893c3cd4dcd8c7810ef1a07c180
+                  included:
+                    type: array
+                    example:
+                      -
+                        type: reservation
+                        id: resrv_1e302893c3cd4dcd8c7810ef1a07c180
+                        attributes:
+                          user: usr_10833034c4dd47849af8ed8ea4a68a1b
+                          event: evt_d7e868f3083344f6bec2548db7979d6b
+                          activity: act_4c0158279c0148439fb285ebc7ad8c12
+                    description: 'Container for included relationships.'
+                    items:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          example: reservation
+                        id:
+                          type: string
+                          example: resrv_1e302893c3cd4dcd8c7810ef1a07c180
+                        attributes:
+                          type: object
+                          properties:
+                            user:
+                              type: string
+                              example: usr_10833034c4dd47849af8ed8ea4a68a1b
+                            event:
+                              type: string
+                              example: evt_d7e868f3083344f6bec2548db7979d6b
+                            activity:
+                              type: string
+                              example: act_4c0158279c0148439fb285ebc7ad8c12
+                  meta:
+                    type: object
+                    properties:
+                      success:
+                        type: boolean
+                        example: true
+                        description: 'Response status summary, if `true` the call was successful.'
+                      errors:
+                        type: string
+                        example: null
+                        description: 'null|object[] If one or more errors occur this field will be filled with errors.'
+      tags:
+        - 'User management'
+    parameters:
+      -
+        in: path
+        name: id
+        description: 'The identifier of the user to verify.'
+        example: 1
+        required: true
+        schema:
+          type: integer
+      -
+        in: path
+        name: hash
+        description: 'Verification hash.'
+        example: 567159d622ffbb50b11b0efd307be358624a26ee
+        required: true
+        schema:
+          type: string
+tags:
+  -
+    name: Endpoints
+    description: ''
+  -
+    name: 'Events interactions'
+    description: "\nActivities related to the interaction of the currently authenticated user with events"
+  -
+    name: 'User management'
+    description: "\nActivities related to the management of the currently authenticated user"
+components:
+  securitySchemes:
+    default:
+      type: http
+      scheme: bearer
+      description: ''
+security:
+  -
+    default: []

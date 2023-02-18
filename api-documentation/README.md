@@ -7,3 +7,5 @@ The documentation is divided into several sections that describe the different f
 Before proceeding, we recommend that you familiarize yourself with the features and functionalities of the event reservation system. This will help you to better understand the API endpoints and how they can be used in your applications.
 
 We hope you find this API documentation useful and informative. If you have any questions or feedback, please feel free to contact us.
+
+In the following subsections, you'll find some explanations and API references. For a complete and updated and extended API reference please refer to the `Api reference` page hosted on your installation of OpenForum.
