@@ -13,3 +13,5 @@
   * [Event interaction](api-documentation/event-interaction.md)
 * [User guide](user-guide/README.md)
   * [Dashboard](user-guide/dashboard.md)
+  * [Settings editor](user-guide/settings-editor.md)
+  * [Users](user-guide/users.md)
