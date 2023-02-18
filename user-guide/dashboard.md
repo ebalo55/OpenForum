@@ -4,7 +4,15 @@
 
 <summary>In this page</summary>
 
+[Site name](dashboard.md#site-name)
 
+[Event dates](dashboard.md#event-dates)
+
+[Registration date-time range](dashboard.md#registration-date-time-range)
+
+[Total imported users](dashboard.md#total-imported-users)
+
+[Latest import errors](dashboard.md#latest-import-errors)
 
 </details>
 
