@@ -3,8 +3,9 @@
 use App\Enum\DatetimeFormatVariation;
 use Carbon\Carbon;
 
-
+// @codeCoverageIgnoreStart
 if (!function_exists("format")) {
+	// @codeCoverageIgnoreEnd
     /**
      * Format the given datetime instance using the common platform datetime format definitions
      *
@@ -17,7 +18,9 @@ if (!function_exists("format")) {
     }
 }
 
+// @codeCoverageIgnoreStart
 if (!function_exists("format_time")) {
+	// @codeCoverageIgnoreEnd
     /**
      * Format the given datetime instance using the common platform datetime format definitions
      *
@@ -30,7 +33,9 @@ if (!function_exists("format_time")) {
     }
 }
 
+// @codeCoverageIgnoreStart
 if (!function_exists("format_date")) {
+	// @codeCoverageIgnoreEnd
     /**
      * Format the given datetime instance using the common platform datetime format definitions
      *
@@ -43,7 +48,9 @@ if (!function_exists("format_date")) {
     }
 }
 
+// @codeCoverageIgnoreStart
 if (!function_exists("make_from_format")) {
+	// @codeCoverageIgnoreEnd
     /**
      * Create a new datetime instance from the given datetime string
      *

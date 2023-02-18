@@ -12,12 +12,16 @@ use App\Models\Activity;
 use App\Models\EventDay;
 use App\Models\User;
 use App\Transformers\EventTransformer;
+use App\Transformers\UserTransformer;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Optional;
+use Illuminate\Support\Str;
 use Spatie\Fractal\Fractal;
 use Throwable;
 
@@ -32,17 +36,43 @@ class EventController extends Controller {
      *      <endpoint>?include=activities -> returns all events and activities for each event
      * </code>
      *
+     * @param Request $request
+     *
      * @return JsonResponse
      */
     public
-    function index(): JsonResponse {
+    function index(
+        Request $request,
+    ): JsonResponse {
         return Fractal::success()
                       ->collection(
                           EventDay::query()
-                                  ->groupBy("date")
-                                  ->orderBy("location")
+                                  ->groupBy(
+                                      "id",
+                                      "date",
+                                  )
+                                  ->orderBy("date")
+                              // eager load activities relation and sort activities by starting date if the include
+                              // parameter exists and it contains the relation name
+                                  ->when(
+                                  Str::contains(
+                                      $request->get(
+                                          "include",
+                                          "",
+                                      ),
+                                      "activities",
+                                  ),
+                                  fn(Builder $builder) => $builder->setEagerLoads(
+                                      [
+                                          "activities" => fn(HasMany $builder) => $builder->orderBy(
+                                              "activities.starting_at",
+                                          ),
+                                      ],
+                                  ),
+                              )
                                   ->get(),
                           EventTransformer::class,
+                          "event_day",
                       )
                       ->respond();
     }
@@ -52,7 +82,7 @@ class EventController extends Controller {
      *
      * @param EventRegisterRequest $request
      *
-     * @return RedirectResponse
+     * @return JsonResponse
      * @throws OverlappingPeriodException
      * @throws ModelNotFoundException
      * @throws ActivityMaximumReservationsReachedException
@@ -62,7 +92,7 @@ class EventController extends Controller {
     public
     function reserve(
         EventRegisterRequest $request,
-    ): RedirectResponse {
+    ): JsonResponse {
         // TODO: currently absences are untracked, tracking them as reservations will make them count in the overall
         //  total by default.
         //  Available options are:
@@ -127,9 +157,12 @@ class EventController extends Controller {
 
         // avoid recreating the response with reservation included, instead prefer the return of the whole user object
         // with the linked reservations
-        return redirect()->route(
-            "user.me",
-            ["include" => "reservations"],
-        );
+        return Fractal::success()
+                      ->parseIncludes("reservations")
+                      ->item(
+                          $current_user,
+                          UserTransformer::class,
+                          "user",
+                      )->respond();
     }
 }

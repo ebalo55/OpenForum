@@ -63,7 +63,7 @@ class Activity extends Model implements ReservableModelContract {
      */
     public
     function maxReservations(): int {
-        return $this->max_reservation;
+        return $this->max_reservation ?? 0;
     }
 
     /**
@@ -85,7 +85,7 @@ class Activity extends Model implements ReservableModelContract {
     protected
     function reservationsCount(): Attribute {
         return Attribute::make(
-            get: fn(?int $value) => $value ?? $this->reservations_count = $this->reservations()->count(),
+            get: fn(?int $value) => $value ?? $this->loadCount("reservations")->reservations_count,
         );
     }
 

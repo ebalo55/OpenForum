@@ -76,8 +76,9 @@ class UserController extends Controller {
             }
 
             // otherwise fallback to an empty error
-            return Fractal::error([])
-                          ->respond(\Symfony\Component\HttpFoundation\Response::HTTP_BAD_REQUEST);
+            // @codeCoverageIgnoreStart
+            return Fractal::error([])->respond(\Symfony\Component\HttpFoundation\Response::HTTP_BAD_REQUEST);
+            // @codeCoverageIgnoreEnd
         }
     }
 

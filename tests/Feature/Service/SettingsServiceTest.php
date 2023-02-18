@@ -28,6 +28,20 @@ class SettingsServiceTest extends TestCase {
     }
 
     public
+    function test_can_set_frontend_domain(): void {
+        app(SettingsService::class)->setFrontEndDomain("example.com");
+        $this->assertEquals(
+            "example.com",
+            app(GeneralSettings::class)->front_end_domain,
+        );
+        app(SettingsService::class)->setFrontEndDomain("aaa.bbb");
+        $this->assertEquals(
+            "aaa.bbb",
+            app(GeneralSettings::class)->front_end_domain,
+        );
+    }
+
+    public
     function test_can_set_password_generation_rules(): void {
         app(SettingsService::class)->setPasswordGenerationRules(PasswordGenerationRules::AT);
         $this->assertEquals(

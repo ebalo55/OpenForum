@@ -4,7 +4,7 @@
 
 /**
  * A helper file for Laravel, to provide autocomplete information to your IDE
- * Generated for Laravel 10.0.0.
+ * Generated for Laravel 10.0.3.
  *
  * This file should not be included in your code, only analyzed by your IDE!
  *
@@ -10494,60 +10494,47 @@ namespace Illuminate\Support\Facades {
          *
          * @param string $driver
          * @param \Closure $callback
-         *
          * @return \Illuminate\Hashing\HashManager
          * @static
          */
-        public static
-        function extend(
-            $driver,
-            $callback
-        ) {            //Method inherited from \Illuminate\Support\Manager
-            /** @var \Illuminate\Hashing\HashManager $instance */
-            return $instance->extend(
-                $driver,
-                $callback
-            );
+        public static function extend($driver, $callback)
+        {            //Method inherited from \Illuminate\Support\Manager
+                        /** @var \Illuminate\Hashing\HashManager $instance */
+                        return $instance->extend($driver, $callback);
         }
-
-        /**
+                    /**
          * Get all of the created "drivers".
          *
          * @return array
          * @static
          */
-        public static
-        function getDrivers() {            //Method inherited from \Illuminate\Support\Manager
-            /** @var \Illuminate\Hashing\HashManager $instance */
-            return $instance->getDrivers();
+        public static function getDrivers()
+        {            //Method inherited from \Illuminate\Support\Manager
+                        /** @var \Illuminate\Hashing\HashManager $instance */
+                        return $instance->getDrivers();
         }
-
-        /**
+                    /**
          * Get the container instance used by the manager.
          *
          * @return \Illuminate\Contracts\Container\Container
          * @static
          */
-        public static
-        function getContainer() {            //Method inherited from \Illuminate\Support\Manager
-            /** @var \Illuminate\Hashing\HashManager $instance */
-            return $instance->getContainer();
+        public static function getContainer()
+        {            //Method inherited from \Illuminate\Support\Manager
+                        /** @var \Illuminate\Hashing\HashManager $instance */
+                        return $instance->getContainer();
         }
-
-        /**
+                    /**
          * Set the container instance used by the manager.
          *
          * @param \Illuminate\Contracts\Container\Container $container
-         *
          * @return \Illuminate\Hashing\HashManager
          * @static
          */
-        public static
-        function setContainer(
-            $container
-        ) {            //Method inherited from \Illuminate\Support\Manager
-            /** @var \Illuminate\Hashing\HashManager $instance */
-            return $instance->setContainer($container);
+        public static function setContainer($container)
+        {            //Method inherited from \Illuminate\Support\Manager
+                        /** @var \Illuminate\Hashing\HashManager $instance */
+                        return $instance->setContainer($container);
         }
 
         /**
@@ -12976,6 +12963,7 @@ namespace Illuminate\Support\Facades {
      * @method static \Illuminate\Process\PendingProcess idleTimeout(int $timeout)
      * @method static \Illuminate\Process\PendingProcess forever()
      * @method static \Illuminate\Process\PendingProcess env(array $environment)
+     * @method static \Illuminate\Process\PendingProcess input(\Traversable|resource|string|int|float|bool|null $input)
      * @method static \Illuminate\Process\PendingProcess quietly()
      * @method static \Illuminate\Process\PendingProcess tty(bool $tty = true)
      * @method static \Illuminate\Process\PendingProcess options(array $options)
@@ -33009,26 +32997,21 @@ namespace {
          * @static
          */
         public static
-        function updateOrInsert(
-            $attributes,
-            $values = [],
-        ) {
-            /** @var \Illuminate\Database\Query\Builder $instance */
-            return $instance->updateOrInsert(
-                $attributes,
-                $values,
-            );
-        }
+        function updateOrInsert($attributes, $values = [])
+            {
+                                /** @var \Illuminate\Database\Query\Builder $instance */
+                                return $instance->updateOrInsert($attributes, $values);
+            }
 
-        /**
-         * Increment the given column's values by the given amounts.
-         *
-         * @param \Illuminate\Database\Query\array<string,  float|int|numeric-string> $columns
-         * @param \Illuminate\Database\Query\array<string,  mixed> $extra
-         * @return int
-         * @throws \InvalidArgumentException
-         * @static
-         */
+                /**
+             * Increment the given column's values by the given amounts.
+             *
+             * @param \Illuminate\Database\Query\array<string,  float|int|numeric-string>  $columns
+             * @param \Illuminate\Database\Query\array<string,  mixed>  $extra
+             * @return int
+             * @throws \InvalidArgumentException
+             * @static
+             */
             public static function incrementEach($columns, $extra = [])
             {
                                 /** @var \Illuminate\Database\Query\Builder $instance */
@@ -33207,17 +33190,17 @@ namespace {
                 /**
              * Use the "write" PDO connection when executing the query.
              *
-             * @return \Illuminate\Database\Query\Builder
-             * @static
-             */
-            public static function useWritePdo()
-            {
-                                /** @var \Illuminate\Database\Query\Builder $instance */
-                                return $instance->useWritePdo();
-            }
+                 * @return \Illuminate\Database\Query\Builder
+                 * @static
+                 */
+        public static
+        function useWritePdo() {
+            /** @var \Illuminate\Database\Query\Builder $instance */
+            return $instance->useWritePdo();
+        }
 
-                /**
-             * Clone the query without the given properties.
+        /**
+         * Clone the query without the given properties.
              *
              * @param array $properties
              * @return static
@@ -33244,7 +33227,7 @@ namespace {
 
                 /**
              * Dump the current SQL and bindings.
-             *
+                 *
              * @return \Illuminate\Database\Query\Builder
              * @static
              */
@@ -33743,10 +33726,14 @@ if (! function_exists('transform')) {
     /**
      * Transform the given value if it is present.
      *
-     * @param  mixed  $value
-     * @param  callable  $callback
-     * @param  mixed  $default
-     * @return mixed|null
+     * @template TValue of mixed
+     * @template TReturn of mixed
+     * @template TDefault of mixed
+     *
+     * @param  TValue  $value
+     * @param  callable(TValue): TReturn  $callback
+     * @param  TDefault|callable(TValue): TDefault|null  $default
+     * @return ($value is empty ? ($default is null ? null : TDefault) : TReturn)
      */
     function transform($value, callable $callback, $default = null)
     {

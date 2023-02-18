@@ -23,4 +23,15 @@ class ActivityFactory extends Factory {
             'updated_at'   => now(),
         ];
     }
+
+    public
+    function withMaxReservations(
+        int $reservations,
+    ): Factory {
+        return $this->state(
+            fn(array $attributes) => [
+                "max_reservation" => $reservations,
+            ],
+        );
+    }
 }

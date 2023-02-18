@@ -39,6 +39,7 @@ class UserTransformer extends TransformerAbstract {
         return $this->collection(
             $user->reservations,
             new ReservationTransformer(),
+            "reservation",
         );
     }
 

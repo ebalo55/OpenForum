@@ -43,6 +43,7 @@ class ActivityTransformer extends TransformerAbstract {
         return $this->item(
             $activity->eventDay,
             new EventTransformer(),
+            "event_day",
         );
     }
 
@@ -58,12 +59,13 @@ class ActivityTransformer extends TransformerAbstract {
         Activity $activity,
     ): Collection {
         abort_unless(
-            request()->user()->can(Event::EXPORT()),
+            auth()->user()->can(Event::EXPORT()),
             Response::HTTP_FORBIDDEN,
         );
         return $this->collection(
             $activity->reservations,
             new ReservationTransformer(),
+            "reservation",
         );
     }
 

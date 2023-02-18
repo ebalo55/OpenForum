@@ -15,16 +15,15 @@ class EventTransformer extends TransformerAbstract {
 	 * @var array
 	 */
 	protected array $availableIncludes = [
-		//
-	];
+        "reservations",
+        "activities",
+    ];
 	/**
 	 * List of resources to automatically include
 	 *
 	 * @var array
 	 */
 	protected array $defaultIncludes = [
-		"reservations",
-		"activities",
 	];
 
 	/**
@@ -39,8 +38,9 @@ class EventTransformer extends TransformerAbstract {
 		EventDay $event_day,
 	): Collection {
 		return $this->collection(
-			$event_day->activities,
-			new ActivityTransformer(),
+            $event_day->activities,
+            new ActivityTransformer(),
+            "activity",
 		);
 	}
 
@@ -56,13 +56,14 @@ class EventTransformer extends TransformerAbstract {
 		EventDay $event,
 	): Collection {
 		abort_unless(
-			request()->user()->can(Event::EXPORT()),
-			Response::HTTP_FORBIDDEN,
+            auth()->user()->can(Event::EXPORT()),
+            Response::HTTP_FORBIDDEN,
 		);
 
 		return $this->collection(
-			$event->reservations,
-			new ReservationTransformer(),
+            $event->reservations,
+            new ReservationTransformer(),
+            "reservation",
 		);
 	}
 
@@ -78,10 +79,10 @@ class EventTransformer extends TransformerAbstract {
 		EventDay $event,
 	): array {
 		return [
-			"id"                     => $event->prefixed_id,
-			"available_reservations" => $event->max_reservation - $event->reservations()->count(),
-			"date"                   => $event->date,
-			"location"               => $event->location,
-		];
+            "id"                     => $event->prefixed_id,
+            "available_reservations" => $event->max_reservation - $event->reservations()->count(),
+            "date"                   => format_date($event->date),
+            "location"               => $event->location,
+        ];
 	}
 }

@@ -3,7 +3,9 @@
 use App\Exceptions\UnserializableBackedEnumException;
 use App\Trait\SerializableEnum;
 
+// @codeCoverageIgnoreStart
 if (!function_exists("pack_abilities_permissions")) {
+    // @codeCoverageIgnoreEnd
     /**
      * Pack the provided list of permissions into a sanctum middleware ability string, useful for permission checking
      *

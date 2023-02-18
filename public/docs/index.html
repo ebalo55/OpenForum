@@ -1,0 +1,1019 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1" name="viewport">
+    <title>Student Forum - Administrative Backend Documentation</title>
+
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet">
+
+    <link href="../docs/css/theme-default.style.css" media="screen" rel="stylesheet">
+    <link href="../docs/css/theme-default.print.css" media="print" rel="stylesheet">
+
+    <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.10/lodash.min.js"></script>
+
+    <link href="https://unpkg.com/@highlightjs/cdn-assets@11.6.0/styles/obsidian.min.css"
+          rel="stylesheet">
+    <script src="https://unpkg.com/@highlightjs/cdn-assets@11.6.0/highlight.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jets/0.14.1/jets.min.js"></script>
+
+    <style id="language-style">
+        /* starts out as display none and is replaced with js later  */
+        body .content .bash-example code {
+            display: none;
+        }
+
+        body .content .javascript-example code {
+            display: none;
+        }
+
+        body .content .python-example code {
+            display: none;
+        }
+    </style>
+
+
+    <script src="../docs/js/theme-default-4.16.0.js"></script>
+
+</head>
+
+<body data-languages="[&quot;bash&quot;,&quot;javascript&quot;,&quot;python&quot;]">
+
+<a href="#" id="nav-button">
+    <span>
+        MENU
+        <img alt="navbar-image" src="../docs/images/navbar.png"/>
+    </span>
+</a>
+<div class="tocify-wrapper">
+
+    <div class="lang-selector">
+        <button class="lang-button" data-language-name="bash" type="button">bash</button>
+        <button class="lang-button" data-language-name="javascript" type="button">javascript</button>
+        <button class="lang-button" data-language-name="python" type="button">python</button>
+    </div>
+
+    <div class="search">
+        <input class="search" id="input-search" placeholder="Search" type="text">
+    </div>
+
+    <div id="toc">
+        <ul class="tocify-header" id="tocify-header-introduction">
+            <li class="tocify-item level-1" data-unique="introduction">
+                <a href="#introduction">Introduction</a>
+            </li>
+        </ul>
+        <ul class="tocify-header" id="tocify-header-authenticating-requests">
+            <li class="tocify-item level-1" data-unique="authenticating-requests">
+                <a href="#authenticating-requests">Authenticating requests</a>
+            </li>
+        </ul>
+        <ul class="tocify-header" id="tocify-header-endpoints">
+            <li class="tocify-item level-1" data-unique="endpoints">
+                <a href="#endpoints">Endpoints</a>
+            </li>
+            <ul class="tocify-subheader" id="tocify-subheader-endpoints">
+                <li class="tocify-item level-2" data-unique="endpoints-GETsanctum-csrf-cookie">
+                    <a href="#endpoints-GETsanctum-csrf-cookie">Return an empty response simply to trigger the storage
+                        of the CSRF cookie in the browser.</a>
+                </li>
+                <li class="tocify-item level-2" data-unique="endpoints-GETapi-users">
+                    <a href="#endpoints-GETapi-users">Returns the current user instance with publishable data</a>
+                </li>
+                <li class="tocify-item level-2" data-unique="endpoints-POSTapi-users-login">
+                    <a href="#endpoints-POSTapi-users-login">Handle the login of a pre-registered account via API, this
+                        method forwards the login logic to the default
+                        Fortify controller but adds a layer of indirection.</a>
+                </li>
+                <li class="tocify-item level-2" data-unique="endpoints-POSTapi-users-email-verify-request-new">
+                    <a href="#endpoints-POSTapi-users-email-verify-request-new">Send a new email verification link once
+                        requested or return the current user instance if already verified</a>
+                </li>
+                <li class="tocify-item level-2" data-unique="endpoints-POSTapi-users-email-verify--id---hash-">
+                    <a href="#endpoints-POSTapi-users-email-verify--id---hash-">Handle the email verification,
+                        forwarding the verification call to Fortify's default controller</a>
+                </li>
+                <li class="tocify-item level-2" data-unique="endpoints-GETapi-events">
+                    <a href="#endpoints-GETapi-events">Lists all events and return their representation, via Fractal's
+                        auto `include` features via this endpoint
+                        activities can be easily retrieved.</a>
+                </li>
+                <li class="tocify-item level-2" data-unique="endpoints-POSTapi-events-reserve">
+                    <a href="#endpoints-POSTapi-events-reserve">Handle the reservation request of a user</a>
+                </li>
+            </ul>
+        </ul>
+    </div>
+
+    <ul class="toc-footer" id="toc-footer">
+        <li style="padding-bottom: 5px;"><a href="../docs/collection.json">View Postman collection</a></li>
+        <li style="padding-bottom: 5px;"><a href="../docs/openapi.yaml">View OpenAPI spec</a></li>
+        <li><a href="http://github.com/knuckleswtf/scribe">Documentation powered by Scribe ✍</a></li>
+    </ul>
+
+    <ul class="toc-footer" id="last-updated">
+        <li>Last updated: February 17, 2023</li>
+    </ul>
+</div>
+
+<div class="page-wrapper">
+    <div class="dark-box"></div>
+    <div class="content">
+        <h1 id="introduction">Introduction</h1>
+        <aside>
+            <strong>Base URL</strong>: <code>http://localhost:8000</code>
+        </aside>
+        <p>This documentation aims to provide all the information you need to work with our API.</p>
+        <aside>As you scroll, you'll see code examples for working with the API in different programming languages in
+            the dark area to the right (or as part of the content on mobile).
+            You can switch the language used with the tabs at the top right (or from the nav menu at the top left on
+            mobile).
+        </aside>
+
+        <h1 id="authenticating-requests">Authenticating requests</h1>
+        <p>To authenticate requests, include an <strong><code>Authorization</code></strong> header with the value
+            <strong><code>"Bearer {YOUR_AUTH_KEY}"</code></strong>.</p>
+        <p>All authenticated endpoints are marked with a <code>requires authentication</code> badge in the documentation
+            below.</p>
+        <p>You can retrieve your token by visiting your dashboard and clicking <b>Generate API token</b>.</p>
+
+        <h1 id="endpoints">Endpoints</h1>
+
+
+        <h2 id="endpoints-GETsanctum-csrf-cookie">Return an empty response simply to trigger the storage of the CSRF
+            cookie in the browser.</h2>
+
+        <p>
+        </p>
+
+
+        <span id="example-requests-GETsanctum-csrf-cookie">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request GET \
+    --get "http://localhost:8000/sanctum/csrf-cookie" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json"</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost:8000/sanctum/csrf-cookie"
+);
+
+const headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+fetch(url, {
+    method: "GET",
+    headers,
+}).then(response =&gt; response.json());</code></pre></div>
+
+
+<div class="python-example">
+    <pre><code class="language-python">import requests
+import json
+
+url = 'http://localhost:8000/sanctum/csrf-cookie'
+headers = {
+  'Content-Type': 'application/json',
+  'Accept': 'application/json'
+}
+
+response = requests.request('GET', url, headers=headers)
+response.json()</code></pre></div>
+
+</span>
+
+        <span id="example-responses-GETsanctum-csrf-cookie">
+    </span>
+        <span hidden id="execution-results-GETsanctum-csrf-cookie">
+    <blockquote>Received response<span
+        id="execution-response-status-GETsanctum-csrf-cookie"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-GETsanctum-csrf-cookie"
+                            style="max-height: 400px;"></code></pre>
+</span>
+        <span hidden id="execution-error-GETsanctum-csrf-cookie">
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-GETsanctum-csrf-cookie"></code></pre>
+</span>
+        <form autocomplete="off" data-authed="0"
+              data-hasfiles="0"
+              data-isarraybody="0"
+              data-method="GET"
+              data-path="sanctum/csrf-cookie"
+              id="form-GETsanctum-csrf-cookie"
+              onsubmit="event.preventDefault(); executeTryOut('GETsanctum-csrf-cookie', this);">
+            <h3>
+                Request&nbsp;&nbsp;&nbsp;
+            </h3>
+            <p>
+                <small class="badge badge-green">GET</small>
+                <b><code>sanctum/csrf-cookie</code></b>
+            </p>
+            <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+            <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+                &nbsp;
+                &nbsp;
+                <input data-component="header" data-endpoint="GETsanctum-csrf-cookie"
+                       name="Content-Type" style="display: none"
+                       type="text"
+                       value="application/json">
+                <br>
+                <p>Example: <code>application/json</code></p>
+            </div>
+            <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+                &nbsp;
+                &nbsp;
+                <input data-component="header" data-endpoint="GETsanctum-csrf-cookie"
+                       name="Accept" style="display: none"
+                       type="text"
+                       value="application/json">
+                <br>
+                <p>Example: <code>application/json</code></p>
+            </div>
+        </form>
+
+        <h2 id="endpoints-GETapi-users">Returns the current user instance with publishable data</h2>
+
+        <p>
+        </p>
+
+
+        <span id="example-requests-GETapi-users">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request GET \
+    --get "http://localhost:8000/api/users" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json"</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost:8000/api/users"
+);
+
+const headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+fetch(url, {
+    method: "GET",
+    headers,
+}).then(response =&gt; response.json());</code></pre></div>
+
+
+<div class="python-example">
+    <pre><code class="language-python">import requests
+import json
+
+url = 'http://localhost:8000/api/users'
+headers = {
+  'Content-Type': 'application/json',
+  'Accept': 'application/json'
+}
+
+response = requests.request('GET', url, headers=headers)
+response.json()</code></pre></div>
+
+</span>
+
+        <span id="example-responses-GETapi-users">
+    </span>
+        <span hidden id="execution-results-GETapi-users">
+    <blockquote>Received response<span
+        id="execution-response-status-GETapi-users"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-GETapi-users" style="max-height: 400px;"></code></pre>
+</span>
+        <span hidden id="execution-error-GETapi-users">
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-GETapi-users"></code></pre>
+</span>
+        <form autocomplete="off" data-authed="0"
+              data-hasfiles="0"
+              data-isarraybody="0"
+              data-method="GET"
+              data-path="api/users"
+              id="form-GETapi-users"
+              onsubmit="event.preventDefault(); executeTryOut('GETapi-users', this);">
+            <h3>
+                Request&nbsp;&nbsp;&nbsp;
+            </h3>
+            <p>
+                <small class="badge badge-green">GET</small>
+                <b><code>api/users</code></b>
+            </p>
+            <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+            <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+                &nbsp;
+                &nbsp;
+                <input data-component="header" data-endpoint="GETapi-users"
+                       name="Content-Type" style="display: none"
+                       type="text"
+                       value="application/json">
+                <br>
+                <p>Example: <code>application/json</code></p>
+            </div>
+            <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+                &nbsp;
+                &nbsp;
+                <input data-component="header" data-endpoint="GETapi-users"
+                       name="Accept" style="display: none"
+                       type="text"
+                       value="application/json">
+                <br>
+                <p>Example: <code>application/json</code></p>
+            </div>
+        </form>
+
+        <h2 id="endpoints-POSTapi-users-login">Handle the login of a pre-registered account via API, this method
+            forwards the login logic to the default
+            Fortify controller but adds a layer of indirection.</h2>
+
+        <p>
+        </p>
+
+        <p>The forwarded call is received and analyzed, if the login request was successful a JSON:API response is
+            created
+            with the newly logged-in user.
+            NOTE: The user is not authenticated in the current request, the user should be authenticated by subsequent
+            front-end requests.</p>
+        <p>If the login was not successful based on the exception type an appropriate JSON:API response is created and
+            returned to the client.</p>
+
+        <span id="example-requests-POSTapi-users-login">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request POST \
+    "http://localhost:8000/api/users/login" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json" \
+    --data "{
+    \"name\": \"quis\",
+    \"password\": \"k:\\/I=ArO%b4G5HCX&amp;b\"
+}"
+</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost:8000/api/users/login"
+);
+
+const headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+let body = {
+    "name": "quis",
+    "password": "k:\/I=ArO%b4G5HCX&amp;b"
+};
+
+fetch(url, {
+    method: "POST",
+    headers,
+    body: JSON.stringify(body),
+}).then(response =&gt; response.json());</code></pre></div>
+
+
+<div class="python-example">
+    <pre><code class="language-python">import requests
+import json
+
+url = 'http://localhost:8000/api/users/login'
+payload = {
+    "name": "quis",
+    "password": "k:\/I=ArO%b4G5HCX&amp;b"
+}
+headers = {
+  'Content-Type': 'application/json',
+  'Accept': 'application/json'
+}
+
+response = requests.request('POST', url, headers=headers, json=payload)
+response.json()</code></pre></div>
+
+</span>
+
+        <span id="example-responses-POSTapi-users-login">
+</span>
+        <span hidden id="execution-results-POSTapi-users-login">
+    <blockquote>Received response<span
+        id="execution-response-status-POSTapi-users-login"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-POSTapi-users-login" style="max-height: 400px;"></code></pre>
+</span>
+        <span hidden id="execution-error-POSTapi-users-login">
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-POSTapi-users-login"></code></pre>
+</span>
+        <form autocomplete="off" data-authed="0"
+              data-hasfiles="0"
+              data-isarraybody="0"
+              data-method="POST"
+              data-path="api/users/login"
+              id="form-POSTapi-users-login"
+              onsubmit="event.preventDefault(); executeTryOut('POSTapi-users-login', this);">
+            <h3>
+                Request&nbsp;&nbsp;&nbsp;
+            </h3>
+            <p>
+                <small class="badge badge-black">POST</small>
+                <b><code>api/users/login</code></b>
+            </p>
+            <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+            <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+                &nbsp;
+                &nbsp;
+                <input data-component="header" data-endpoint="POSTapi-users-login"
+                       name="Content-Type" style="display: none"
+                       type="text"
+                       value="application/json">
+                <br>
+                <p>Example: <code>application/json</code></p>
+            </div>
+            <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+                &nbsp;
+                &nbsp;
+                <input data-component="header" data-endpoint="POSTapi-users-login"
+                       name="Accept" style="display: none"
+                       type="text"
+                       value="application/json">
+                <br>
+                <p>Example: <code>application/json</code></p>
+            </div>
+            <h4 class="fancy-heading-panel"><b>Body Parameters</b></h4>
+            <div style=" padding-left: 28px;  clear: unset;">
+                <b style="line-height: 2;"><code>name</code></b>&nbsp;&nbsp;
+                <small>string</small>&nbsp;
+                &nbsp;
+                <input data-component="body" data-endpoint="POSTapi-users-login"
+                       name="name" style="display: none"
+                       type="text"
+                       value="quis">
+                <br>
+                <p>Example: <code>quis</code></p>
+            </div>
+            <div style=" padding-left: 28px;  clear: unset;">
+                <b style="line-height: 2;"><code>password</code></b>&nbsp;&nbsp;
+                <small>string</small>&nbsp;
+                &nbsp;
+                <input data-component="body" data-endpoint="POSTapi-users-login"
+                       name="password" style="display: none"
+                       type="text"
+                       value="k:/I=ArO%b4G5HCX&b">
+                <br>
+                <p>Example: <code>k:/I=ArO%b4G5HCX&amp;b</code></p>
+            </div>
+        </form>
+
+        <h2 id="endpoints-POSTapi-users-email-verify-request-new">Send a new email verification link once requested or
+            return the current user instance if already verified</h2>
+
+        <p>
+        </p>
+
+
+        <span id="example-requests-POSTapi-users-email-verify-request-new">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request POST \
+    "http://localhost:8000/api/users/email/verify/request-new" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json"</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost:8000/api/users/email/verify/request-new"
+);
+
+const headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+fetch(url, {
+    method: "POST",
+    headers,
+}).then(response =&gt; response.json());</code></pre></div>
+
+
+<div class="python-example">
+    <pre><code class="language-python">import requests
+import json
+
+url = 'http://localhost:8000/api/users/email/verify/request-new'
+headers = {
+  'Content-Type': 'application/json',
+  'Accept': 'application/json'
+}
+
+response = requests.request('POST', url, headers=headers)
+response.json()</code></pre></div>
+
+</span>
+
+        <span id="example-responses-POSTapi-users-email-verify-request-new">
+</span>
+        <span hidden id="execution-results-POSTapi-users-email-verify-request-new">
+    <blockquote>Received response<span
+        id="execution-response-status-POSTapi-users-email-verify-request-new"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-POSTapi-users-email-verify-request-new"
+                            style="max-height: 400px;"></code></pre>
+</span>
+        <span hidden id="execution-error-POSTapi-users-email-verify-request-new">
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-POSTapi-users-email-verify-request-new"></code></pre>
+</span>
+        <form autocomplete="off" data-authed="0"
+              data-hasfiles="0"
+              data-isarraybody="0"
+              data-method="POST"
+              data-path="api/users/email/verify/request-new"
+              id="form-POSTapi-users-email-verify-request-new"
+              onsubmit="event.preventDefault(); executeTryOut('POSTapi-users-email-verify-request-new', this);">
+            <h3>
+                Request&nbsp;&nbsp;&nbsp;
+            </h3>
+            <p>
+                <small class="badge badge-black">POST</small>
+                <b><code>api/users/email/verify/request-new</code></b>
+            </p>
+            <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+            <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+                &nbsp;
+                &nbsp;
+                <input data-component="header" data-endpoint="POSTapi-users-email-verify-request-new"
+                       name="Content-Type" style="display: none"
+                       type="text"
+                       value="application/json">
+                <br>
+                <p>Example: <code>application/json</code></p>
+            </div>
+            <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+                &nbsp;
+                &nbsp;
+                <input data-component="header" data-endpoint="POSTapi-users-email-verify-request-new"
+                       name="Accept" style="display: none"
+                       type="text"
+                       value="application/json">
+                <br>
+                <p>Example: <code>application/json</code></p>
+            </div>
+        </form>
+
+        <h2 id="endpoints-POSTapi-users-email-verify--id---hash-">Handle the email verification, forwarding the
+            verification call to Fortify&#039;s default controller</h2>
+
+        <p>
+        </p>
+
+        <p>The same result can be achieved by implementing the \Laravel\Fortify\Contracts\VerifyEmailResponse, anyway,
+            creating a new route we have changed the calling method from GET to POST</p>
+
+        <span id="example-requests-POSTapi-users-email-verify--id---hash-">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request POST \
+    "http://localhost:8000/api/users/email/verify/autem/quisquam" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json"</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost:8000/api/users/email/verify/autem/quisquam"
+);
+
+const headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+fetch(url, {
+    method: "POST",
+    headers,
+}).then(response =&gt; response.json());</code></pre></div>
+
+
+<div class="python-example">
+    <pre><code class="language-python">import requests
+import json
+
+url = 'http://localhost:8000/api/users/email/verify/autem/quisquam'
+headers = {
+  'Content-Type': 'application/json',
+  'Accept': 'application/json'
+}
+
+response = requests.request('POST', url, headers=headers)
+response.json()</code></pre></div>
+
+</span>
+
+        <span id="example-responses-POSTapi-users-email-verify--id---hash-">
+</span>
+        <span hidden id="execution-results-POSTapi-users-email-verify--id---hash-">
+    <blockquote>Received response<span
+        id="execution-response-status-POSTapi-users-email-verify--id---hash-"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-POSTapi-users-email-verify--id---hash-"
+                            style="max-height: 400px;"></code></pre>
+</span>
+        <span hidden id="execution-error-POSTapi-users-email-verify--id---hash-">
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-POSTapi-users-email-verify--id---hash-"></code></pre>
+</span>
+        <form autocomplete="off" data-authed="0"
+              data-hasfiles="0"
+              data-isarraybody="0"
+              data-method="POST"
+              data-path="api/users/email/verify/{id}/{hash}"
+              id="form-POSTapi-users-email-verify--id---hash-"
+              onsubmit="event.preventDefault(); executeTryOut('POSTapi-users-email-verify--id---hash-', this);">
+            <h3>
+                Request&nbsp;&nbsp;&nbsp;
+            </h3>
+            <p>
+                <small class="badge badge-black">POST</small>
+                <b><code>api/users/email/verify/{id}/{hash}</code></b>
+            </p>
+            <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+            <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+                &nbsp;
+                &nbsp;
+                <input data-component="header" data-endpoint="POSTapi-users-email-verify--id---hash-"
+                       name="Content-Type" style="display: none"
+                       type="text"
+                       value="application/json">
+                <br>
+                <p>Example: <code>application/json</code></p>
+            </div>
+            <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+                &nbsp;
+                &nbsp;
+                <input data-component="header" data-endpoint="POSTapi-users-email-verify--id---hash-"
+                       name="Accept" style="display: none"
+                       type="text"
+                       value="application/json">
+                <br>
+                <p>Example: <code>application/json</code></p>
+            </div>
+            <h4 class="fancy-heading-panel"><b>URL Parameters</b></h4>
+            <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>id</code></b>&nbsp;&nbsp;
+                <small>string</small>&nbsp;
+                &nbsp;
+                <input data-component="url" data-endpoint="POSTapi-users-email-verify--id---hash-"
+                       name="id" style="display: none"
+                       type="text"
+                       value="autem">
+                <br>
+                <p>The ID of the verify. Example: <code>autem</code></p>
+            </div>
+            <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>hash</code></b>&nbsp;&nbsp;
+                <small>string</small>&nbsp;
+                &nbsp;
+                <input data-component="url" data-endpoint="POSTapi-users-email-verify--id---hash-"
+                       name="hash" style="display: none"
+                       type="text"
+                       value="quisquam">
+                <br>
+                <p>Example: <code>quisquam</code></p>
+            </div>
+        </form>
+
+        <h2 id="endpoints-GETapi-events">Lists all events and return their representation, via Fractal&#039;s auto
+            `include` features via this endpoint
+            activities can be easily retrieved.</h2>
+
+        <p>
+        </p>
+
+        <p>EXAMPLE:
+            <code></p>
+        <endpoint> -> returns all events
+            <endpoint>?include=activities -> returns all events and activities for each event
+                </code>
+
+                <span id="example-requests-GETapi-events">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request GET \
+    --get "http://localhost:8000/api/events" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json"</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost:8000/api/events"
+);
+
+const headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+fetch(url, {
+    method: "GET",
+    headers,
+}).then(response =&gt; response.json());</code></pre></div>
+
+
+<div class="python-example">
+    <pre><code class="language-python">import requests
+import json
+
+url = 'http://localhost:8000/api/events'
+headers = {
+  'Content-Type': 'application/json',
+  'Accept': 'application/json'
+}
+
+response = requests.request('GET', url, headers=headers)
+response.json()</code></pre></div>
+
+</span>
+
+                <span id="example-responses-GETapi-events">
+    </span>
+                <span hidden id="execution-results-GETapi-events">
+    <blockquote>Received response<span
+        id="execution-response-status-GETapi-events"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-GETapi-events" style="max-height: 400px;"></code></pre>
+</span>
+                <span hidden id="execution-error-GETapi-events">
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-GETapi-events"></code></pre>
+</span>
+                <form autocomplete="off" data-authed="0"
+                      data-hasfiles="0"
+                      data-isarraybody="0"
+                      data-method="GET"
+                      data-path="api/events"
+                      id="form-GETapi-events"
+                      onsubmit="event.preventDefault(); executeTryOut('GETapi-events', this);">
+                    <h3>
+                        Request&nbsp;&nbsp;&nbsp;
+                    </h3>
+                    <p>
+                        <small class="badge badge-green">GET</small>
+                        <b><code>api/events</code></b>
+                    </p>
+                    <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                    <div style="padding-left: 28px; clear: unset;">
+                        <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+                        &nbsp;
+                        &nbsp;
+                        <input data-component="header" data-endpoint="GETapi-events"
+                               name="Content-Type" style="display: none"
+                               type="text"
+                               value="application/json">
+                        <br>
+                        <p>Example: <code>application/json</code></p>
+                    </div>
+                    <div style="padding-left: 28px; clear: unset;">
+                        <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+                        &nbsp;
+                        &nbsp;
+                        <input data-component="header" data-endpoint="GETapi-events"
+                               name="Accept" style="display: none"
+                               type="text"
+                               value="application/json">
+                        <br>
+                        <p>Example: <code>application/json</code></p>
+                    </div>
+                </form>
+
+                <h2 id="endpoints-POSTapi-events-reserve">Handle the reservation request of a user</h2>
+
+                <p>
+                </p>
+
+
+                <span id="example-requests-POSTapi-events-reserve">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request POST \
+    "http://localhost:8000/api/events/reserve" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json" \
+    --data "{
+    \"reservations\": \"ut\"
+}"
+</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost:8000/api/events/reserve"
+);
+
+const headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+let body = {
+    "reservations": "ut"
+};
+
+fetch(url, {
+    method: "POST",
+    headers,
+    body: JSON.stringify(body),
+}).then(response =&gt; response.json());</code></pre></div>
+
+
+<div class="python-example">
+    <pre><code class="language-python">import requests
+import json
+
+url = 'http://localhost:8000/api/events/reserve'
+payload = {
+    "reservations": "ut"
+}
+headers = {
+  'Content-Type': 'application/json',
+  'Accept': 'application/json'
+}
+
+response = requests.request('POST', url, headers=headers, json=payload)
+response.json()</code></pre></div>
+
+</span>
+
+                <span id="example-responses-POSTapi-events-reserve">
+</span>
+                <span hidden id="execution-results-POSTapi-events-reserve">
+    <blockquote>Received response<span
+        id="execution-response-status-POSTapi-events-reserve"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-POSTapi-events-reserve"
+                            style="max-height: 400px;"></code></pre>
+</span>
+                <span hidden id="execution-error-POSTapi-events-reserve">
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-POSTapi-events-reserve"></code></pre>
+</span>
+                <form autocomplete="off" data-authed="0"
+                      data-hasfiles="0"
+                      data-isarraybody="0"
+                      data-method="POST"
+                      data-path="api/events/reserve"
+                      id="form-POSTapi-events-reserve"
+                      onsubmit="event.preventDefault(); executeTryOut('POSTapi-events-reserve', this);">
+                    <h3>
+                        Request&nbsp;&nbsp;&nbsp;
+                    </h3>
+                    <p>
+                        <small class="badge badge-black">POST</small>
+                        <b><code>api/events/reserve</code></b>
+                    </p>
+                    <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                    <div style="padding-left: 28px; clear: unset;">
+                        <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+                        &nbsp;
+                        &nbsp;
+                        <input data-component="header" data-endpoint="POSTapi-events-reserve"
+                               name="Content-Type" style="display: none"
+                               type="text"
+                               value="application/json">
+                        <br>
+                        <p>Example: <code>application/json</code></p>
+                    </div>
+                    <div style="padding-left: 28px; clear: unset;">
+                        <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+                        &nbsp;
+                        &nbsp;
+                        <input data-component="header" data-endpoint="POSTapi-events-reserve"
+                               name="Accept" style="display: none"
+                               type="text"
+                               value="application/json">
+                        <br>
+                        <p>Example: <code>application/json</code></p>
+                    </div>
+                    <h4 class="fancy-heading-panel"><b>Body Parameters</b></h4>
+                    <div style=" padding-left: 28px;  clear: unset;">
+                        <details>
+                            <summary style="padding-bottom: 10px;">
+                                <b style="line-height: 2;"><code>reservations</code></b>&nbsp;&nbsp;
+                                <small>string[]</small>&nbsp;
+                                &nbsp;
+                                <br>
+                                <p>This field must contain 0 items. Example: <code>ut</code></p>
+                            </summary>
+                            <div style="margin-left: 14px; clear: unset;">
+                                <b style="line-height: 2;"><code>date</code></b>&nbsp;&nbsp;
+                                <small>string</small>&nbsp;
+                                &nbsp;
+                                <input data-component="body" data-endpoint="POSTapi-events-reserve"
+                                       name="reservations.0.date" style="display: none"
+                                       type="text"
+                                       value="17/02/2023">
+                                <br>
+                                <p>Must be a valid date in the format <code>d/m/Y</code>. Example:
+                                    <code>17/02/2023</code></p>
+                            </div>
+                            <div style="margin-left: 14px; clear: unset;">
+                                <b style="line-height: 2;"><code>location</code></b>&nbsp;&nbsp;
+                                <small>string</small>&nbsp;
+                                &nbsp;
+                                <input data-component="body" data-endpoint="POSTapi-events-reserve"
+                                       name="reservations.0.location" style="display: none"
+                                       type="text"
+                                       value="et">
+                                <br>
+                                <p>Example: <code>et</code></p>
+                            </div>
+                            <div style="margin-left: 14px; clear: unset;">
+                                <b style="line-height: 2;"><code>absent</code></b>&nbsp;&nbsp;
+                                <small>boolean</small>&nbsp;
+                                <i>optional</i> &nbsp;
+                                <label data-endpoint="POSTapi-events-reserve" style="display: none">
+                                    <input data-component="body" data-endpoint="POSTapi-events-reserve"
+                                           name="reservations.0.absent"
+                                           type="radio"
+                                           value="true">
+                                    <code>true</code>
+                                </label>
+                                <label data-endpoint="POSTapi-events-reserve" style="display: none">
+                                    <input data-component="body" data-endpoint="POSTapi-events-reserve"
+                                           name="reservations.0.absent"
+                                           type="radio"
+                                           value="false">
+                                    <code>false</code>
+                                </label>
+                                <br>
+                                <p>This field is required when <code>reservations.*.activity_reservations</code> is not
+                                    present. Example: <code>false</code></p>
+                            </div>
+                            <div style="margin-left: 14px; clear: unset;">
+                                <b style="line-height: 2;"><code>activity_reservations</code></b>&nbsp;&nbsp;
+                                <small>string[]</small>&nbsp;
+                                <i>optional</i> &nbsp;
+                                <input data-component="body" data-endpoint="POSTapi-events-reserve"
+                                       name="reservations.0.activity_reservations[0]"
+                                       style="display: none"
+                                       type="text">
+                                <input data-component="body" data-endpoint="POSTapi-events-reserve"
+                                       name="reservations.0.activity_reservations[1]"
+                                       style="display: none"
+                                       type="text">
+                                <br>
+
+                            </div>
+                        </details>
+                    </div>
+                </form>
+
+
+    </div>
+    <div class="dark-box">
+        <div class="lang-selector">
+            <button class="lang-button" data-language-name="bash" type="button">bash</button>
+            <button class="lang-button" data-language-name="javascript" type="button">javascript</button>
+            <button class="lang-button" data-language-name="python" type="button">python</button>
+        </div>
+    </div>
+</div>
+</body>
+</html>

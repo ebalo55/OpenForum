@@ -1,7 +1,7 @@
 <?php
 
-use App\Http\Controllers\Api\EventController;
 use App\Enum\Permissions\Classes\Event as EventPermissions;
+use App\Http\Controllers\Api\EventController;
 
 Route::prefix("events")->group(
     function() {
@@ -12,7 +12,7 @@ Route::prefix("events")->group(
             [
                 pack_abilities_permissions(EventPermissions::READ),
             ],
-        )->name("event.index");
+        )->name("api.events.index");
 
         Route::post(
             "reserve",
@@ -21,6 +21,6 @@ Route::prefix("events")->group(
             [
                 pack_abilities_permissions(EventPermissions::RESERVE),
             ],
-        )->name("event.reserve");
+        )->name("api.events.reserve");
     },
 );

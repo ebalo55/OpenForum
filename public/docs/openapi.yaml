@@ -1,0 +1,221 @@
+openapi: 3.0.3
+info:
+  title: 'Student Forum - Administrative Backend'
+  description: ''
+  version: 1.0.0
+servers:
+  - url: 'http://localhost:8000'
+paths:
+  /sanctum/csrf-cookie:
+    get:
+      summary: 'Return an empty response simply to trigger the storage of the CSRF cookie in the browser.'
+      operationId: returnAnEmptyResponseSimplyToTriggerTheStorageOfTheCSRFCookieInTheBrowser
+      description: ''
+      parameters:
+        - in: header
+          name: Content-Type
+          description: ''
+          example: application/json
+          schema:
+            type: string
+        - in: header
+          name: Accept
+          description: ''
+          example: application/json
+          schema:
+            type: string
+      responses: { }
+      tags:
+        - Endpoints
+      security: [ ]
+  /api/users:
+    get:
+      summary: 'Returns the current user instance with publishable data'
+      operationId: returnsTheCurrentUserInstanceWithPublishableData
+      description: ''
+      parameters:
+        - in: header
+          name: Content-Type
+          description: ''
+          example: application/json
+          schema:
+            type: string
+        - in: header
+          name: Accept
+          description: ''
+          example: application/json
+          schema:
+            type: string
+      responses: { }
+      tags:
+        - Endpoints
+      security: [ ]
+  /api/users/login:
+    post:
+      summary: "Handle the login of a pre-registered account via API, this method forwards the login logic to the default\nFortify controller but adds a layer of indirection."
+      operationId: handleTheLoginOfAPreRegisteredAccountViaAPIThisMethodForwardsTheLoginLogicToTheDefaultFortifyControllerButAddsALayerOfIndirection
+      description: "The forwarded call is received and analyzed, if the login request was successful a JSON:API response is created\nwith the newly logged-in user.\nNOTE: The user is not authenticated in the current request, the user should be authenticated by subsequent\n     front-end requests.\n\nIf the login was not successful based on the exception type an appropriate JSON:API response is created and\nreturned to the client."
+      parameters:
+        - in: header
+          name: Content-Type
+          description: ''
+          example: application/json
+          schema:
+            type: string
+        - in: header
+          name: Accept
+          description: ''
+          example: application/json
+          schema:
+            type: string
+      responses: { }
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: ''
+                  example: quis
+                password:
+                  type: string
+                  description: ''
+                  example: 'k:/I=ArO%b4G5HCX&b'
+              required:
+                - name
+                - password
+      security: [ ]
+  /api/users/email/verify/request-new:
+    post:
+      summary: 'Send a new email verification link once requested or return the current user instance if already verified'
+      operationId: sendANewEmailVerificationLinkOnceRequestedOrReturnTheCurrentUserInstanceIfAlreadyVerified
+      description: ''
+      parameters:
+        - in: header
+          name: Content-Type
+          description: ''
+          example: application/json
+          schema:
+            type: string
+        - in: header
+          name: Accept
+          description: ''
+          example: application/json
+          schema:
+            type: string
+      responses: { }
+      tags:
+        - Endpoints
+      security: [ ]
+  '/api/users/email/verify/{id}/{hash}':
+    post:
+      summary: "Handle the email verification, forwarding the verification call to Fortify's default controller"
+      operationId: handleTheEmailVerificationForwardingTheVerificationCallToFortifysDefaultController
+      description: "The same result can be achieved by implementing the \\Laravel\\Fortify\\Contracts\\VerifyEmailResponse, anyway,\ncreating a new route we have changed the calling method from GET to POST"
+      parameters:
+        - in: header
+          name: Content-Type
+          description: ''
+          example: application/json
+          schema:
+            type: string
+        - in: header
+          name: Accept
+          description: ''
+          example: application/json
+          schema:
+            type: string
+      responses: { }
+      tags:
+        - Endpoints
+      security: [ ]
+    parameters:
+      - in: path
+        name: id
+        description: 'The ID of the verify.'
+        example: autem
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: hash
+        description: ''
+        example: quisquam
+        required: true
+        schema:
+          type: string
+  /api/events:
+    get:
+      summary: "Lists all events and return their representation, via Fractal's auto `include` features via this endpoint\nactivities can be easily retrieved."
+      operationId: listsAllEventsAndReturnTheirRepresentationViaFractalsAutoincludeFeaturesViaThisEndpointactivitiesCanBeEasilyRetrieved
+      description: "EXAMPLE:\n<code>\n     <endpoint> -> returns all events\n     <endpoint>?include=activities -> returns all events and activities for each event\n</code>"
+      parameters:
+        - in: header
+          name: Content-Type
+          description: ''
+          example: application/json
+          schema:
+            type: string
+        - in: header
+          name: Accept
+          description: ''
+          example: application/json
+          schema:
+            type: string
+      responses: { }
+      tags:
+        - Endpoints
+      security: [ ]
+  /api/events/reserve:
+    post:
+      summary: 'Handle the reservation request of a user'
+      operationId: handleTheReservationRequestOfAUser
+      description: ''
+      parameters:
+        - in: header
+          name: Content-Type
+          description: ''
+          example: application/json
+          schema:
+            type: string
+        - in: header
+          name: Accept
+          description: ''
+          example: application/json
+          schema:
+            type: string
+      responses: { }
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                reservations:
+                  type: array
+                  description: 'This field must contain 0 items.'
+                  example: ut
+                  items:
+                    type: string
+              required:
+                - reservations
+      security: [ ]
+tags:
+  - name: Endpoints
+    description: ''
+components:
+  securitySchemes:
+    default:
+      type: http
+      scheme: bearer
+      description: ''
+security:
+  - default: [ ]

@@ -13,10 +13,6 @@ use App\Service\LivewireBannerService;
 use App\Service\SettingsService;
 use App\Service\UserService;
 use App\Transformers\NullTransformer;
-use Illuminate\Auth\Notifications\VerifyEmail;
-use Illuminate\Support\Carbon;
-use Illuminate\Support\Facades\Config;
-use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Vite;
 use Illuminate\Support\ServiceProvider;
 use Laravel\Sanctum\Sanctum;
@@ -68,22 +64,6 @@ class AppServiceProvider extends ServiceProvider {
         Vite::macro(
             'image',
             fn($asset) => Vite::asset("resources/assets/images/{$asset}"),
-        );
-
-        VerifyEmail::createUrlUsing(
-            fn(User $notifiable) => URL::temporarySignedRoute(
-                'verification.verify',
-                Carbon::now()->addMinutes(
-                    Config::get(
-                        'auth.verification.expire',
-                        60,
-                    ),
-                ),
-                [
-                    'id' => $notifiable->prefixed_id,
-                    'hash' => sha1($notifiable->getEmailForVerification()),
-                ],
-            ),
         );
     }
 

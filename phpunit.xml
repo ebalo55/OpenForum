@@ -16,9 +16,6 @@
         <include>
             <directory suffix=".php">./app</directory>
         </include>
-        <exclude>
-            <file>./app/Helpers/format.php</file>
-        </exclude>
     </coverage>
     <php>
         <env name="APP_ENV" value="testing"/>

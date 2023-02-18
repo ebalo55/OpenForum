@@ -40,6 +40,7 @@ class ReservationTransformer extends TransformerAbstract {
         return $this->item(
             $reservation->activity,
             new ActivityTransformer(),
+            "activity",
         );
     }
 
@@ -57,6 +58,7 @@ class ReservationTransformer extends TransformerAbstract {
         return $this->item(
             $reservation->eventDay,
             new EventTransformer(),
+            "event_day",
         );
     }
 
@@ -74,6 +76,7 @@ class ReservationTransformer extends TransformerAbstract {
         return $this->item(
             $reservation->user,
             new UserTransformer(),
+            "user",
         );
     }
 

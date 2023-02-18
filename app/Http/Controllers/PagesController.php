@@ -17,7 +17,8 @@ class PagesController extends Controller {
             "https://" .
             app(GeneralSettings::class)->front_end_domain .
             config("student-forum.front_end_email_verification_path") .
-            "?id=$id&hash=$hash&signature=" . $request->get("signature") . "&expires=" . $request->get("expires"),
+            "?id=$id&hash=$hash&signature=" . $request->get("signature")
+            . "&expires=" . $request->get("expires"),
         );
     }
 

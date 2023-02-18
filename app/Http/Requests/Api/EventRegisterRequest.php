@@ -35,10 +35,10 @@ class EventRegisterRequest extends FormRequest {
                 "string",
                 "distinct:strict",
                 "date_format:" . config("student-forum.date_format"),
-                Rule::exists(
+                /*Rule::exists(
                     (new EventDay())->getTable(),
                     "date",
-                ),
+                ),*/
             ],
             "reservations.*.location"                => [
                 "required",

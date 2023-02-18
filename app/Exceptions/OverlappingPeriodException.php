@@ -10,7 +10,7 @@ class OverlappingPeriodException extends HttpException {
     function __construct() {
         parent::__construct(
             statusCode: Response::HTTP_CONFLICT,
-            message:    "One or more activities overlap, check your preferences and try again",
+            message:    "One or more activities overlap, check your choices and try again",
             code:       config("student-forum.exception_codes." . static::class),
         );
     }

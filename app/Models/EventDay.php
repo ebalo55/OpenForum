@@ -66,7 +66,7 @@ class EventDay extends Model implements ReservableModelContract {
 	 */
 	public
 	function maxReservations(): int {
-		return $this->max_reservation;
+		return $this->max_reservation ?? 0;
 	}
 
 	/**
@@ -92,7 +92,7 @@ class EventDay extends Model implements ReservableModelContract {
 	protected
 	function activitiesCount(): Attribute {
 		return Attribute::make(
-			get: fn(?int $value) => $value ?? $this->activities_count = $this->activities()->count(),
+            get: fn(?int $value) => $value ?? $this->loadCount("activities")->activities_count,
 		);
 	}
 
@@ -104,7 +104,7 @@ class EventDay extends Model implements ReservableModelContract {
 	protected
 	function reservationsCount(): Attribute {
 		return Attribute::make(
-			get: fn(?int $value) => $value ?? $this->reservations_count = $this->reservations()->count(),
+            get: fn(?int $value) => $value ?? $this->loadCount("reservations")->reservations_count,
 		);
 	}
 }

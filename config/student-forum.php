@@ -28,5 +28,5 @@ return [
     "date_format"     => "d/m/Y",
     "time_format"     => "H:i:s",
 
-    "front_end_email_verification_path" => "/verification/email/",
+    "front_end_email_verification_path" => "/verification/email",
 ];
