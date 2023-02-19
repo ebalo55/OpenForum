@@ -1,0 +1,134 @@
+{
+    "data": [
+        {
+            "type": "event_day",
+            "id": "evt_fe42d9d6092f4cde86d67e4fca313a49",
+            "attributes": {
+                "available_reservations": 9,
+                "date": "01\/01\/2023",
+                "location": "Smithfort"
+            },
+            "relationships": {
+                "reservations": {
+                    "data": [
+                        {
+                            "type": "reservation",
+                            "id": "resrv_fac88ea6628a466f8f3ff4464c12130c"
+                        }
+                    ]
+                },
+                "activities": {
+                    "data": [
+                        {
+                            "type": "activity",
+                            "id": "act_04a71df315ec4fe8b0ab555200c83935"
+                        },
+                        {
+                            "type": "activity",
+                            "id": "act_07972666e17a4ac69de2f152fd75e03d"
+                        }
+                    ]
+                }
+            }
+        },
+        {
+            "type": "event_day",
+            "id": "evt_316046ad43bc4750b1ce65f8a09658f1",
+            "attributes": {
+                "available_reservations": 9,
+                "date": "02\/02\/2023",
+                "location": "Windlerstad"
+            },
+            "relationships": {
+                "reservations": {
+                    "data": [
+                        {
+                            "type": "reservation",
+                            "id": "resrv_f85e6c770ec2473cb9047eeed2bfc2c2"
+                        }
+                    ]
+                },
+                "activities": {
+                    "data": [
+                        {
+                            "type": "activity",
+                            "id": "act_b9f4d227bcfb49f79e1481e3f2e7d893"
+                        },
+                        {
+                            "type": "activity",
+                            "id": "act_5c2eefd3bf814837b81eba07769121d3"
+                        }
+                    ]
+                }
+            }
+        }
+    ],
+    "included": [
+        {
+            "type": "activity",
+            "id": "act_04a71df315ec4fe8b0ab555200c83935",
+            "attributes": {
+                "starting_at": "12:30:00",
+                "ending_at": "14:23:23",
+                "title": "Fuga et dignissimos accusamus quibusdam vel.",
+                "available_reservations": 0,
+                "description": "Compiled description markdown"
+            }
+        },
+        {
+            "type": "activity",
+            "id": "act_07972666e17a4ac69de2f152fd75e03d",
+            "attributes": {
+                "starting_at": "15:30:00",
+                "ending_at": "06:02:26",
+                "title": "Maiores et laborum enim dolor repellendus et.",
+                "available_reservations": 0,
+                "description": "Compiled description markdown"
+            }
+        },
+        {
+            "type": "reservation",
+            "id": "resrv_fac88ea6628a466f8f3ff4464c12130c",
+            "attributes": {
+                "user": "usr_7fb676db17324097a29eefcfbd611cf1",
+                "event": "evt_fe42d9d6092f4cde86d67e4fca313a49",
+                "activity": "act_875df90f7fb84c6ea32fffb21d200ab4"
+            }
+        },
+        {
+            "type": "activity",
+            "id": "act_b9f4d227bcfb49f79e1481e3f2e7d893",
+            "attributes": {
+                "starting_at": "12:30:00",
+                "ending_at": "21:34:51",
+                "title": "Ea eum cupiditate eos.",
+                "available_reservations": 0,
+                "description": "Compiled description markdown"
+            }
+        },
+        {
+            "type": "activity",
+            "id": "act_5c2eefd3bf814837b81eba07769121d3",
+            "attributes": {
+                "starting_at": "15:30:00",
+                "ending_at": "15:52:24",
+                "title": "Dolorum non dolorem deleniti ullam.",
+                "available_reservations": 0,
+                "description": "Compiled description markdown"
+            }
+        },
+        {
+            "type": "reservation",
+            "id": "resrv_f85e6c770ec2473cb9047eeed2bfc2c2",
+            "attributes": {
+                "user": "usr_119167e659424661bb98b5402281ec17",
+                "event": "evt_316046ad43bc4750b1ce65f8a09658f1",
+                "activity": "act_1da71ee2d61d4851bbe641ed6bd1a13c"
+            }
+        }
+    ],
+    "meta": {
+        "success": true,
+        "errors": null
+    }
+}

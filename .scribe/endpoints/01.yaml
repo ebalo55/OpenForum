@@ -14,7 +14,7 @@ endpoints:
         Activities related to the management of the currently authenticated user
       subgroup: ''
       subgroupDescription: ''
-      title: 'Get the current user instance'
+      title: 'Current user'
       description: |-
         Returns a censored representation of the current user instance.
         The response will always include the plain representation of the token used to authenticate the user
@@ -248,15 +248,15 @@ endpoints:
         custom: []
       'meta.errors[].message':
         name: 'meta.errors[].message'
-        description: 'The ending error message.'
+        description: 'The error message(s).'
         required: false
         example: null
-        type: string
+        type: 'string|string[]'
         custom: []
     auth:
       - headers
       - Authorization
-      - 'Bearer 4d6831aDfbPva5VeZg6ckEh'
+      - 'Bearer ZcgP8Edh5v1463ae6fabkVD'
     controller: null
     method: null
     route: null
@@ -272,56 +272,299 @@ endpoints:
         Activities related to the management of the currently authenticated user
       subgroup: ''
       subgroupDescription: ''
-      title: |-
+      title: Login
+      description: |-
         Handle the login of a pre-registered account via API, this method forwards the login logic to the default
         Fortify controller but adds a layer of indirection.
-      description: |-
+
         The forwarded call is received and analyzed, if the login request was successful a JSON:API response is created
         with the newly logged-in user.
-        NOTE: The user is not authenticated in the current request, the user should be authenticated by subsequent
-             front-end requests.
+
+        <aside class="notice">
+        Note that the user is not authenticated in the current request, the user should be authenticated by subsequent
+        front-end requests.
+        </aside>
 
         If the login was not successful based on the exception type an appropriate JSON:API response is created and
         returned to the client.
       authenticated: true
-      custom: []
+      custom: [ ]
     headers:
       Authorization: 'Bearer {YOUR_AUTH_KEY}'
       Content-Type: application/json
       Accept: application/json
-    urlParameters: []
-    cleanUrlParameters: []
-    queryParameters: []
-    cleanQueryParameters: []
+    urlParameters: [ ]
+    cleanUrlParameters: [ ]
+    queryParameters:
+      includes:
+        name: includes
+        description: 'Comma separated list of user relation to include'
+        required: false
+        example: reservations
+        type: string
+        custom: [ ]
+    cleanQueryParameters:
+      includes: reservations
     bodyParameters:
       name:
         name: name
         description: ''
         required: true
-        example: quod
+        example: beatae
         type: string
-        custom: []
+        custom: [ ]
       password:
         name: password
         description: ''
         required: true
-        example: 'H0=z]-"ewh7^AI;cD*'
+        example: '+V90BtZ`A;V]'
         type: string
-        custom: []
+        custom: [ ]
     cleanBodyParameters:
-      name: quod
-      password: 'H0=z]-"ewh7^AI;cD*'
-    fileParameters: []
-    responses: []
-    responseFields: []
+      name: beatae
+      password: '+V90BtZ`A;V]'
+    fileParameters: [ ]
+    responses:
+      - status: 200
+        content: |
+          {
+              "data": {
+                  "type": "user",
+                  "id": "usr_10833034c4dd47849af8ed8ea4a68a1b",
+                  "attributes": {
+                      "name": "Devonte Goldner",
+                      "email": "imo********************",
+                      "email_verified_at": "18\/02\/2023 11:05:51",
+                      "token": "2|aFGHN9Ox9Uc42XfLqrXlY2xAzNwhQLDb7kIf3rjN"
+                  },
+                  "relationships": {
+                      "reservations": {
+                          "data": [
+                              {
+                                  "type": "reservation",
+                                  "id": "resrv_1e302893c3cd4dcd8c7810ef1a07c180"
+                              }
+                          ]
+                      }
+                  }
+              },
+              "included": [
+                  {
+                      "type": "reservation",
+                      "id": "resrv_1e302893c3cd4dcd8c7810ef1a07c180",
+                      "attributes": {
+                          "user": "usr_10833034c4dd47849af8ed8ea4a68a1b",
+                          "event": "evt_d7e868f3083344f6bec2548db7979d6b",
+                          "activity": "act_4c0158279c0148439fb285ebc7ad8c12"
+                      }
+                  }
+              ],
+              "meta": {
+                  "success": true,
+                  "errors": null
+              }
+          }
+        headers: [ ]
+        description: 'Login successful'
+        custom: [ ]
+      - status: 422
+        content: |
+          {
+              "data": [],
+              "meta": {
+                  "success": false,
+                  "errors": [
+                      {
+                          "reference_code": 0,
+                          "field": "name",
+                          "message": [
+                              "These credentials do not match our records."
+                          ]
+                      }
+                  ]
+              }
+          }
+        headers: [ ]
+        description: 'Login error'
+        custom: [ ]
+    responseFields:
+      data:
+        name: data
+        description: 'Container for resource.'
+        required: false
+        example: null
+        type: object
+        custom: [ ]
+      data.type:
+        name: data.type
+        description: 'Resource return type as of JSON:API standard, always equal to `user`.'
+        required: false
+        example: null
+        type: string
+        custom: [ ]
+      data.id:
+        name: data.id
+        description: 'Resource unique identifier, always starts with `usr_`.'
+        required: false
+        example: null
+        type: string
+        custom: [ ]
+      data.attributes:
+        name: data.attributes
+        description: 'Resource attributes container.'
+        required: false
+        example: null
+        type: object
+        custom: [ ]
+      data.attributes.name:
+        name: data.attributes.name
+        description: 'Current user full name.'
+        required: false
+        example: null
+        type: string
+        custom: [ ]
+      data.attributes.email:
+        name: data.attributes.email
+        description: 'Current user censored email.'
+        required: false
+        example: null
+        type: string
+        custom: [ ]
+      data.attributes.email_verified_at:
+        name: data.attributes.email_verified_at
+        description: |-
+          Email verification datetime or null, if this field is
+                         null for a given user he won't be allowed to reserve any spot.
+        required: false
+        example: null
+        type: '?string'
+        custom: [ ]
+      data.attributes.token:
+        name: data.attributes.token
+        description: 'Current user authentication token.'
+        required: false
+        example: null
+        type: string
+        custom: [ ]
+      data.relationships:
+        name: data.relationships
+        description: 'Wrapper for included relationships.'
+        required: false
+        example: null
+        type: '?object'
+        custom: [ ]
+      data.relationships.reservations:
+        name: data.relationships.reservations
+        description: 'Wrapper for reservation identification data.'
+        required: false
+        example: null
+        type: '?object'
+        custom: [ ]
+      data.relationships.reservations.data:
+        name: data.relationships.reservations.data
+        description: 'Reservations identifier data container.'
+        required: false
+        example: null
+        type: 'object[]'
+        custom: [ ]
+      'data.relationships.reservations.data[].type':
+        name: 'data.relationships.reservations.data[].type'
+        description: |-
+          Resource return type as of JSON:API standard,
+                         always equal to `reservation`
+        required: false
+        example: null
+        type: string
+        custom: [ ]
+      'data.relationships.reservations.data[].id':
+        name: 'data.relationships.reservations.data[].id'
+        description: |-
+          Resource unique identifier, always starts with
+                         `resrv_`.
+        required: false
+        example: null
+        type: string
+        custom: [ ]
+      included:
+        name: included
+        description: 'Container for included relationships.'
+        required: false
+        example: null
+        type: '?object[]'
+        custom: [ ]
+      'included[].type':
+        name: 'included[].type'
+        description: 'Resource return type as of JSON:API standard.'
+        required: false
+        example: null
+        type: string
+        custom: [ ]
+      'included[].id':
+        name: 'included[].id'
+        description: 'Resource unique identifier.'
+        required: false
+        example: null
+        type: string
+        custom: [ ]
+      'included[].attributes':
+        name: 'included[].attributes'
+        description: 'Resource attributes container.'
+        required: false
+        example: null
+        type: object
+        custom: [ ]
+      meta:
+        name: meta
+        description: 'Container for metadata.'
+        required: false
+        example: null
+        type: object
+        custom: [ ]
+      meta.success:
+        name: meta.success
+        description: 'Response status summary, if `true` the call was successful.'
+        required: false
+        example: null
+        type: boolean
+        custom: [ ]
+      meta.errors:
+        name: meta.errors
+        description: 'null|object[] If one or more errors occur this field will be filled with errors.'
+        required: false
+        example: null
+        type: ''
+        custom: [ ]
+      'meta.errors[].reference_code':
+        name: 'meta.errors[].reference_code'
+        description: 'Error reference code for easy front-end retrieval.'
+        required: false
+        example: null
+        type: integer
+        custom: [ ]
+      'meta.errors[].field':
+        name: 'meta.errors[].field'
+        description: |-
+          null|string If an error occur linked to a form field this field will handle
+                         the field name the error references to.
+        required: false
+        example: null
+        type: ''
+        custom: [ ]
+      'meta.errors[].message':
+        name: 'meta.errors[].message'
+        description: 'The error message(s).'
+        required: false
+        example: null
+        type: 'string|string[]'
+        custom: [ ]
     auth:
       - headers
       - Authorization
-      - 'Bearer c6DfE38d1eV5aZgv6bh4Pak'
+      - 'Bearer vEh3aZf65e46gbcPDkV1a8d'
     controller: null
     method: null
     route: null
-    custom: []
+    custom: [ ]
   -
     httpMethods:
       - POST
@@ -333,31 +576,254 @@ endpoints:
         Activities related to the management of the currently authenticated user
       subgroup: ''
       subgroupDescription: ''
-      title: 'Send a new email verification link once requested or return the current user instance if already verified'
-      description: ''
+      title: 'Request new verification email'
+      description: 'Send a new email verification link once requested or return the current user instance if already verified'
       authenticated: true
-      custom: []
+      custom: [ ]
     headers:
       Authorization: 'Bearer {YOUR_AUTH_KEY}'
       Content-Type: application/json
       Accept: application/json
-    urlParameters: []
-    cleanUrlParameters: []
-    queryParameters: []
-    cleanQueryParameters: []
-    bodyParameters: []
-    cleanBodyParameters: []
-    fileParameters: []
-    responses: []
-    responseFields: []
+    urlParameters: [ ]
+    cleanUrlParameters: [ ]
+    queryParameters: [ ]
+    cleanQueryParameters: [ ]
+    bodyParameters: [ ]
+    cleanBodyParameters: [ ]
+    fileParameters: [ ]
+    responses:
+      - status: 200
+        content: |
+          {
+              "data": {
+                  "type": "user",
+                  "id": "usr_10833034c4dd47849af8ed8ea4a68a1b",
+                  "attributes": {
+                      "name": "Devonte Goldner",
+                      "email": "imo********************",
+                      "email_verified_at": "18\/02\/2023 11:05:51",
+                      "token": "2|aFGHN9Ox9Uc42XfLqrXlY2xAzNwhQLDb7kIf3rjN"
+                  },
+                  "relationships": {
+                      "reservations": {
+                          "data": [
+                              {
+                                  "type": "reservation",
+                                  "id": "resrv_1e302893c3cd4dcd8c7810ef1a07c180"
+                              }
+                          ]
+                      }
+                  }
+              },
+              "included": [
+                  {
+                      "type": "reservation",
+                      "id": "resrv_1e302893c3cd4dcd8c7810ef1a07c180",
+                      "attributes": {
+                          "user": "usr_10833034c4dd47849af8ed8ea4a68a1b",
+                          "event": "evt_d7e868f3083344f6bec2548db7979d6b",
+                          "activity": "act_4c0158279c0148439fb285ebc7ad8c12"
+                      }
+                  }
+              ],
+              "meta": {
+                  "success": true,
+                  "errors": null
+              }
+          }
+        headers: [ ]
+        description: 'Email already verified'
+        custom: [ ]
+      - status: 200
+        content: |
+          {
+              "data": [],
+              "meta": {
+                  "success": true,
+                  "errors": null
+              }
+          }
+        headers: [ ]
+        description: 'Verification email sent'
+        custom: [ ]
+    responseFields:
+      data:
+        name: data
+        description: 'Container for resource.'
+        required: false
+        example: null
+        type: object
+        custom: [ ]
+      data.type:
+        name: data.type
+        description: 'Resource return type as of JSON:API standard, always equal to `user`.'
+        required: false
+        example: null
+        type: string
+        custom: [ ]
+      data.id:
+        name: data.id
+        description: 'Resource unique identifier, always starts with `usr_`.'
+        required: false
+        example: null
+        type: string
+        custom: [ ]
+      data.attributes:
+        name: data.attributes
+        description: 'Resource attributes container.'
+        required: false
+        example: null
+        type: object
+        custom: [ ]
+      data.attributes.name:
+        name: data.attributes.name
+        description: 'Current user full name.'
+        required: false
+        example: null
+        type: string
+        custom: [ ]
+      data.attributes.email:
+        name: data.attributes.email
+        description: 'Current user censored email.'
+        required: false
+        example: null
+        type: string
+        custom: [ ]
+      data.attributes.email_verified_at:
+        name: data.attributes.email_verified_at
+        description: |-
+          Email verification datetime or null, if this field is
+                         null for a given user he won't be allowed to reserve any spot.
+        required: false
+        example: null
+        type: '?string'
+        custom: [ ]
+      data.attributes.token:
+        name: data.attributes.token
+        description: 'Current user authentication token.'
+        required: false
+        example: null
+        type: string
+        custom: [ ]
+      data.relationships:
+        name: data.relationships
+        description: 'Wrapper for included relationships.'
+        required: false
+        example: null
+        type: '?object'
+        custom: [ ]
+      data.relationships.reservations:
+        name: data.relationships.reservations
+        description: 'Wrapper for reservation identification data.'
+        required: false
+        example: null
+        type: '?object'
+        custom: [ ]
+      data.relationships.reservations.data:
+        name: data.relationships.reservations.data
+        description: 'Reservations identifier data container.'
+        required: false
+        example: null
+        type: 'object[]'
+        custom: [ ]
+      'data.relationships.reservations.data[].type':
+        name: 'data.relationships.reservations.data[].type'
+        description: |-
+          Resource return type as of JSON:API standard,
+                         always equal to `reservation`
+        required: false
+        example: null
+        type: string
+        custom: [ ]
+      'data.relationships.reservations.data[].id':
+        name: 'data.relationships.reservations.data[].id'
+        description: |-
+          Resource unique identifier, always starts with
+                         `resrv_`.
+        required: false
+        example: null
+        type: string
+        custom: [ ]
+      included:
+        name: included
+        description: 'Container for included relationships.'
+        required: false
+        example: null
+        type: '?object[]'
+        custom: [ ]
+      'included[].type':
+        name: 'included[].type'
+        description: 'Resource return type as of JSON:API standard.'
+        required: false
+        example: null
+        type: string
+        custom: [ ]
+      'included[].id':
+        name: 'included[].id'
+        description: 'Resource unique identifier.'
+        required: false
+        example: null
+        type: string
+        custom: [ ]
+      'included[].attributes':
+        name: 'included[].attributes'
+        description: 'Resource attributes container.'
+        required: false
+        example: null
+        type: object
+        custom: [ ]
+      meta:
+        name: meta
+        description: 'Container for metadata.'
+        required: false
+        example: null
+        type: object
+        custom: [ ]
+      meta.success:
+        name: meta.success
+        description: 'Response status summary, if `true` the call was successful.'
+        required: false
+        example: null
+        type: boolean
+        custom: [ ]
+      meta.errors:
+        name: meta.errors
+        description: 'null|object[] If one or more errors occur this field will be filled with errors.'
+        required: false
+        example: null
+        type: ''
+        custom: [ ]
+      'meta.errors[].reference_code':
+        name: 'meta.errors[].reference_code'
+        description: 'Error reference code for easy front-end retrieval.'
+        required: false
+        example: null
+        type: integer
+        custom: [ ]
+      'meta.errors[].field':
+        name: 'meta.errors[].field'
+        description: |-
+          null|string If an error occur linked to a form field this field will handle
+                         the field name the error references to.
+        required: false
+        example: null
+        type: ''
+        custom: [ ]
+      'meta.errors[].message':
+        name: 'meta.errors[].message'
+        description: 'The error message(s).'
+        required: false
+        example: null
+        type: 'string|string[]'
+        custom: [ ]
     auth:
       - headers
       - Authorization
-      - 'Bearer e5a3c66dDb1avZPhgV48Ekf'
+      - 'Bearer vha6VcDP1Eefba3Z4586dgk'
     controller: null
     method: null
     route: null
-    custom: []
+    custom: [ ]
   -
     httpMethods:
       - POST
@@ -369,12 +835,10 @@ endpoints:
         Activities related to the management of the currently authenticated user
       subgroup: ''
       subgroupDescription: ''
-      title: "Handle the email verification, forwarding the verification call to Fortify's default controller"
-      description: |-
-        The same result can be achieved by implementing the \Laravel\Fortify\Contracts\VerifyEmailResponse, anyway,
-        creating a new route we have changed the calling method from GET to POST
+      title: 'Verify email'
+      description: "Handle the email verification, forwarding the verification call to Fortify's default controller."
       authenticated: true
-      custom: []
+      custom: [ ]
     headers:
       Authorization: 'Bearer {YOUR_AUTH_KEY}'
       Content-Type: application/json
@@ -382,33 +846,260 @@ endpoints:
     urlParameters:
       id:
         name: id
-        description: 'The ID of the verify.'
+        description: 'The identifier of the user to verify.'
         required: true
-        example: eum
-        type: string
-        custom: []
+        example: 1
+        type: integer
+        custom: [ ]
       hash:
         name: hash
-        description: ''
+        description: 'Verification hash.'
         required: true
-        example: qui
+        example: 567159d622ffbb50b11b0efd307be358624a26ee
         type: string
-        custom: []
+        custom: [ ]
     cleanUrlParameters:
-      id: eum
-      hash: qui
-    queryParameters: []
-    cleanQueryParameters: []
-    bodyParameters: []
-    cleanBodyParameters: []
-    fileParameters: []
-    responses: []
-    responseFields: []
+      id: 1
+      hash: 567159d622ffbb50b11b0efd307be358624a26ee
+    queryParameters:
+      expires:
+        name: expires
+        description: 'expiration timestamp of the verification link.'
+        required: true
+        example: 1676736522
+        type: integer
+        custom: [ ]
+      signature:
+        name: signature
+        description: 'Url signature hash.'
+        required: true
+        example: 2e99a9278bcba67a7b52acbb6f2fb822c72c6d4b1d63fb059033439059d9f250
+        type: string
+        custom: [ ]
+    cleanQueryParameters:
+      expires: 1676736522
+      signature: 2e99a9278bcba67a7b52acbb6f2fb822c72c6d4b1d63fb059033439059d9f250
+    bodyParameters: [ ]
+    cleanBodyParameters: [ ]
+    fileParameters: [ ]
+    responses:
+      - status: 200
+        content: |
+          {
+              "data": {
+                  "type": "user",
+                  "id": "usr_10833034c4dd47849af8ed8ea4a68a1b",
+                  "attributes": {
+                      "name": "Devonte Goldner",
+                      "email": "imo********************",
+                      "email_verified_at": "18\/02\/2023 11:05:51",
+                      "token": "2|aFGHN9Ox9Uc42XfLqrXlY2xAzNwhQLDb7kIf3rjN"
+                  },
+                  "relationships": {
+                      "reservations": {
+                          "data": [
+                              {
+                                  "type": "reservation",
+                                  "id": "resrv_1e302893c3cd4dcd8c7810ef1a07c180"
+                              }
+                          ]
+                      }
+                  }
+              },
+              "included": [
+                  {
+                      "type": "reservation",
+                      "id": "resrv_1e302893c3cd4dcd8c7810ef1a07c180",
+                      "attributes": {
+                          "user": "usr_10833034c4dd47849af8ed8ea4a68a1b",
+                          "event": "evt_d7e868f3083344f6bec2548db7979d6b",
+                          "activity": "act_4c0158279c0148439fb285ebc7ad8c12"
+                      }
+                  }
+              ],
+              "meta": {
+                  "success": true,
+                  "errors": null
+              }
+          }
+        headers: [ ]
+        description: ''
+        custom: [ ]
+    responseFields:
+      data:
+        name: data
+        description: 'Container for resource.'
+        required: false
+        example: null
+        type: object
+        custom: [ ]
+      data.type:
+        name: data.type
+        description: 'Resource return type as of JSON:API standard, always equal to `user`.'
+        required: false
+        example: null
+        type: string
+        custom: [ ]
+      data.id:
+        name: data.id
+        description: 'Resource unique identifier, always starts with `usr_`.'
+        required: false
+        example: null
+        type: string
+        custom: [ ]
+      data.attributes:
+        name: data.attributes
+        description: 'Resource attributes container.'
+        required: false
+        example: null
+        type: object
+        custom: [ ]
+      data.attributes.name:
+        name: data.attributes.name
+        description: 'Current user full name.'
+        required: false
+        example: null
+        type: string
+        custom: [ ]
+      data.attributes.email:
+        name: data.attributes.email
+        description: 'Current user censored email.'
+        required: false
+        example: null
+        type: string
+        custom: [ ]
+      data.attributes.email_verified_at:
+        name: data.attributes.email_verified_at
+        description: |-
+          Email verification datetime or null, if this field is
+                         null for a given user he won't be allowed to reserve any spot.
+        required: false
+        example: null
+        type: '?string'
+        custom: [ ]
+      data.attributes.token:
+        name: data.attributes.token
+        description: 'Current user authentication token.'
+        required: false
+        example: null
+        type: string
+        custom: [ ]
+      data.relationships:
+        name: data.relationships
+        description: 'Wrapper for included relationships.'
+        required: false
+        example: null
+        type: '?object'
+        custom: [ ]
+      data.relationships.reservations:
+        name: data.relationships.reservations
+        description: 'Wrapper for reservation identification data.'
+        required: false
+        example: null
+        type: '?object'
+        custom: [ ]
+      data.relationships.reservations.data:
+        name: data.relationships.reservations.data
+        description: 'Reservations identifier data container.'
+        required: false
+        example: null
+        type: 'object[]'
+        custom: [ ]
+      'data.relationships.reservations.data[].type':
+        name: 'data.relationships.reservations.data[].type'
+        description: |-
+          Resource return type as of JSON:API standard,
+                         always equal to `reservation`
+        required: false
+        example: null
+        type: string
+        custom: [ ]
+      'data.relationships.reservations.data[].id':
+        name: 'data.relationships.reservations.data[].id'
+        description: |-
+          Resource unique identifier, always starts with
+                         `resrv_`.
+        required: false
+        example: null
+        type: string
+        custom: [ ]
+      included:
+        name: included
+        description: 'Container for included relationships.'
+        required: false
+        example: null
+        type: '?object[]'
+        custom: [ ]
+      'included[].type':
+        name: 'included[].type'
+        description: 'Resource return type as of JSON:API standard.'
+        required: false
+        example: null
+        type: string
+        custom: [ ]
+      'included[].id':
+        name: 'included[].id'
+        description: 'Resource unique identifier.'
+        required: false
+        example: null
+        type: string
+        custom: [ ]
+      'included[].attributes':
+        name: 'included[].attributes'
+        description: 'Resource attributes container.'
+        required: false
+        example: null
+        type: object
+        custom: [ ]
+      meta:
+        name: meta
+        description: 'Container for metadata.'
+        required: false
+        example: null
+        type: object
+        custom: [ ]
+      meta.success:
+        name: meta.success
+        description: 'Response status summary, if `true` the call was successful.'
+        required: false
+        example: null
+        type: boolean
+        custom: [ ]
+      meta.errors:
+        name: meta.errors
+        description: 'null|object[] If one or more errors occur this field will be filled with errors.'
+        required: false
+        example: null
+        type: ''
+        custom: [ ]
+      'meta.errors[].reference_code':
+        name: 'meta.errors[].reference_code'
+        description: 'Error reference code for easy front-end retrieval.'
+        required: false
+        example: null
+        type: integer
+        custom: [ ]
+      'meta.errors[].field':
+        name: 'meta.errors[].field'
+        description: |-
+          null|string If an error occur linked to a form field this field will handle
+                         the field name the error references to.
+        required: false
+        example: null
+        type: ''
+        custom: [ ]
+      'meta.errors[].message':
+        name: 'meta.errors[].message'
+        description: 'The error message(s).'
+        required: false
+        example: null
+        type: 'string|string[]'
+        custom: [ ]
     auth:
       - headers
       - Authorization
-      - 'Bearer f1eVcZDgaakh863d4bv5E6P'
+      - 'Bearer 465vcPZV3b6dgk8EaDfea1h'
     controller: null
     method: null
     route: null
-    custom: []
+    custom: [ ]

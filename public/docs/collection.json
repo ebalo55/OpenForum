@@ -5,12 +5,12 @@
             "key": "baseUrl",
             "type": "string",
             "name": "string",
-            "value": "http(s):\/\/[host]"
+            "value": "http(s):\/\/[current-host]"
         }
     ],
     "info": {
         "name": "OpenForum - API documentation",
-        "_postman_id": "2bdb52a8-e9b6-4b0a-82b1-6f2e9e11c9bd",
+        "_postman_id": "180154bb-62b3-4732-85a2-6ff4881bb30f",
         "description": "OpenForum default API documentation",
         "schema": "https:\/\/schema.getpostman.com\/json\/collection\/v2.1.0\/collection.json"
     },
@@ -43,9 +43,15 @@
                         "description": ""
                     },
                     "response": []
-                },
+                }
+            ]
+        },
+        {
+            "name": "Events interactions",
+            "description": "\nActivities related to the interaction of the currently authenticated user with events",
+            "item": [
                 {
-                    "name": "Lists all events and return their representation, via Fractal's auto `include` features via this endpoint\nactivities can be easily retrieved.",
+                    "name": "Events index",
                     "request": {
                         "url": {
                             "host": "{{baseUrl}}",
@@ -65,12 +71,19 @@
                             }
                         ],
                         "body": null,
-                        "description": "EXAMPLE:\n<code>\n     <endpoint> -> returns all events\n     <endpoint>?include=activities -> returns all events and activities for each event\n<\/code>"
+                        "description": "Lists all events and optionally on or many of their relations."
                     },
-                    "response": []
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\n    \"data\": [\n        {\n            \"type\": \"event_day\",\n            \"id\": \"evt_fe42d9d6092f4cde86d67e4fca313a49\",\n            \"attributes\": {\n                \"available_reservations\": 9,\n                \"date\": \"01\\\/01\\\/2023\",\n                \"location\": \"Smithfort\"\n            },\n            \"relationships\": {\n                \"reservations\": {\n                    \"data\": [\n                        {\n                            \"type\": \"reservation\",\n                            \"id\": \"resrv_fac88ea6628a466f8f3ff4464c12130c\"\n                        }\n                    ]\n                },\n                \"activities\": {\n                    \"data\": [\n                        {\n                            \"type\": \"activity\",\n                            \"id\": \"act_04a71df315ec4fe8b0ab555200c83935\"\n                        },\n                        {\n                            \"type\": \"activity\",\n                            \"id\": \"act_07972666e17a4ac69de2f152fd75e03d\"\n                        }\n                    ]\n                }\n            }\n        },\n        {\n            \"type\": \"event_day\",\n            \"id\": \"evt_316046ad43bc4750b1ce65f8a09658f1\",\n            \"attributes\": {\n                \"available_reservations\": 9,\n                \"date\": \"02\\\/02\\\/2023\",\n                \"location\": \"Windlerstad\"\n            },\n            \"relationships\": {\n                \"reservations\": {\n                    \"data\": [\n                        {\n                            \"type\": \"reservation\",\n                            \"id\": \"resrv_f85e6c770ec2473cb9047eeed2bfc2c2\"\n                        }\n                    ]\n                },\n                \"activities\": {\n                    \"data\": [\n                        {\n                            \"type\": \"activity\",\n                            \"id\": \"act_b9f4d227bcfb49f79e1481e3f2e7d893\"\n                        },\n                        {\n                            \"type\": \"activity\",\n                            \"id\": \"act_5c2eefd3bf814837b81eba07769121d3\"\n                        }\n                    ]\n                }\n            }\n        }\n    ],\n    \"included\": [\n        {\n            \"type\": \"activity\",\n            \"id\": \"act_04a71df315ec4fe8b0ab555200c83935\",\n            \"attributes\": {\n                \"starting_at\": \"12:30:00\",\n                \"ending_at\": \"14:23:23\",\n                \"title\": \"Fuga et dignissimos accusamus quibusdam vel.\",\n                \"available_reservations\": 0,\n                \"description\": \"Compiled description markdown\"\n            }\n        },\n        {\n            \"type\": \"activity\",\n            \"id\": \"act_07972666e17a4ac69de2f152fd75e03d\",\n            \"attributes\": {\n                \"starting_at\": \"15:30:00\",\n                \"ending_at\": \"06:02:26\",\n                \"title\": \"Maiores et laborum enim dolor repellendus et.\",\n                \"available_reservations\": 0,\n                \"description\": \"Compiled description markdown\"\n            }\n        },\n        {\n            \"type\": \"reservation\",\n            \"id\": \"resrv_fac88ea6628a466f8f3ff4464c12130c\",\n            \"attributes\": {\n                \"user\": \"usr_7fb676db17324097a29eefcfbd611cf1\",\n                \"event\": \"evt_fe42d9d6092f4cde86d67e4fca313a49\",\n                \"activity\": \"act_875df90f7fb84c6ea32fffb21d200ab4\"\n            }\n        },\n        {\n            \"type\": \"activity\",\n            \"id\": \"act_b9f4d227bcfb49f79e1481e3f2e7d893\",\n            \"attributes\": {\n                \"starting_at\": \"12:30:00\",\n                \"ending_at\": \"21:34:51\",\n                \"title\": \"Ea eum cupiditate eos.\",\n                \"available_reservations\": 0,\n                \"description\": \"Compiled description markdown\"\n            }\n        },\n        {\n            \"type\": \"activity\",\n            \"id\": \"act_5c2eefd3bf814837b81eba07769121d3\",\n            \"attributes\": {\n                \"starting_at\": \"15:30:00\",\n                \"ending_at\": \"15:52:24\",\n                \"title\": \"Dolorum non dolorem deleniti ullam.\",\n                \"available_reservations\": 0,\n                \"description\": \"Compiled description markdown\"\n            }\n        },\n        {\n            \"type\": \"reservation\",\n            \"id\": \"resrv_f85e6c770ec2473cb9047eeed2bfc2c2\",\n            \"attributes\": {\n                \"user\": \"usr_119167e659424661bb98b5402281ec17\",\n                \"event\": \"evt_316046ad43bc4750b1ce65f8a09658f1\",\n                \"activity\": \"act_1da71ee2d61d4851bbe641ed6bd1a13c\"\n            }\n        }\n    ],\n    \"meta\": {\n        \"success\": true,\n        \"errors\": null\n    }\n}\n",
+                            "name": ""
+                        }
+                    ]
                 },
                 {
-                    "name": "Handle the reservation request of a user",
+                    "name": "Reserve spots",
                     "request": {
                         "url": {
                             "host": "{{baseUrl}}",
@@ -91,11 +104,30 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"reservations\":\"cum\"}"
+                            "raw": "{\"reservations\":[{\"date\":\"18\\\/02\\\/2023\",\"location\":\"Florence\",\"absent\":false,\"activity_reservations\":[\"act_b9f4d227bcfb49f79e1481e3f2e7d893\",\"act_5c2eefd3bf814837b81eba07769121d3\"]}]}"
                         },
-                        "description": ""
+                        "description": "Handle the reservation request of a user reserving the provided spots\n<aside class=\"notice\">\n     This call must be executed using the logged-in user token in order to subscribe the user.\n     The authentication token will the ALWAYS be different from the authorization token used to retrieve the\n     data and authenticate the user.\n<\/aside>"
                     },
-                    "response": []
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\n    \"data\": {\n        \"type\": \"user\",\n        \"id\": \"usr_10833034c4dd47849af8ed8ea4a68a1b\",\n        \"attributes\": {\n            \"name\": \"Devonte Goldner\",\n            \"email\": \"imo********************\",\n            \"email_verified_at\": \"18\\\/02\\\/2023 11:05:51\",\n            \"token\": \"2|aFGHN9Ox9Uc42XfLqrXlY2xAzNwhQLDb7kIf3rjN\"\n        },\n        \"relationships\": {\n            \"reservations\": {\n                \"data\": [\n                    {\n                        \"type\": \"reservation\",\n                        \"id\": \"resrv_1e302893c3cd4dcd8c7810ef1a07c180\"\n                    }\n                ]\n            }\n        }\n    },\n    \"included\": [\n        {\n            \"type\": \"reservation\",\n            \"id\": \"resrv_1e302893c3cd4dcd8c7810ef1a07c180\",\n            \"attributes\": {\n                \"user\": \"usr_10833034c4dd47849af8ed8ea4a68a1b\",\n                \"event\": \"evt_d7e868f3083344f6bec2548db7979d6b\",\n                \"activity\": \"act_4c0158279c0148439fb285ebc7ad8c12\"\n            }\n        }\n    ],\n    \"meta\": {\n        \"success\": true,\n        \"errors\": null\n    }\n}\n",
+                            "name": "Reservation successful"
+                        },
+                        {
+                            "header": [],
+                            "code": 409,
+                            "body": "{\n    \"data\": [],\n    \"meta\": {\n        \"success\": false,\n        \"errors\": [\n            {\n                \"reference_code\": 0,\n                \"field\": null,\n                \"message\": \"\"\n            }\n        ]\n    }\n}\n",
+                            "name": "One or more conflicts arised while reserving"
+                        },
+                        {
+                            "header": [],
+                            "code": 404,
+                            "body": "{\"data\":[],\"meta\":{\"errors\":{\"reference_code\":0,\"field\":null,\"message\":\"No query results for model <model-name>\"}}}",
+                            "name": "Event\/Activity not found"
+                        }
+                    ]
                 }
             ]
         },
@@ -104,7 +136,7 @@
             "description": "\nActivities related to the management of the currently authenticated user",
             "item": [
                 {
-                    "name": "Get the current user instance",
+                    "name": "Current user",
                     "request": {
                         "url": {
                             "host": "{{baseUrl}}",
@@ -143,13 +175,20 @@
                     ]
                 },
                 {
-                    "name": "Handle the login of a pre-registered account via API, this method forwards the login logic to the default\nFortify controller but adds a layer of indirection.",
+                    "name": "Login",
                     "request": {
                         "url": {
                             "host": "{{baseUrl}}",
                             "path": "api\/users\/login",
-                            "query": [],
-                            "raw": "{{baseUrl}}\/api\/users\/login"
+                            "query": [
+                                {
+                                    "key": "includes",
+                                    "value": "reservations",
+                                    "description": "Comma separated list of user relation to include",
+                                    "disabled": false
+                                }
+                            ],
+                            "raw": "{{baseUrl}}\/api\/users\/login?includes=reservations"
                         },
                         "method": "POST",
                         "header": [
@@ -164,14 +203,27 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"name\":\"quod\",\"password\":\"H0=z]-\\\"ewh7^AI;cD*\"}"
+                            "raw": "{\"name\":\"beatae\",\"password\":\"+V90BtZ`A;V]\"}"
                         },
-                        "description": "The forwarded call is received and analyzed, if the login request was successful a JSON:API response is created\nwith the newly logged-in user.\nNOTE: The user is not authenticated in the current request, the user should be authenticated by subsequent\n     front-end requests.\n\nIf the login was not successful based on the exception type an appropriate JSON:API response is created and\nreturned to the client."
+                        "description": "Handle the login of a pre-registered account via API, this method forwards the login logic to the default\nFortify controller but adds a layer of indirection.\n\nThe forwarded call is received and analyzed, if the login request was successful a JSON:API response is created\nwith the newly logged-in user.\n\n<aside class=\"notice\">\nNote that the user is not authenticated in the current request, the user should be authenticated by subsequent\nfront-end requests.\n<\/aside>\n\nIf the login was not successful based on the exception type an appropriate JSON:API response is created and\nreturned to the client."
                     },
-                    "response": []
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\n    \"data\": {\n        \"type\": \"user\",\n        \"id\": \"usr_10833034c4dd47849af8ed8ea4a68a1b\",\n        \"attributes\": {\n            \"name\": \"Devonte Goldner\",\n            \"email\": \"imo********************\",\n            \"email_verified_at\": \"18\\\/02\\\/2023 11:05:51\",\n            \"token\": \"2|aFGHN9Ox9Uc42XfLqrXlY2xAzNwhQLDb7kIf3rjN\"\n        },\n        \"relationships\": {\n            \"reservations\": {\n                \"data\": [\n                    {\n                        \"type\": \"reservation\",\n                        \"id\": \"resrv_1e302893c3cd4dcd8c7810ef1a07c180\"\n                    }\n                ]\n            }\n        }\n    },\n    \"included\": [\n        {\n            \"type\": \"reservation\",\n            \"id\": \"resrv_1e302893c3cd4dcd8c7810ef1a07c180\",\n            \"attributes\": {\n                \"user\": \"usr_10833034c4dd47849af8ed8ea4a68a1b\",\n                \"event\": \"evt_d7e868f3083344f6bec2548db7979d6b\",\n                \"activity\": \"act_4c0158279c0148439fb285ebc7ad8c12\"\n            }\n        }\n    ],\n    \"meta\": {\n        \"success\": true,\n        \"errors\": null\n    }\n}\n",
+                            "name": "Login successful"
+                        },
+                        {
+                            "header": [],
+                            "code": 422,
+                            "body": "{\n    \"data\": [],\n    \"meta\": {\n        \"success\": false,\n        \"errors\": [\n            {\n                \"reference_code\": 0,\n                \"field\": \"name\",\n                \"message\": [\n                    \"These credentials do not match our records.\"\n                ]\n            }\n        ]\n    }\n}\n",
+                            "name": "Login error"
+                        }
+                    ]
                 },
                 {
-                    "name": "Send a new email verification link once requested or return the current user instance if already verified",
+                    "name": "Request new verification email",
                     "request": {
                         "url": {
                             "host": "{{baseUrl}}",
@@ -191,30 +243,56 @@
                             }
                         ],
                         "body": null,
-                        "description": ""
+                        "description": "Send a new email verification link once requested or return the current user instance if already verified"
                     },
-                    "response": []
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\n    \"data\": {\n        \"type\": \"user\",\n        \"id\": \"usr_10833034c4dd47849af8ed8ea4a68a1b\",\n        \"attributes\": {\n            \"name\": \"Devonte Goldner\",\n            \"email\": \"imo********************\",\n            \"email_verified_at\": \"18\\\/02\\\/2023 11:05:51\",\n            \"token\": \"2|aFGHN9Ox9Uc42XfLqrXlY2xAzNwhQLDb7kIf3rjN\"\n        },\n        \"relationships\": {\n            \"reservations\": {\n                \"data\": [\n                    {\n                        \"type\": \"reservation\",\n                        \"id\": \"resrv_1e302893c3cd4dcd8c7810ef1a07c180\"\n                    }\n                ]\n            }\n        }\n    },\n    \"included\": [\n        {\n            \"type\": \"reservation\",\n            \"id\": \"resrv_1e302893c3cd4dcd8c7810ef1a07c180\",\n            \"attributes\": {\n                \"user\": \"usr_10833034c4dd47849af8ed8ea4a68a1b\",\n                \"event\": \"evt_d7e868f3083344f6bec2548db7979d6b\",\n                \"activity\": \"act_4c0158279c0148439fb285ebc7ad8c12\"\n            }\n        }\n    ],\n    \"meta\": {\n        \"success\": true,\n        \"errors\": null\n    }\n}\n",
+                            "name": "Email already verified"
+                        },
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\n    \"data\": [],\n    \"meta\": {\n        \"success\": true,\n        \"errors\": null\n    }\n}\n",
+                            "name": "Verification email sent"
+                        }
+                    ]
                 },
                 {
-                    "name": "Handle the email verification, forwarding the verification call to Fortify's default controller",
+                    "name": "Verify email",
                     "request": {
                         "url": {
                             "host": "{{baseUrl}}",
                             "path": "api\/users\/email\/verify\/:id\/:hash",
-                            "query": [],
-                            "raw": "{{baseUrl}}\/api\/users\/email\/verify\/:id\/:hash",
+                            "query": [
+                                {
+                                    "key": "expires",
+                                    "value": "1676736522",
+                                    "description": "expiration timestamp of the verification link.",
+                                    "disabled": false
+                                },
+                                {
+                                    "key": "signature",
+                                    "value": "2e99a9278bcba67a7b52acbb6f2fb822c72c6d4b1d63fb059033439059d9f250",
+                                    "description": "Url signature hash.",
+                                    "disabled": false
+                                }
+                            ],
+                            "raw": "{{baseUrl}}\/api\/users\/email\/verify\/:id\/:hash?expires=1676736522&signature=2e99a9278bcba67a7b52acbb6f2fb822c72c6d4b1d63fb059033439059d9f250",
                             "variable": [
                                 {
                                     "id": "id",
                                     "key": "id",
-                                    "value": "eum",
-                                    "description": "The ID of the verify."
+                                    "value": "1",
+                                    "description": "The identifier of the user to verify."
                                 },
                                 {
                                     "id": "hash",
                                     "key": "hash",
-                                    "value": "qui",
-                                    "description": ""
+                                    "value": "567159d622ffbb50b11b0efd307be358624a26ee",
+                                    "description": "Verification hash."
                                 }
                             ]
                         },
@@ -230,9 +308,16 @@
                             }
                         ],
                         "body": null,
-                        "description": "The same result can be achieved by implementing the \\Laravel\\Fortify\\Contracts\\VerifyEmailResponse, anyway,\ncreating a new route we have changed the calling method from GET to POST"
+                        "description": "Handle the email verification, forwarding the verification call to Fortify's default controller."
                     },
-                    "response": []
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\n    \"data\": {\n        \"type\": \"user\",\n        \"id\": \"usr_10833034c4dd47849af8ed8ea4a68a1b\",\n        \"attributes\": {\n            \"name\": \"Devonte Goldner\",\n            \"email\": \"imo********************\",\n            \"email_verified_at\": \"18\\\/02\\\/2023 11:05:51\",\n            \"token\": \"2|aFGHN9Ox9Uc42XfLqrXlY2xAzNwhQLDb7kIf3rjN\"\n        },\n        \"relationships\": {\n            \"reservations\": {\n                \"data\": [\n                    {\n                        \"type\": \"reservation\",\n                        \"id\": \"resrv_1e302893c3cd4dcd8c7810ef1a07c180\"\n                    }\n                ]\n            }\n        }\n    },\n    \"included\": [\n        {\n            \"type\": \"reservation\",\n            \"id\": \"resrv_1e302893c3cd4dcd8c7810ef1a07c180\",\n            \"attributes\": {\n                \"user\": \"usr_10833034c4dd47849af8ed8ea4a68a1b\",\n                \"event\": \"evt_d7e868f3083344f6bec2548db7979d6b\",\n                \"activity\": \"act_4c0158279c0148439fb285ebc7ad8c12\"\n            }\n        }\n    ],\n    \"meta\": {\n        \"success\": true,\n        \"errors\": null\n    }\n}\n",
+                            "name": ""
+                        }
+                    ]
                 }
             ]
         }

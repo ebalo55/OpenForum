@@ -1,0 +1,13 @@
+{
+    "data": [],
+    "meta": {
+        "success": false,
+        "errors": [
+            {
+                "reference_code": 0,
+                "field": null,
+                "message": ""
+            }
+        ]
+    }
+}
