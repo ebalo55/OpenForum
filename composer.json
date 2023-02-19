@@ -19,6 +19,7 @@
         "laravel/sanctum": "^3.2",
         "laravel/tinker": "^2.8",
         "livewire/livewire": "^2.11",
+        "nwidart/laravel-modules": "^10.0",
         "rappasoft/laravel-livewire-tables": "^2.11",
         "spatie/laravel-data": "^3.0",
         "spatie/laravel-fractal": "^6.0.3",
