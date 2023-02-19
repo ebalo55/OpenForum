@@ -9,7 +9,9 @@ use App\Models\Reservation;
 use App\Models\User;
 use App\Service\AuthorizationService;
 use App\Service\BulkService;
+use App\Service\EventDaysService;
 use App\Service\LivewireBannerService;
+use App\Service\LivewireScrollService;
 use App\Service\SettingsService;
 use App\Service\UserService;
 use App\Transformers\NullTransformer;
@@ -31,6 +33,8 @@ class AppServiceProvider extends ServiceProvider {
         SettingsService::class       => SettingsService::class,
         UserService::class           => UserService::class,
         LivewireBannerService::class => LivewireBannerService::class,
+        LivewireScrollService::class => LivewireScrollService::class,
+        EventDaysService::class      => EventDaysService::class,
     ];
 
     /**

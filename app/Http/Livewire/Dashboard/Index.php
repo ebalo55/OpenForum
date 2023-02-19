@@ -55,20 +55,15 @@ class Index extends Component {
                 "property_name" => "siteName",
             ],
             [
-                "title"         => "Events dates",
+                "title"         => "Event dates",
                 "content"       => $this->getEventsDateRangeProperty(),
                 "full"          => false,
                 "property_name" => "EventsDateRange",
             ],
             [
-                "title"         => "Registration available from",
-                "content"       => $this->getRegistrationEnabledFromProperty(),
-                "property_name" => "registrationEnabledFrom",
-            ],
-            [
-                "title"         => "Registration available to",
-                "content"       => $this->getRegistrationEnabledToProperty(),
-                "property_name" => "registrationEnabledTo",
+                "title"         => "Registration date-time range",
+                "content"       => $this->getEventsRegistrationRangeProperty(),
+                "property_name" => "eventsRegistrationRange",
             ],
             [
                 "title"           => "Imported users",
@@ -97,6 +92,21 @@ class Index extends Component {
                 app(GeneralSettings::class)->events_starting_day,
             ) . " to " . format_date(app(GeneralSettings::class)->events_ending_day)
             : "Events day range not defined";
+    }
+
+    /**
+     * Creates the computed property referring the events registration date range
+     *
+     * @return string
+     */
+    public
+    function getEventsRegistrationRangeProperty(): string {
+        return app(GeneralSettings::class)->registration_enabled_from &&
+               app(GeneralSettings::class)->registration_enabled_to
+            ? "From " . format(
+                app(GeneralSettings::class)->registration_enabled_from,
+            ) . " to " . format(app(GeneralSettings::class)->registration_enabled_to)
+            : "Events registration date-time range not defined";
     }
 
     /**
