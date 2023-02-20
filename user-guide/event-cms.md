@@ -1,5 +1,17 @@
 # Event CMS
 
+<details>
+
+<summary>In this page</summary>
+
+[Event: settings](event-cms.md#settings)
+
+[Event: activities](event-cms.md#activities)
+
+[Activity: creation/editing](event-cms.md#activity-creation-editing)
+
+</details>
+
 <figure><img src="../.gitbook/assets/image (2).png" alt=""><figcaption><p>OpenForum - Event CMS</p></figcaption></figure>
 
 description

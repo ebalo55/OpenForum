@@ -4,7 +4,9 @@
 
 <summary>In this page</summary>
 
-Imported users
+[Imported users](users.md#imported-users)
+
+[Import](users.md#import)
 
 </details>
 
