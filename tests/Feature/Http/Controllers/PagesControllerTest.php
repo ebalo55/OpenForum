@@ -15,15 +15,17 @@ class PagesControllerTest extends TestCase {
 
         Carbon::setTestNow(Carbon::create(2023));
 
+        $route_lifetime = Carbon::now()->addMinutes(
+            Config::get(
+                'auth.verification.expire',
+                60,
+            ),
+        );
+
         $response = $this->actingAs($user)->get(
             URL::temporarySignedRoute(
                 "verification.verify",
-                Carbon::now()->addMinutes(
-                    Config::get(
-                        'auth.verification.expire',
-                        60,
-                    ),
-                ),
+                $route_lifetime,
                 [
                     'id'   => 1,
                     'hash' => sha1("test@example.com"),
@@ -31,8 +33,25 @@ class PagesControllerTest extends TestCase {
             ),
         );
 
+        $params = [
+            'id'      => 1,
+            'hash'    => sha1("test@example.com"),
+            "expires" => $route_lifetime,
+        ];
+        ksort($params);
+
+        $route = route(
+                     "verification.verify",
+                     $params,
+                 ) . "?expires=" . $route_lifetime->timestamp;
+        $signature = hash_hmac(
+            'sha256',
+            $route,
+            config("app.key"),
+        );
+
         $response->assertRedirect(
-            "https://www.example.com/verification/email?id=1&hash=567159d622ffbb50b11b0efd307be358624a26ee&signature=b4c4442e04cd86768776a116055486514c8ef384fd86aa47cc7839f3eebf0ac7&expires=1672534800",
+            "https://www.example.com/verification/email?id=1&hash=567159d622ffbb50b11b0efd307be358624a26ee&signature=$signature&expires=1672534800",
         );
     }
 
