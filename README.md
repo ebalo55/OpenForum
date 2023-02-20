@@ -42,4 +42,4 @@ changes and customization.
 
 This repo comes with an online documentation hosted on the administration panel itself.
 
-[This is the official documentation link](????)
+[This is the official documentation link](https://openforum-docs.override.sh/)
