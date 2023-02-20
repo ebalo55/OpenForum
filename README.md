@@ -10,36 +10,44 @@
     </a>
 </p>
 
-## Why does this repository exists?
+# Introduction
 
-Why does this repository exists? The answer may be difficult to understand at first but let's try...
+Welcome to the **OpenForum** project, a fully functional platform that aims to make the creation and development of
+informative plans for forums and events easy for non-technicians. This project was created to provide a fully
+configurable and easily integrated web application for displaying scheduled events and allowing people to reserve event
+participation in one of many sites.
 
-This repository have been created by me, Ebalo, in order to help with the creation of fully functional platforms that
-non technician can use to create and develop the informative plan for a student forum.
+### Why does this repository exist?
 
-This was especially needed as not everyone is able to build something that works easily and is fully configurable,
-unless not in high schools.
+The traditional approach to creating forum and event web applications requires technical expertise and is not easily
+configurable. This limitation creates a barrier for non-technicians who want to develop and manage forums, especially
+with low budgets.
 
-## What does this repo offers?
+The OpenForum project aims to solve this problem by providing a fully featured source code for the admin and client side
+of the web app. The main goal is to provide the highest configurable application and the easiest front-end integration.
 
-The answer's pretty easy, this repo offers a fully featured source code for the admin and client side of a web app whose
-final goal is to display scheduled events and let people register in one of many sites.
+### What does this project offer?
 
-The main goal here is to provide the highest configurable application and the easiest front-end integration.
+The OpenForum project provides a source code for the administration and client sides of a web app. The application's
+final goal is to display scheduled events and allow people to reserve event participation in one of many sites.
 
-## Ending notes
+The application offers a highly configurable platform that is easy to integrate with any front-end. This platform is
+designed to provide the easiest front-end integration, with customizable features that can be adapted to the specific
+needs of each forum or event.
 
-This application offers only the administration side of the full final application needed in a typical Student Forum
-app.
+The application offers only the administration side of the full final application needed in a typical forum or event
+app. The front end is where users will land for reservation, and multiple front-ends can be developed and attached to
+the administration API without any effort.
 
-#### Why?
+Using a predefined front end reduces the possibility of changes and customization this is the reason we've chosen to
+provide a convenient and easy-to-use platform for non-technicians who want to create and manage forums with powerful API
+to integrate any custom-developed front end.
 
-The answer's easy, the front-end is where the users will land for registration, multiple front-end can be developed and
-attached to an administration api without any effort, while creating a predefined one will reduce the possibility of
-changes and customization.
+### Documentation
 
-## Documentation
+The OpenForum project comes with online documentation hosted
+on [this official documentation link](https://app.gitbook.com/s/EqPTxBs77BdlGcGLn0U0/). The documentation includes a
+user guide, API documentation and much more.
 
-This repo comes with an online documentation hosted on the administration panel itself.
-
-[This is the official documentation link](https://openforum-docs.override.sh/)
+These resources provide a comprehensive guide to using and customizing the application to meet the specific needs of
+each student forum.
