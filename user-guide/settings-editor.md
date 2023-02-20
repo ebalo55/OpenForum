@@ -12,7 +12,7 @@
 
 </details>
 
-<figure><img src="../.gitbook/assets/image (3).png" alt=""><figcaption><p>OpenForum - Settings editor</p></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (3) (2).png" alt=""><figcaption><p>OpenForum - Settings editor</p></figcaption></figure>
 
 The Settings Editor is a critical section of the backend which allows you to define and modify the global behaviour of the application, the event dates and locations, and the password generation policies. The Settings Editor allows you to configure how users will interact with the platform and what functionalities they will have access to.
 

@@ -34,7 +34,7 @@ If you need to change the site name, you can easily do so by navigating to the `
 
 ### Event dates
 
-<figure><img src="../.gitbook/assets/image (2) (1).png" alt=""><figcaption><p>OpenForum - Dashbord - Event dates card</p></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (2) (1) (1).png" alt=""><figcaption><p>OpenForum - Dashbord - Event dates card</p></figcaption></figure>
 
 The `event dates` card on the dashboard displays the defined date range for the event. The event date range is set by the administrator, and once set, stub events are automatically created. These stub events allow users to reserve spots in the activities that will be held during the event.
 
@@ -42,7 +42,7 @@ It is important to note that the reservation system is only available for the da
 
 ### Registration date-time range
 
-<figure><img src="../.gitbook/assets/image.png" alt=""><figcaption><p>OpenForum - Dashbord - Registration date-time range card</p></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (7).png" alt=""><figcaption><p>OpenForum - Dashbord - Registration date-time range card</p></figcaption></figure>
 
 The `registration date-time range` card on the dashboard displays the registration period for the current event. This period determines the time frame during which users can reserve spots for the event. By default, the registration range should end before the start of the event, but administrators have the flexibility to extend this range beyond the start of the event if desired.
 
@@ -64,7 +64,7 @@ The card is also useful in conjunction with the latest import errors card, which
 
 ### Latest import errors
 
-<figure><img src="../.gitbook/assets/image (1).png" alt=""><figcaption><p>OpenForum - Dashbord - Latest import errors card</p></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (1) (1).png" alt=""><figcaption><p>OpenForum - Dashbord - Latest import errors card</p></figcaption></figure>
 
 This card displays the number of errors that occurred during the latest import process of users into the application. If there are errors, the card will show a non-zero number and allow administrators to download the log of the latest import attempt for further analysis.
 
