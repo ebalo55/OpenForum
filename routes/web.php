@@ -1,10 +1,12 @@
 <?php
 
+use App\Enum\Permissions\Classes\Control;
 use App\Http\Controllers\PagesController;
 use App\Http\Livewire\Dashboard\Index;
 use App\Http\Livewire\Event\Activities\Create;
 use App\Http\Livewire\Event\Activities\Edit;
 use App\Http\Livewire\Settings\Editor;
+use App\Http\Livewire\Users\Details;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -83,14 +85,23 @@ Route::middleware(
             Create::class,
         )->name('events.activities.create');
 
-        Route::middleware(
-            [
-                "can:" . \App\Enum\Permissions\Classes\Event::UPDATE(),
-            ],
-        )->get(
-            '/events/{event}/{activity}',
-            Edit::class,
-        )->name('events.activities.edit');
+	    Route::middleware(
+		    [
+			    "can:" . \App\Enum\Permissions\Classes\Event::UPDATE(),
+		    ],
+	    )->get(
+		    '/events/{event}/{activity}',
+		    Edit::class,
+	    )->name('events.activities.edit');
+
+	    Route::middleware(
+		    [
+			    "can:" . Control::MANAGE_USER_ROLES(),
+		    ],
+	    )->get(
+		    "/user/{user}",
+		    Details::class,
+	    )->name("user.details");
     },
 );
 

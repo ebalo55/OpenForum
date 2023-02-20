@@ -1,7 +1,18 @@
 <?php
 
+use App\Console\Commands\ModuleMakeCommandOverride;
 use Nwidart\Modules\Activators\FileActivator;
 use Nwidart\Modules\Commands;
+
+$all_replacements = [
+    'LOWER_NAME',
+    'STUDLY_NAME',
+    'VENDOR',
+    'AUTHOR_NAME',
+    'AUTHOR_EMAIL',
+    'MODULE_NAMESPACE',
+    'PROVIDER_NAMESPACE',
+];
 
 return [
 
@@ -26,37 +37,67 @@ return [
     */
 
     'stubs' => [
-        'enabled'      => false,
-        'path'         => base_path('vendor/nwidart/laravel-modules/src/Commands/stubs'),
+        'enabled'      => true,
+        // path'         => base_path('vendor/nwidart/laravel-modules/src/Commands/stubs'),
+        'path'         => base_path('stubs/nwidart-stubs'),
         'files'        => [
-            'routes/web'      => 'Routes/web.php',
-            'routes/api'      => 'Routes/api.php',
-            'views/index'     => 'Resources/views/index.blade.php',
-            'views/master'    => 'Resources/views/layouts/master.blade.php',
-            'scaffold/config' => 'Config/config.php',
+            'routes/web'      => 'routes/web.php',
+            'routes/api'      => 'routes/api.php',
+            'views/index'     => 'resources/views/index.blade.php',
+            'views/master'    => 'resources/views/layouts/master.blade.php',
+            'scaffold/config' => 'config/config.php',
             'composer'        => 'composer.json',
-            'assets/js/app'   => 'Resources/assets/js/app.js',
-            'assets/sass/app' => 'Resources/assets/sass/app.scss',
+            'assets/js/app'   => 'resources/assets/js/app.js',
+            'assets/sass/app' => 'resources/assets/sass/app.scss',
             'vite'            => 'vite.config.js',
             'package'         => 'package.json',
         ],
         'replacements' => [
-            'routes/web'      => ['LOWER_NAME', 'STUDLY_NAME'],
-            'routes/api'      => ['LOWER_NAME'],
-            'vite'            => ['LOWER_NAME'],
-            'json'            => ['LOWER_NAME', 'STUDLY_NAME', 'MODULE_NAMESPACE', 'PROVIDER_NAMESPACE'],
-            'views/index'     => ['LOWER_NAME'],
-            'views/master'    => ['LOWER_NAME', 'STUDLY_NAME'],
-            'scaffold/config' => ['STUDLY_NAME'],
-            'composer'        => [
-                'LOWER_NAME',
-                'STUDLY_NAME',
-                'VENDOR',
-                'AUTHOR_NAME',
-                'AUTHOR_EMAIL',
-                'MODULE_NAMESPACE',
-                'PROVIDER_NAMESPACE',
-            ],
+            'routes/web'           => $all_replacements,
+            'routes/api'           => $all_replacements,
+            'views/index'          => $all_replacements,
+            'views/master'         => $all_replacements,
+            'scaffold/config'      => $all_replacements,
+            "command"              => $all_replacements,
+            "component-class"      => $all_replacements,
+            "component-view"       => $all_replacements,
+            "composer"             => $all_replacements,
+            "controller-api"       => $all_replacements,
+            "controller-plain"     => $all_replacements,
+            "controller"           => $all_replacements,
+            "event"                => $all_replacements,
+            "factory"              => $all_replacements,
+            "feature-test"         => $all_replacements,
+            "job-queued"           => $all_replacements,
+            "job"                  => $all_replacements,
+            "json"                 => $all_replacements,
+            "listener-duck"        => $all_replacements,
+            "listener-queued-duck" => $all_replacements,
+            "listener-queued"      => $all_replacements,
+            "listener"             => $all_replacements,
+            "mail"                 => $all_replacements,
+            "middleware"           => $all_replacements,
+            "model"                => $all_replacements,
+            "notification"         => $all_replacements,
+            "package"              => $all_replacements,
+            "policy.plain"         => $all_replacements,
+            "provider"             => $all_replacements,
+            "request"              => $all_replacements,
+            "resource-collection"  => $all_replacements,
+            "resource"             => $all_replacements,
+            "routeProvider"        => $all_replacements,
+            "rule"                 => $all_replacements,
+            "seeder"               => $all_replacements,
+            "unit-test"            => $all_replacements,
+            "vite"                 => $all_replacements,
+            "migration/add"        => $all_replacements,
+            "migration/create"     => $all_replacements,
+            "migration/delete"     => $all_replacements,
+            "migration/drop"       => $all_replacements,
+            "migration/plain"      => $all_replacements,
+            "scaffold/provider"    => $all_replacements,
+            "assets/js/app"        => $all_replacements,
+            "assets/sass/app"      => $all_replacements,
         ],
         'gitkeep'      => true,
     ],
@@ -161,7 +202,6 @@ return [
         Commands\InstallCommand::class,
         Commands\ListCommand::class,
         Commands\ModuleDeleteCommand::class,
-        Commands\ModuleMakeCommand::class,
         Commands\FactoryMakeCommand::class,
         Commands\PolicyMakeCommand::class,
         Commands\RequestMakeCommand::class,
@@ -186,7 +226,10 @@ return [
         Commands\UseCommand::class,
         Commands\ResourceMakeCommand::class,
         Commands\TestMakeCommand::class,
-        Commands\LaravelModulesV6Migrator::class,
+        // Commands\LaravelModulesV6Migrator::class, useless
+
+        // overrides
+        ModuleMakeCommandOverride::class, // Commands\ModuleMakeCommand::class,
     ],
 
     /*

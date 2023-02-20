@@ -9,8 +9,6 @@ class $CLASS$
 {
     /**
      * Create the event listener.
-     *
-     * @return void
      */
     public function __construct()
     {
@@ -23,7 +21,7 @@ class $CLASS$
      * @param  object  $event
      * @return void
      */
-    public function handle($event)
+    public function handle($event): void
     {
         //
     }

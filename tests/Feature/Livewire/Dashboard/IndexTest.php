@@ -55,20 +55,15 @@ class IndexTest extends TestCase {
                     "property_name" => "siteName",
                 ],
                 [
-                    "title"         => "Events dates",
+                    "title"         => "Event dates",
                     "content"       => $component->get("EventsDateRange"),
                     "full"          => false,
                     "property_name" => "EventsDateRange",
                 ],
                 [
-                    "title"         => "Registration available from",
-                    "content"       => $component->get("registrationEnabledFrom"),
-                    "property_name" => "registrationEnabledFrom",
-                ],
-                [
-                    "title"         => "Registration available to",
-                    "content"       => $component->get("registrationEnabledTo"),
-                    "property_name" => "registrationEnabledTo",
+                    "title"         => "Registration date-time range",
+                    "content"       => $component->get("eventsRegistrationRange"),
+                    "property_name" => "eventsRegistrationRange",
                 ],
                 [
                     "title"           => "Imported users",

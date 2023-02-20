@@ -9,6 +9,7 @@ module.exports = {
         "./storage/framework/views/*.php",
         "./resources/views/**/*.blade.php",
         "./app/Http/Livewire/**/*.php",
+        "./modules/**/*.blade.php",
     ],
 
     darkMode: "class",

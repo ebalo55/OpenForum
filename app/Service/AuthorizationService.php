@@ -23,7 +23,7 @@ class AuthorizationService extends BaseService {
     function assignDefaultAdminRole(
         User $user,
     ): void {
-        $user->assignRole(InternalRoles::ADMIN());
+        $user->syncRoles(InternalRoles::ADMIN());
     }
 
     /**
@@ -37,7 +37,7 @@ class AuthorizationService extends BaseService {
     function assignDefaultUserRole(
         User $user,
     ): void {
-        $user->assignRole(InternalRoles::USER());
+	    $user->syncRoles(InternalRoles::USER());
     }
 
     /**

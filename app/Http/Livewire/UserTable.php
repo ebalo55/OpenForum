@@ -8,13 +8,14 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Str;
 use Rappasoft\LaravelLivewireTables\DataTableComponent;
 use Rappasoft\LaravelLivewireTables\Views\Column;
+use Rappasoft\LaravelLivewireTables\Views\Columns\LinkColumn;
 use Spatie\SimpleExcel\SimpleExcelWriter;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 class UserTable extends DataTableComponent {
     public array $bulkActions = [
-        "export"    => "Export Selected",
-        "exportAll" => "Export All",
+	    "export"    => "Export Selected",
+	    "exportAll" => "Export All",
     ];
 
     public
@@ -30,26 +31,38 @@ class UserTable extends DataTableComponent {
     public
     function columns(): array {
         return [
-            Column::make(
-                "Identifier",
-                "prefixed_id",
-            )
-                  ->format(
-                      fn(string $value) => Str::limit(
-                          $value,
-                          20,
-                      ),
-                  )
-                  ->sortable(),
-            Column::make(
-                "Full name",
-                "name",
-            )->searchable()->sortable(),
-            Column::make(
-                "Email",
-                "email",
-            )
-                  ->format(
+	        LinkColumn::make(
+		        "Identifier",
+		        "prefixed_id",
+	        )
+	                  ->title(
+		                  fn(User $row) => Str::limit(
+			                  $row->prefixed_id,
+			                  20,
+		                  ),
+	                  )
+	                  ->location(
+		                  fn(User $row) => route(
+			                  "user.details",
+			                  ["user" => $row],
+		                  ),
+	                  )
+	                  ->attributes(
+		                  fn($row) => [
+			                  "class" => "text-blue-500 underline hover:text-blue-600 transition-all duration-300",
+		                  ],
+	                  )
+	                  ->sortable(),
+
+	        Column::make(
+		        "Full name",
+		        "name",
+	        )->searchable()->sortable(),
+	        Column::make(
+		        "Email",
+		        "email",
+	        )
+	              ->format(
                       fn(string|null $string) => Str::mask(
                           $string ?? "",
                           "*",

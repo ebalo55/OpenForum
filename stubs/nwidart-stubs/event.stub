@@ -10,8 +10,6 @@ class $CLASS$
 
     /**
      * Create a new event instance.
-     *
-     * @return void
      */
     public function __construct()
     {
@@ -23,7 +21,7 @@ class $CLASS$
      *
      * @return array
      */
-    public function broadcastOn()
+    public function broadcastOn(): array
     {
         return [];
     }

@@ -2,7 +2,7 @@
     <img src="https://github.com/ebalo55/student-forum-full-backend/raw/main/resources/assets/images/cover.svg" alt="Student Forum - Full Administration Panel"/>
 </p>
 <p align="center">
-    <img src="https://img.shields.io/badge/Coverage-100%25-brightgreen" alt="Coverage: 100%"/>
+    <img src="https://raw.githubusercontent.com/ebalo55/OpenForum/main/badge-coverage.svg"/>
 </p>
 
 ## Why does this repository exists?
