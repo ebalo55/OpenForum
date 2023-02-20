@@ -1,6 +1,16 @@
-# Introduction
+<p align="center">
+    <img src="https://github.com/ebalo55/student-forum-full-backend/raw/main/resources/assets/images/cover.svg" alt="Student Forum - Full Administration Panel"/>
+</p>
+<p align="center">
+    <a href="https://codecov.io/gh/ebalo55/OpenForum"> 
+        <img src="https://codecov.io/gh/ebalo55/OpenForum/branch/main/graph/badge.svg?token=4BTE2S0USV"/> 
+    </a>
+    <a href="https://github.com/ebalo55/OpenForum/actions/workflows/test.yml">
+        <img src="https://github.com/ebalo55/OpenForum/actions/workflows/test.yml/badge.svg"/>
+    </a>
+</p>
 
-![OpenForum - Full Administration Panel](https://github.com/ebalo55/student-forum-full-backend/raw/main/resources/assets/images/cover.svg)
+# Introduction
 
 Welcome to the **OpenForum** project, a fully functional platform that aims to make the creation and development of informative plans for forums and events easy for non-technicians. This project was created to provide a fully configurable and easily integrated web application for displaying scheduled events and allowing people to reserve event participation in one of many sites.
 
