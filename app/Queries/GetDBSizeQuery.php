@@ -27,6 +27,6 @@ class GetDBSizeQuery implements QueryContract {
                     config("database.connections." . config("database.default") . ".database")
                     . "')) as db_size",
                 )
-            : $query->selectRaw("'unsupported operation' as db_size;");
+            : $query->selectRaw("'unsupported operation' as db_size");
     }
 }
