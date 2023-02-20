@@ -188,23 +188,25 @@ class EventController extends Controller {
     function reserve(
         EventRegisterRequest $request,
     ): JsonResponse {
-        // TODO: currently absences are untracked, tracking them as reservations will make them count in the overall
-        //  total by default.
-        //  Available options are:
-        //      - Track them in a table
-        //      - Scope the query for the Reservation model
-        /** @var User $current_user */
-        $current_user = $request->user();
+	    // TODO: currently absences are untracked, tracking them as reservations will make them count in the overall
+	    //  total by default.
+	    //  Available options are:
+	    //      - Track them in a table
+	    //      - Scope the query for the Reservation model
+	    /** @var User $current_user */
+	    $current_user = $request->user();
 
-        // in order to grant data consistency run everything in a DB transaction, if something fail nothing will be
-        // recorded
-        DB::transaction(
-            function() use ($current_user, $request) {
-                // drop all previous reservations if this method is called again
-                $current_user->reservations()->delete();
+	    EventDayServiceFacade::isRegistrationEnabled();
 
-                foreach ($request->get("reservations") as $reservation) {
-                    /** @var array{date: string, location: string, absent: Optional|bool, activity_reservations: Optional|string[]} $reservation */
+	    // in order to grant data consistency run everything in a DB transaction, if something fail nothing will be
+	    // recorded
+	    DB::transaction(
+		    function() use ($current_user, $request) {
+			    // drop all previous reservations if this method is called again
+			    $current_user->reservations()->delete();
+
+			    foreach ($request->get("reservations") as $reservation) {
+				    /** @var array{date: string, location: string, absent: Optional|bool, activity_reservations: Optional|string[]} $reservation */
 
                     if (Arr::has(
                         $reservation,

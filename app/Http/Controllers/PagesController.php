@@ -14,11 +14,11 @@ class PagesController extends Controller {
         string  $hash,
     ): RedirectResponse {
         return redirect(
-            "https://" .
-            app(GeneralSettings::class)->front_end_domain .
-            config("student-forum.front_end_email_verification_path") .
-            "?id=$id&hash=$hash&signature=" . $request->get("signature")
-            . "&expires=" . $request->get("expires"),
+	        "https://" .
+	        app(GeneralSettings::class)->front_end_domain .
+	        config("open-forum.front_end_email_verification_path") .
+	        "?id=$id&hash=$hash&signature=" . $request->get("signature")
+	        . "&expires=" . $request->get("expires"),
         );
     }
 

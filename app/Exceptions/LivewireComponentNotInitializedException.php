@@ -9,7 +9,7 @@ class LivewireComponentNotInitializedException extends RuntimeException {
     function __construct() {
         parent::__construct(
             message: "Livewire component not initialized or missing during dynamic call.",
-            code:    config("student-forum.exception_codes." . static::class),
+            code:    config("open-forum.exception_codes." . static::class),
         );
     }
 }

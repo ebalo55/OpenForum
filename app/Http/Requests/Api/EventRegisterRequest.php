@@ -31,14 +31,14 @@ class EventRegisterRequest extends FormRequest {
                 "size:" . EventDayServiceFacade::countUniqueEvents(),
             ],
             "reservations.*.date"                    => [
-                "required",
-                "string",
-                "distinct:strict",
-                "date_format:" . config("student-forum.date_format"),
-                /*Rule::exists(
-                    (new EventDay())->getTable(),
-                    "date",
-                ),*/
+	            "required",
+	            "string",
+	            "distinct:strict",
+	            "date_format:" . config("open-forum.date_format"),
+	            /*Rule::exists(
+					(new EventDay())->getTable(),
+					"date",
+				),*/
             ],
             "reservations.*.location"                => [
                 "required",

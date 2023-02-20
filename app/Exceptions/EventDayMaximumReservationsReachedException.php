@@ -14,10 +14,10 @@ class EventDayMaximumReservationsReachedException extends HttpException {
     ) {
         parent::__construct(
             statusCode: Response::HTTP_CONFLICT,
-            message:    "Unable to reserve a spot for the event of " .
-                        format_date($event_day->date) .
-                        " in {$event_day->location}, maximum number of reservation already reached.",
-            code:       config("student-forum.exception_codes." . static::class),
+	        message:    "Unable to reserve a spot for the event of " .
+	                    format_date($event_day->date) .
+	                    " in {$event_day->location}, maximum number of reservation already reached.",
+	        code:       config("open-forum.exception_codes." . static::class),
         );
     }
 }

@@ -2,7 +2,12 @@
     <img src="https://github.com/ebalo55/student-forum-full-backend/raw/main/resources/assets/images/cover.svg" alt="Student Forum - Full Administration Panel"/>
 </p>
 <p align="center">
-    <img src="https://raw.githubusercontent.com/ebalo55/OpenForum/main/badge-coverage.svg"/>
+    <a href="https://codecov.io/gh/ebalo55/OpenForum"> 
+        <img src="https://codecov.io/gh/ebalo55/OpenForum/branch/main/graph/badge.svg?token=4BTE2S0USV"/> 
+    </a>
+    <a href="https://github.com/ebalo55/OpenForum/actions/workflows/test.yml">
+        <img src="https://github.com/ebalo55/OpenForum/actions/workflows/test.yml/badge.svg"/>
+    </a>
 </p>
 
 ## Why does this repository exists?

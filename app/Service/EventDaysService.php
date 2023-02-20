@@ -6,6 +6,7 @@ use App\Contracts\ReservableModelContract;
 use App\Enum\DatetimeFormatVariation;
 use App\Exceptions\EventDayMaximumReservationsReachedException;
 use App\Exceptions\OverlappingPeriodException;
+use App\Exceptions\RegistrationNotEnabledException;
 use App\Models\Activity;
 use App\Models\EventDay;
 use App\Settings\GeneralSettings;
@@ -33,6 +34,28 @@ class EventDaysService extends BaseService {
         ReservableModelContract $reservable_model,
     ): bool {
         return $reservable_model->maxReservations() > $reservable_model->reservationCount();
+    }
+
+    /**
+     * Checks if the registration is enabled or fail with an exception
+     *
+     * @return bool
+     * @throws Throwable
+     * @throws RegistrationNotEnabledException
+     */
+    public
+    function isRegistrationEnabled(): bool {
+        throw_if(
+            is_null(app(GeneralSettings::class)->registration_enabled_from) ||
+            is_null(app(GeneralSettings::class)->registration_enabled_to) ||
+            !(
+                now()->timestamp >= app(GeneralSettings::class)->registration_enabled_from->timestamp &&
+                now()->timestamp <= app(GeneralSettings::class)->registration_enabled_to->timestamp
+            ),
+            RegistrationNotEnabledException::class,
+        );
+
+        return true;
     }
 
     /**

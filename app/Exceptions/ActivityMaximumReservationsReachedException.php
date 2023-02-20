@@ -13,8 +13,8 @@ class ActivityMaximumReservationsReachedException extends HttpException {
     ) {
         parent::__construct(
             statusCode: Response::HTTP_CONFLICT,
-            message:    "Unable to reserve a spot for the activity named '{$activity->title}', maximum number of reservation already reached.",
-            code:       config("student-forum.exception_codes." . static::class),
+	        message:    "Unable to reserve a spot for the activity named '{$activity->title}', maximum number of reservation already reached.",
+	        code:       config("open-forum.exception_codes." . static::class),
         );
     }
 }

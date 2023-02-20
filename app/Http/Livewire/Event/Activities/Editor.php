@@ -41,8 +41,8 @@ class Editor extends Component {
         return [
             "activity.title"           => "required|string|max:65535|min:3",
             "activity.markup"          => "required|string",
-            "activity_starting_at"     => "required|date_format:" . config("student-forum.time_format"),
-            "activity_ending_at"       => "required|date_format:" . config("student-forum.time_format"),
+            "activity_starting_at"     => "required|date_format:" . config("open-forum.time_format"),
+            "activity_ending_at"       => "required|date_format:" . config("open-forum.time_format"),
             "activity.max_reservation" => "required|integer|min:0|max:2000000000",
         ];
     }

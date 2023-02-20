@@ -162,14 +162,14 @@ class GeneralSettingsForm extends Component {
         );
 
         Validator::make(
-            [
+	        [
                 "starting_date" => $starting_date,
                 "ending_date"   => $ending_date,
             ],
-            [
-                "starting_date" => "required|string|date_format:" . config("student-forum.date_format"),
-                "ending_date"   => "required|string|date_format:" . config("student-forum.date_format"),
-            ],
+	        [
+		        "starting_date" => "required|string|date_format:" . config("open-forum.date_format"),
+		        "ending_date"   => "required|string|date_format:" . config("open-forum.date_format"),
+	        ],
         )->validate();
 
         $savable_data["starting_date"] = $starting_date;
@@ -211,14 +211,14 @@ class GeneralSettingsForm extends Component {
     function rules(): array {
         return [
             "registration_available_from" => [
-                "required",
-                "date_format:" . config("student-forum.datetime_format"),
-                "after:now",
+	            "required",
+	            "date_format:" . config("open-forum.datetime_format"),
+	            "after:now",
             ],
             "registration_available_to"   => [
-                "required",
-                "date_format:" . config("student-forum.datetime_format"),
-                "after:registration_available_from",
+	            "required",
+	            "date_format:" . config("open-forum.datetime_format"),
+	            "after:registration_available_from",
             ],
             "site_name"                   => "required|min:4|max:255",
             // accepts only format: day/month/year to day/month/year

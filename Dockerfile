@@ -5,7 +5,7 @@
 # Valid version values are PHP 7.4+
 ARG PHP_VERSION=8.2
 ARG NODE_VERSION=18
-FROM serversideup/php:${PHP_VERSION}-fpm-nginx-v1.5.0 as base
+FROM php:8.2.3-fpm as base
 
 # PHP_VERSION needs to be repeated here
 # See https://docs.docker.com/engine/reference/builder/#understand-how-arg-and-from-interact
@@ -13,27 +13,31 @@ ARG PHP_VERSION
 
 LABEL fly_launch_runtime="laravel"
 
-RUN apt-get update && apt-get install -y \
-    git curl zip unzip rsync ca-certificates vim htop cron \
-    php${PHP_VERSION}-pgsql php${PHP_VERSION}-bcmath \
-    php${PHP_VERSION}-swoole php${PHP_VERSION}-xml php${PHP_VERSION}-mbstring \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/*
+ADD https://github.com/mlocati/docker-php-extension-installer/releases/latest/download/install-php-extensions /usr/local/bin/
+
+# install tools and extensions
+RUN chmod +x /usr/local/bin/install-php-extensions
+RUN apt-get update && apt-get install -y git curl zip unzip rsync ca-certificates vim htop cron nginx
+RUN install-php-extensions pgsql swoole xml bcmath mbstring zip @composer
+RUN apt-get clean
+RUN rm -rf /var/lib/apt/lists/*
 
 WORKDIR /var/www/html
 # copy application code, skipping files based on .dockerignore
 COPY . /var/www/html
 
-RUN composer install --optimize-autoloader --no-dev \
-    && mkdir -p storage/logs \
-    && php artisan optimize:clear \
-    && chown -R webuser:webgroup /var/www/html \
-    && sed -i 's/protected \$proxies/protected \$proxies = "*"/g' app/Http/Middleware/TrustProxies.php \
-    && echo "MAILTO=\"\"\n* * * * * webuser /usr/bin/php /var/www/html/artisan schedule:run" > /etc/cron.d/laravel \
-    && rm -rf /etc/cont-init.d/* \
-    && cp .fly/nginx-websockets.conf /etc/nginx/conf.d/websockets.conf \
-    && cp .fly/entrypoint.sh /entrypoint \
-    && chmod +x /entrypoint
+RUN composer install --optimize-autoloader --no-dev
+RUN mkdir -p storage/logs
+RUN php artisan optimize:clear
+RUN adduser --group webgroup
+RUN useradd -G webgroup webuser
+RUN chown -R webuser:webgroup /var/www/html
+RUN sed -i 's/protected \$proxies/protected \$proxies = "*"/g' app/Http/Middleware/TrustProxies.php
+RUN echo "MAILTO=\"\"\n* * * * * webuser /usr/bin/php /var/www/html/artisan schedule:run" > /etc/cron.d/laravel
+RUN rm -rf /etc/cont-init.d/*
+RUN cp .fly/nginx-websockets.conf /etc/nginx/conf.d/websockets.conf
+RUN cp .fly/entrypoint.sh /entrypoint
+RUN chmod +x /entrypoint
 
 # If we're using Octane...
 RUN if grep -Fq "laravel/octane" /var/www/html/composer.json; then \
@@ -91,8 +95,8 @@ FROM base
 # in the assets we generated above rather than overwrite them
 COPY --from=node_modules_go_brrr /app/public /var/www/html/public-npm
 RUN rsync -ar /var/www/html/public-npm/ /var/www/html/public/ \
-    && rm -rf /var/www/html/public-npm \
-    && chown -R webuser:webgroup /var/www/html/public
+RUN rm -rf /var/www/html/public-npm \
+RUN chown -R webuser:webgroup /var/www/html/public
 
 EXPOSE 8080
 

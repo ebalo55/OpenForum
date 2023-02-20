@@ -19,34 +19,40 @@ class Details extends Component {
 
     /**
      * Assign the default user role to a given user
-     *
      */
     public
     function downgrade() {
-        if (!$this->user->hasRole(InternalRoles::SUPER_ADMIN())) {
-            AuthorizationServiceFacade::assignDefaultUserRole($this->user);
-        }
+	    if (!$this->user->hasRole(InternalRoles::SUPER_ADMIN())) {
+		    AuthorizationServiceFacade::assignDefaultUserRole($this->user);
 
-        LivewireBannerServiceFacade::from($this)
-                                   ->success("User downgraded to the basic 'user' role");
-        LivewireScrollServiceFacade::from($this)
-                                   ->scrollToTop();
+		    LivewireBannerServiceFacade::from($this)
+		                               ->success("User downgraded to the basic 'user' role");
+	    } else {
+		    LivewireBannerServiceFacade::from($this)
+		                               ->error("Action unauthorized");
+	    }
+
+	    LivewireScrollServiceFacade::from($this)
+	                               ->scrollToTop();
     }
 
     /**
      * Assign the default admin role to a given user
-     *
      */
     public
     function elevate() {
-        if (!$this->user->hasRole(InternalRoles::SUPER_ADMIN())) {
-            AuthorizationServiceFacade::assignDefaultAdminRole($this->user);
-        }
+	    if (!$this->user->hasRole(InternalRoles::SUPER_ADMIN())) {
+		    AuthorizationServiceFacade::assignDefaultAdminRole($this->user);
 
-        LivewireBannerServiceFacade::from($this)
-                                   ->success("User elevated to the 'admin' role");
-        LivewireScrollServiceFacade::from($this)
-                                   ->scrollToTop();
+		    LivewireBannerServiceFacade::from($this)
+		                               ->success("User elevated to the 'admin' role");
+	    } else {
+		    LivewireBannerServiceFacade::from($this)
+		                               ->error("Action unauthorized");
+	    }
+
+	    LivewireScrollServiceFacade::from($this)
+	                               ->scrollToTop();
     }
 
     /**

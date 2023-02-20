@@ -14,7 +14,7 @@ if (!function_exists("format")) {
      * @return string
      */
     function format(Carbon $datetime): string {
-        return $datetime->format(config("student-forum.datetime_format"));
+        return $datetime->format(config("open-forum.datetime_format"));
     }
 }
 
@@ -29,7 +29,7 @@ if (!function_exists("format_time")) {
      * @return string
      */
     function format_time(Carbon $datetime): string {
-        return $datetime->format(config("student-forum.time_format"));
+        return $datetime->format(config("open-forum.time_format"));
     }
 }
 
@@ -44,7 +44,7 @@ if (!function_exists("format_date")) {
      * @return string
      */
     function format_date(Carbon $datetime): string {
-        return $datetime->format(config("student-forum.date_format"));
+        return $datetime->format(config("open-forum.date_format"));
     }
 }
 
@@ -65,15 +65,15 @@ if (!function_exists("make_from_format")) {
     ): Carbon {
         return match ($format_variation) {
             DatetimeFormatVariation::DATETIME => Carbon::createFromFormat(
-                config("student-forum.datetime_format"),
+                config("open-forum.datetime_format"),
                 $datetime,
             ),
             DatetimeFormatVariation::DATE     => Carbon::createFromFormat(
-                config("student-forum.date_format"),
+                config("open-forum.date_format"),
                 $datetime,
             ),
             DatetimeFormatVariation::TIME     => Carbon::createFromFormat(
-                config("student-forum.time_format"),
+                config("open-forum.time_format"),
                 $datetime,
             ),
         };

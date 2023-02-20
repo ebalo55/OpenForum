@@ -6,6 +6,8 @@ use App\Exceptions\LivewireComponentNotInitializedException;
 use App\Exceptions\MissingOrInvalidHeadersException;
 use App\Exceptions\OverlappingPeriodException;
 use App\Exceptions\PendingUploadInProgressException;
+use App\Exceptions\RegistrationNotEnabledException;
+use App\Exceptions\UndefinedRegistryKeyException;
 use App\Exceptions\UnserializableBackedEnumException;
 
 return [
@@ -22,6 +24,8 @@ return [
         OverlappingPeriodException::class                  => 1004,
         ActivityMaximumReservationsReachedException::class => 1005,
         EventDayMaximumReservationsReachedException::class => 1006,
+        UndefinedRegistryKeyException::class               => 1007,
+        RegistrationNotEnabledException::class             => 1008,
     ],
 
     "datetime_format" => "d/m/Y H:i:s",

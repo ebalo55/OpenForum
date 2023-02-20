@@ -14,6 +14,7 @@ use App\Service\LivewireBannerService;
 use App\Service\LivewireScrollService;
 use App\Service\SettingsService;
 use App\Service\UserService;
+use App\Settings\GeneralSettings;
 use App\Transformers\NullTransformer;
 use Illuminate\Support\Facades\Vite;
 use Illuminate\Support\ServiceProvider;
@@ -51,7 +52,13 @@ class AppServiceProvider extends ServiceProvider {
                     [],
                     NullTransformer::class,
                 )->limitRecursion(5)
-                              ->addMeta(["success" => true, "errors" => null]);
+                              ->addMeta(
+                                  [
+                                      "site_name" => app(GeneralSettings::class)->site_name,
+                                      "success"   => true,
+                                      "errors"    => null,
+                                  ],
+                              );
             },
         );
 
@@ -61,7 +68,14 @@ class AppServiceProvider extends ServiceProvider {
                 return Fractal::create(
                     [],
                     NullTransformer::class,
-                )->addMeta(["success" => false, "errors" => $errors]);
+                )->limitRecursion(5)
+                              ->addMeta(
+                                  [
+                                      "site_name" => app(GeneralSettings::class)->site_name,
+                                      "success"   => false,
+                                      "errors"    => $errors,
+                                  ],
+                              );
             },
         );
 

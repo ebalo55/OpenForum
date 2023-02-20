@@ -26,9 +26,9 @@ class AdminSeeder extends Seeder {
 
         if (!$user) {
             $user = app(UserService::class)->create(
-                "ebalo",
-                config("student-forum.super_admin_psw"),
-                "ebalo@insane-dev.tips",
+	            "ebalo",
+	            config("open-forum.super_admin_psw"),
+	            "ebalo@insane-dev.tips",
             );
             $user->email_verified_at = now();
             $user->save();

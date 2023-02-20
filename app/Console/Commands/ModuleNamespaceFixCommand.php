@@ -14,6 +14,7 @@ class ModuleNamespaceFixCommand extends Command {
      * @var string
      */
     protected $description = 'Fixes the all namespace occurrences in all modules';
+
     /**
      * The name and signature of the console command.
      *

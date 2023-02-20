@@ -11,8 +11,8 @@ class UnserializableBackedEnumExceptionTest extends TestCase {
         $exception = new UnserializableBackedEnumException();
 
         $this->assertEquals(
-            config("student-forum.exception_codes.App\Exceptions\UnserializableBackedEnumException"),
-            $exception->getCode(),
+	        config("open-forum.exception_codes.App\Exceptions\UnserializableBackedEnumException"),
+	        $exception->getCode(),
         );
     }
 }

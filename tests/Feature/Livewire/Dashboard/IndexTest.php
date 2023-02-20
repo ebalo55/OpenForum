@@ -43,6 +43,21 @@ class IndexTest extends TestCase {
     }
 
     public
+    function test_automatically_formats_registration_date_ranges_if_defined() {
+        $component = Livewire::test(Index::class);
+
+        SettingServiceFacade::setRegistrationStartingTime(Carbon::create(2023));
+        SettingServiceFacade::setRegistrationEndingTime(Carbon::create(2024));
+
+        $this->assertEquals(
+            "From " . format(
+                app(GeneralSettings::class)->registration_enabled_from,
+            ) . " to " . format(app(GeneralSettings::class)->registration_enabled_to),
+            $component->get("eventsRegistrationRange"),
+        );
+    }
+
+    public
     function test_can_get_cards_data_computed_property() {
         $component = Livewire::test(Index::class);
 

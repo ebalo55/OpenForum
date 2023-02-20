@@ -10,7 +10,7 @@ class UnserializableBackedEnumException extends RuntimeException {
     function __construct() {
         parent::__construct(
             message: "Unserializable backed enum detected, you're missing the " . SerializableEnum::class . ".",
-            code:    config("student-forum.exception_codes." . static::class),
+	        code:    config("open-forum.exception_codes." . static::class),
         );
     }
 }

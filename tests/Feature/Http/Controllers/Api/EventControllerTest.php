@@ -4,7 +4,9 @@ namespace Tests\Feature\Http\Controllers\Api;
 
 use App\Enum\DatetimeFormatVariation;
 use App\Exceptions\ActivityMaximumReservationsReachedException;
+use App\Exceptions\RegistrationNotEnabledException;
 use App\Facade\EventDayServiceFacade;
+use App\Facade\SettingServiceFacade;
 use App\Facade\UserServiceFacade;
 use App\Models\Activity;
 use App\Models\EventDay;
@@ -335,6 +337,9 @@ class EventControllerTest extends TestCase {
         // need to trigger the refresh of the counter manually as it is triggered internally during the events creation
         EventDayServiceFacade::countUniqueEvents(true);
 
+        SettingServiceFacade::setRegistrationStartingTime(now()->subDays());
+        SettingServiceFacade::setRegistrationEndingTime(now()->addDays());
+
         $response = $this->actingAs($user = User::first())->post(
             route("api.events.reserve"),
             [
@@ -457,6 +462,9 @@ class EventControllerTest extends TestCase {
         // need to trigger the refresh of the counter manually as it is triggered internally during the events creation
         EventDayServiceFacade::countUniqueEvents(true);
 
+        SettingServiceFacade::setRegistrationStartingTime(now()->subDays());
+        SettingServiceFacade::setRegistrationEndingTime(now()->addDays());
+
         $response = $this->actingAs($user = User::first())->post(
             route("api.events.reserve"),
             [
@@ -577,6 +585,9 @@ class EventControllerTest extends TestCase {
         // need to trigger the refresh of the counter manually as it is triggered internally during the events creation
         EventDayServiceFacade::countUniqueEvents(true);
 
+        SettingServiceFacade::setRegistrationStartingTime(now()->subDays());
+        SettingServiceFacade::setRegistrationEndingTime(now()->addDays());
+
         $response = $this->actingAs($user = User::first())->post(
             route("api.events.reserve"),
             [
@@ -606,12 +617,102 @@ class EventControllerTest extends TestCase {
                     "errors"  => [
                         [
                             "reference_code" => config(
-                                "student-forum.exception_codes.App\Exceptions\ActivityMaximumReservationsReachedException",
+                                "open-forum.exception_codes.App\Exceptions\ActivityMaximumReservationsReachedException",
                             ),
                             "field"          => null,
                             "message"        => (new ActivityMaximumReservationsReachedException(
                                 $events[1]->activities[0]
                             ))->getMessage(),
+                        ],
+                    ],
+                ],
+            ],
+        );
+    }
+
+    public
+    function test_cannot_reserve_a_spot_if_registration_is_not_enabled(): void {
+        $events = EventDay::factory(2)
+                          ->withMaxReservations(10)
+                          ->sequence(
+                              [
+                                  "date" => make_from_format(
+                                      "01/01/2023",
+                                      DatetimeFormatVariation::DATE,
+                                  ),
+                              ],
+                              [
+                                  "date" => make_from_format(
+                                      "02/01/2023",
+                                      DatetimeFormatVariation::DATE,
+                                  ),
+                              ],
+                          )
+                          ->has(
+                              Activity::factory(2)
+                                      ->sequence(
+                                          [
+                                              "starting_at" => make_from_format(
+                                                  "12:30:00",
+                                                  DatetimeFormatVariation::TIME,
+                                              ),
+                                              "ending_at"   => make_from_format(
+                                                  "13:30:00",
+                                                  DatetimeFormatVariation::TIME,
+                                              ),
+                                          ],
+                                          [
+                                              "starting_at" => make_from_format(
+                                                  "19:30:00",
+                                                  DatetimeFormatVariation::TIME,
+                                              ),
+                                              "ending_at"   => make_from_format(
+                                                  "21:30:00",
+                                                  DatetimeFormatVariation::TIME,
+                                              ),
+                                          ],
+                                      ),
+                          )
+                          ->create();
+
+        $events = EventDay::query()->orderBy("date")->get();
+
+        // need to trigger the refresh of the counter manually as it is triggered internally during the events creation
+        EventDayServiceFacade::countUniqueEvents(true);
+
+        $response = $this->actingAs($user = User::first())->post(
+            route("api.events.reserve"),
+            [
+                "reservations" => [
+                    [
+                        "date"     => format_date($events[0]->date),
+                        "location" => $events[0]->location,
+                        "absent"   => true,
+                    ],
+                    [
+                        "date"                  => format_date($events[1]->date),
+                        "location"              => $events[1]->location,
+                        "activity_reservations" => [
+                            $events[1]->activities[0]->prefixed_id,
+                            $events[1]->activities[1]->prefixed_id,
+                        ],
+                    ],
+                ],
+            ],
+        );
+
+        $response->assertJson(
+            [
+                "data" => [],
+                "meta" => [
+                    "success" => false,
+                    "errors"  => [
+                        [
+                            "reference_code" => config(
+                                "open-forum.exception_codes.App\Exceptions\RegistrationNotEnabledException",
+                            ),
+                            "field"          => null,
+                            "message"        => (new RegistrationNotEnabledException())->getMessage(),
                         ],
                     ],
                 ],

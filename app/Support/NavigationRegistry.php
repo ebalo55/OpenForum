@@ -5,7 +5,7 @@ namespace App\Support;
 use App\Data\NavigationRegistryData;
 use App\Service\BaseService;
 
-class NavigationRegistry extends BaseService {
+class NavigationRegistry {
     /**
      * Get the content of the registry
      *
