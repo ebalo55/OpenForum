@@ -37,9 +37,5 @@ jobs:
         DB_CONNECTION: sqlite
         DB_DATABASE: database/database.sqlite
       run: vendor/bin/phpunit --coverage-clover clover.xml
-    - name: Generate test coverage badge
-      uses: timkrase/phpunit-coverage-badge@v1.2.1
-      with:
-        coverage_badge_path: 'badge-coverage.svg'
-        push_badge: true
-        repo_token: ${{ secrets.GITHUB_TOKEN }}
+    - name: Upload coverage reports to Codecov
+      uses: codecov/codecov-action@v3
