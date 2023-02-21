@@ -20,13 +20,11 @@ class GetDBSizeQuery implements QueryContract {
         EloquentBuilder|Builder $query,
         mixed                   ...$parameters
     ): Builder|EloquentBuilder {
-        return config("database.default") === "pgsql"
-            ? $query
-                ->selectRaw(
-                    "pg_size_pretty(pg_database_size('" .
-                    config("database.connections." . config("database.default") . ".database")
-                    . "')) as db_size",
-                )
-            : $query->selectRaw("'unsupported operation' as db_size");
+        return $query
+            ->selectRaw(
+                "pg_size_pretty(pg_database_size('" .
+                config("database.connections." . config("database.default") . ".database")
+                . "')) as db_size",
+            );
     }
 }
