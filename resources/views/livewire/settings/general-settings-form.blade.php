@@ -1,5 +1,5 @@
 <div>
-    <x-jet-form-section submit="save">
+    <x-jet-form-section submit="save" :with_bordered_card="true">
         <x-slot name="title">
             General settings
         </x-slot>
@@ -77,7 +77,7 @@
             </x-jet-button>
         </x-slot>
     </x-jet-form-section>
-    <x-jet-form-section submit="save" class="mt-2">
+    <x-jet-form-section submit="save" class="mt-4" :with_bordered_card="true">
         <x-slot name="title">
             <div class="flex items-center">
                 General settings
