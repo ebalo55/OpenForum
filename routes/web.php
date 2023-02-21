@@ -1,12 +1,6 @@
 <?php
 
-use App\Enum\Permissions\Classes\Control;
 use App\Http\Controllers\PagesController;
-use App\Http\Livewire\Dashboard\Index;
-use App\Http\Livewire\Event\Activities\Create;
-use App\Http\Livewire\Event\Activities\Edit;
-use App\Http\Livewire\Settings\Editor;
-use App\Http\Livewire\Users\Details;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -35,75 +29,10 @@ Route::middleware(
     ],
 )->group(
     function() {
-        Route::get(
-            '/dashboard',
-            Index::class,
-        )->name('dashboard');
-
-        Route::middleware(
-            [
-                "can:" . \App\Enum\Permissions\Classes\Event::UPDATE(),
-            ],
-        )->get(
-            '/settings',
-            Editor::class,
-        )->name('settings.editor');
-
-        Route::middleware(
-            [
-                "can:" . \App\Enum\Permissions\Classes\Event::UPDATE(),
-            ],
-        )->get(
-            '/users',
-            \App\Http\Livewire\Users\Index::class,
-        )->name('users.index');
-
-        Route::middleware(
-            [
-                "can:" . \App\Enum\Permissions\Classes\Event::UPDATE(),
-                "can:" . \App\Enum\Permissions\Classes\Event::CREATE(),
-            ],
-        )->get(
-            '/events',
-            \App\Http\Livewire\Event\Days\Index::class,
-        )->name('events.index');
-
-        Route::middleware(
-            [
-                "can:" . \App\Enum\Permissions\Classes\Event::UPDATE(),
-                "can:" . \App\Enum\Permissions\Classes\Event::CREATE(),
-            ],
-        )->get(
-            '/events/{event}',
-            \App\Http\Livewire\Event\Activities\Index::class,
-        )->name('events.activities');
-
-        Route::middleware(
-            [
-                "can:" . \App\Enum\Permissions\Classes\Event::CREATE(),
-            ],
-        )->get(
-            '/events/{event}/create',
-            Create::class,
-        )->name('events.activities.create');
-
-	    Route::middleware(
-		    [
-			    "can:" . \App\Enum\Permissions\Classes\Event::UPDATE(),
-		    ],
-	    )->get(
-		    '/events/{event}/{activity}',
-		    Edit::class,
-	    )->name('events.activities.edit');
-
-	    Route::middleware(
-		    [
-			    "can:" . Control::MANAGE_USER_ROLES(),
-		    ],
-	    )->get(
-		    "/user/{user}",
-		    Details::class,
-	    )->name("user.details");
+        require "web/dashboard.php";
+        require "web/settings.php";
+        require "web/users.php";
+        require "web/events.php";
     },
 );
 
