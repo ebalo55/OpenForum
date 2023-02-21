@@ -25,6 +25,8 @@ Route::get(
     [PagesController::class, "loginRedirect"],
 );
 
+Route::mailPreview('mail-preview');
+
 Route::middleware(
     [
         'auth:sanctum',

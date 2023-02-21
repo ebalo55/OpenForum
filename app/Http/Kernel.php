@@ -26,6 +26,7 @@ use Illuminate\Session\Middleware\AuthenticateSession;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 use Laravel\Sanctum\Http\Middleware\CheckAbilities;
+use Spatie\MailPreview\Http\Middleware\AddMailPreviewOverlayToResponse;
 
 class Kernel extends HttpKernel {
     /**
@@ -77,6 +78,7 @@ class Kernel extends HttpKernel {
             ShareErrorsFromSession::class,
             VerifyCsrfToken::class,
             SubstituteBindings::class,
+            AddMailPreviewOverlayToResponse::class,
         ],
 
         'api' => [

@@ -11,6 +11,7 @@ use App\Http\Requests\Api\EventRegisterRequest;
 use App\Models\Activity;
 use App\Models\EventDay;
 use App\Models\User;
+use App\Notifications\ReservationConfirmed;
 use App\Transformers\EventTransformer;
 use App\Transformers\UserTransformer;
 use Illuminate\Database\Eloquent\Builder;
@@ -252,14 +253,16 @@ class EventController extends Controller {
             },
         );
 
+        $current_user->notify(new ReservationConfirmed());
+
         // avoid recreating the response with reservation included, instead prefer the return of the whole user object
         // with the linked reservations
         return Fractal::success()
-            ->parseIncludes("reservations")
-            ->item(
-                $current_user,
-                UserTransformer::class,
-                "user",
-            )->respond();
+                      ->parseIncludes("reservations")
+                      ->item(
+                          $current_user,
+                          UserTransformer::class,
+                          "user",
+                      )->respond();
     }
 }
