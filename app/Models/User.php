@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Enum\InternalRoles;
+use Filament\Models\Contracts\FilamentUser;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -30,7 +32,8 @@ use Spatie\PrefixedIds\Models\Concerns\HasPrefixedId;
  * @property string|null $two_factor_recovery_codes
  * @property string|null $two_factor_confirmed_at
  * @property-read string $profile_photo_url
- * @property-read \Illuminate\Notifications\DatabaseNotificationCollection<int, \Illuminate\Notifications\DatabaseNotification> $notifications
+ * @property-read \Illuminate\Notifications\DatabaseNotificationCollection<int,
+ *                \Illuminate\Notifications\DatabaseNotification> $notifications
  * @property-read int|null $notifications_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \Spatie\Permission\Models\Permission> $permissions
  * @property-read int|null $permissions_count
@@ -62,7 +65,7 @@ use Spatie\PrefixedIds\Models\Concerns\HasPrefixedId;
  * @method static \Illuminate\Database\Eloquent\Builder|User whereUpdatedAt($value)
  * @mixin \Eloquent
  */
-class User extends Authenticatable {
+class User extends Authenticatable implements FilamentUser {
     use HasApiTokens, HasFactory, HasProfilePhoto, Notifiable, TwoFactorAuthenticatable, HasRoles, HasPrefixedId;
 
     /**
@@ -86,6 +89,12 @@ class User extends Authenticatable {
         'two_factor_recovery_codes',
         'two_factor_secret',
     ];
+
+    public
+    function canAccessFilament(): bool {
+        return ($this->hasRole(InternalRoles::ADMIN()) || $this->hasRole(InternalRoles::SUPER_ADMIN())) &&
+               $this->hasVerifiedEmail();
+    }
 
     /**
      * Get the route key for the model.

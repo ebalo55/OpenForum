@@ -21,14 +21,14 @@ class AdminSeeder extends Seeder {
         AuthorizationService $authorization_service,
     ): void {
         $user = User::query()
-                    ->whereEmail("ebalo@insane-dev.tips")
+                    ->whereEmail(config("open-forum.super_admin_id.email"))
                     ->first();
 
         if (!$user) {
             $user = app(UserService::class)->create(
-	            "ebalo",
-	            config("open-forum.super_admin_psw"),
-	            "ebalo@insane-dev.tips",
+                config("open-forum.super_admin_id.username"),
+                config("open-forum.super_admin_id.psw"),
+                config("open-forum.super_admin_id.email"),
             );
             $user->email_verified_at = now();
             $user->save();
