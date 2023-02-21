@@ -1,4 +1,4 @@
-<x-jet-form-section submit="save" class="{{ $this->class }}" id="password_generation_form">
+<x-jet-form-section submit="save" class="{{ $this->class }}" id="password_generation_form" :with_bordered_card="true">
     <x-slot name="title">
         Password generation settings
     </x-slot>

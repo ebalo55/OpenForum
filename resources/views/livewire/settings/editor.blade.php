@@ -9,9 +9,22 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <x-banner.success/>
             <x-banner.error/>
-            <livewire:settings.general-settings-form/>
-            <x-jet-section-border/>
-            <livewire:settings.password-generation-form/>
+            <x-tabs :active_tab="0">
+                <x-tabs.header>
+                    <x-tabs.header.tab :tab_id="0">
+                        General
+                    </x-tabs.header.tab>
+                    <x-tabs.header.tab :tab_id="1">
+                        Password generation
+                    </x-tabs.header.tab>
+                </x-tabs.header>
+                <x-tabs.content :tab_id="0">
+                    <livewire:settings.general-settings-form/>
+                </x-tabs.content>
+                <x-tabs.content :tab_id="1">
+                    <livewire:settings.password-generation-form/>
+                </x-tabs.content>
+            </x-tabs>
         </div>
     </div>
 </div>
