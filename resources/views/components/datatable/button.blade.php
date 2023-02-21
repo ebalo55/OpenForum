@@ -1,10 +1,11 @@
+@php use App\Enum\ButtonVariant; @endphp
 @props([
 	"event",
 	"url"
 ])
 
 <x-button class="bg-white hover:bg-gray-100 flex items-center justify-center border border-gray-300 pl-2"
-          :variant="\App\Enum\ButtonVariant::LINK"
+          :variant="ButtonVariant::LINK"
           :url="$url"
 >
     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"

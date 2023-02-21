@@ -1,15 +1,16 @@
+@php use App\Enum\ButtonVariant; @endphp
 @props([
-	"variant" => \App\Enum\ButtonVariant::BUTTON,
+	"variant" => ButtonVariant::BUTTON,
 	"url" => null,
 	"target" => "_self",
 ])
 
-@if($variant === \App\Enum\ButtonVariant::BUTTON)
+@if($variant === ButtonVariant::BUTTON)
     <button
         {{$attributes->merge(["class" => "px-4 py-2 rounded text-sm transition-all duration-300 hover:bg-gray-100"])}}>
         {{$slot}}
     </button>
-@elseif($variant === \App\Enum\ButtonVariant::LINK)
+@elseif($variant === ButtonVariant::LINK)
     <a
         href="{{$url}}"
         target="{{$target}}"

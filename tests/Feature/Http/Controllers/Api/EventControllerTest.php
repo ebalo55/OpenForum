@@ -12,7 +12,9 @@ use App\Models\Activity;
 use App\Models\EventDay;
 use App\Models\Reservation;
 use App\Models\User;
+use App\Notifications\ReservationConfirmed;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Facades\Notification;
 use Spatie\LaravelMarkdown\MarkdownRenderer;
 use Tests\TestCase;
 
@@ -288,6 +290,11 @@ class EventControllerTest extends TestCase {
 
     public
     function test_can_reserve_a_spot(): void {
+        Notification::fake();
+
+        SettingServiceFacade::setEventsStartingDay(now());
+        SettingServiceFacade::setEventsEndingDay(now()->addDays());
+
         $events = EventDay::factory(2)
                           ->withMaxReservations(10)
                           ->sequence(
@@ -410,10 +417,20 @@ class EventControllerTest extends TestCase {
                 ],
             ],
         );
+
+        Notification::assertSentTimes(
+            ReservationConfirmed::class,
+            1,
+        );
     }
 
     public
     function test_can_reserve_a_spot_and_be_absent_a_day(): void {
+        Notification::fake();
+
+        SettingServiceFacade::setEventsStartingDay(now());
+        SettingServiceFacade::setEventsEndingDay(now()->addDays());
+
         $events = EventDay::factory(2)
                           ->withMaxReservations(10)
                           ->sequence(
@@ -532,6 +549,11 @@ class EventControllerTest extends TestCase {
                     "errors"  => null,
                 ],
             ],
+        );
+
+        Notification::assertSentTimes(
+            ReservationConfirmed::class,
+            1,
         );
     }
 

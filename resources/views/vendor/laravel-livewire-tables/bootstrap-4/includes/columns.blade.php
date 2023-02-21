@@ -1,3 +1,4 @@
+@php use Illuminate\Support\HtmlString; @endphp
 <tr>
     @foreach($columns as $column)
         @if ($column->isVisible())
@@ -15,11 +16,11 @@
                 {{ $column->getText() }}
 
                 @if ($sortField !== $column->getAttribute())
-                    {{ new \Illuminate\Support\HtmlString($sortDefaultIcon) }}
+                    {{ new HtmlString($sortDefaultIcon) }}
                 @elseif ($sortDirection === 'asc')
-                    {{ new \Illuminate\Support\HtmlString($ascSortIcon) }}
+                    {{ new HtmlString($ascSortIcon) }}
                 @else
-                    {{ new \Illuminate\Support\HtmlString($descSortIcon) }}
+                    {{ new HtmlString($descSortIcon) }}
                 @endif
                 </th>
             @else

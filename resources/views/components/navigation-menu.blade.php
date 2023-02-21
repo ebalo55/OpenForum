@@ -1,3 +1,4 @@
+@php use App\Support\NavigationRegistry; @endphp
 <nav x-data="{ open: false }" class="bg-white border-b border-gray-100">
     <!-- Primary Navigation Menu -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -12,7 +13,7 @@
 
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    @foreach(\App\Support\NavigationRegistry::get() as $nav_link)
+                    @foreach(NavigationRegistry::get() as $nav_link)
                         @if($nav_link->canBeViewed())
                             <x-jet-nav-link href="{{ route($nav_link->route_name) }}"
                                             :active="request()->routeIs($nav_link->route_name)">
@@ -101,7 +102,7 @@
     <!-- Responsive Navigation Menu -->
     <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
         <div class="pt-2 pb-3 space-y-1">
-            @foreach(\App\Support\NavigationRegistry::get() as $nav_link)
+            @foreach(NavigationRegistry::get() as $nav_link)
                 @if($nav_link->canBeViewed())
                     <x-jet-responsive-nav-link href="{{ route($nav_link->route_name) }}"
                                                :active="request()->routeIs($nav_link->route_name)">

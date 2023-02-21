@@ -3,6 +3,8 @@
 namespace App\Notifications;
 
 use App\Models\User;
+use App\Queries\DateOrderedReservationsQuery;
+use App\Settings\GeneralSettings;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
@@ -31,7 +33,22 @@ class ReservationConfirmed extends Notification {
     function toMail(
         User $notifiable,
     ): MailMessage {
-        return (new MailMessage())->markdown("mails.reservation-confirmed");
+        $notifiable->loadCount("reservations");
+        return (new MailMessage())
+            ->subject(app(GeneralSettings::class)->site_name . " - Reservation confirmed")
+            ->markdown(
+                "mails.reservation-confirmed",
+                [
+                    "user"                 => $notifiable,
+                    "reservation_count"    => $notifiable->reservations_count,
+                    "ordered_reservations" => DateOrderedReservationsQuery::handle(
+                        $notifiable->reservations()->getQuery(),
+                    )->get(),
+                    "unique_days_count"    => app(GeneralSettings::class)->events_ending_day->diffInDays(
+                        app(GeneralSettings::class)->events_starting_day,
+                    ),
+                ],
+            );
     }
 
     /**
@@ -51,6 +68,6 @@ class ReservationConfirmed extends Notification {
      */
     public
     function __construct() {
-        //
+        $this->afterCommit();
     }
 }
