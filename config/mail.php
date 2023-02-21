@@ -38,7 +38,11 @@ return [
 
     'mailers' => [
         'smtp' => [
-            'transport'    => 'smtp',
+            // transport customized, if the app is in debug the preview transport will be used
+            'transport'    => env(
+                'APP_DEBUG',
+                false,
+            ) ? "preview" : 'smtp',
             'host'         => env(
                 'MAIL_HOST',
                 'smtp.mailgun.org',

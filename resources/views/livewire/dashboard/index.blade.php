@@ -1,3 +1,4 @@
+@php use App\Enum\ButtonVariant; @endphp
 <div>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
@@ -23,7 +24,7 @@
                                 @if(!$this->shouldSpanFullGrid($data))
                                     <x-button.small
                                         class="ml-auto text-sky-600 hover:bg-sky-100"
-                                        :variant="\App\Enum\ButtonVariant::LINK"
+                                        :variant="ButtonVariant::LINK"
                                         :url="route('settings.editor')"
                                     >
                                         Edit

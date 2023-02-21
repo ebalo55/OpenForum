@@ -6,7 +6,7 @@ use App\Contracts\QueryContract;
 use Illuminate\Database\Eloquent\Builder as EloquentBuilder;
 use Illuminate\Database\Query\Builder;
 
-class GetDBSizeQuery implements QueryContract {
+class DateOrderedReservationsQuery implements QueryContract {
     /**
      * Handle the query and apply the necessary restrictions returning the modified instance of the query
      *
@@ -21,10 +21,19 @@ class GetDBSizeQuery implements QueryContract {
         mixed                   ...$parameters
     ): Builder|EloquentBuilder {
         return $query
-            ->selectRaw(
-                "pg_size_pretty(pg_database_size('" .
-                config("database.connections." . config("database.default") . ".database")
-                . "')) as db_size",
+            ->join(
+                "event_days",
+                "event_days.id",
+                "=",
+                "reservations.event_day_id",
+            )
+            ->with(["eventDay", "activity"])
+            ->select(["event_days.date", "reservations.*"])
+            ->orderBy("event_days.date")
+            ->groupBy(
+                "reservations.id",
+                "reservations.event_day_id",
+                "event_days.date",
             );
     }
 }

@@ -1,8 +1,12 @@
+@php use App\Enum\ButtonVariant; @endphp
+@php use App\Enum\Permissions\Classes\Control; @endphp
+@php use App\Enum\InternalRoles; @endphp
+@php use App\Models\Reservation; @endphp
 <div>
     <x-slot name="header">
         <div class="flex items-center">
             <x-button class="px-2"
-                      :variant="\App\Enum\ButtonVariant::LINK"
+                      :variant="ButtonVariant::LINK"
                       :url="route('users.index')"
             >
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -23,7 +27,7 @@
             <x-banner.error/>
             <div class="bg-white rounded shadow-md border grid grid-cols-6 pb-6">
                 <div class="col-span-full bg-gray-50 border-b px-6 py-3 mb-6 rounded-t flex items-center justify-end">
-                    @can(\App\Enum\Permissions\Classes\Control::MANAGE_USER_ROLES())
+                    @can(Control::MANAGE_USER_ROLES())
                         <x-jet-dropdown align="right" width="48">
                             <x-slot name="trigger">
                                 <span class="inline-flex rounded-md">
@@ -48,7 +52,7 @@
                                     Account management
                                 </div>
 
-                                @if($user->hasRole(\App\Enum\InternalRoles::USER()))
+                                @if($user->hasRole(InternalRoles::USER()))
                                     <form wire:submit.prevent="elevate" x-data>
                                         @csrf
 
@@ -120,7 +124,7 @@
 
                         @foreach($this->user_reservations as $key => $reservation)
                             @php
-                                /** @var \App\Models\Reservation $reservation */
+                                /** @var Reservation $reservation */
                             @endphp
 
                             @if($reservation->eventDay->date->timestamp !== $last_reservation_date->timestamp)
