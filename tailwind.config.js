@@ -1,4 +1,5 @@
 const defaultTheme = require("tailwindcss/defaultTheme")
+const colors = require("tailwindcss/colors")
 
 /** @type {import("tailwindcss").Config} */
 module.exports = {
@@ -10,14 +11,21 @@ module.exports = {
         "./resources/views/**/*.blade.php",
         "./app/Http/Livewire/**/*.php",
         "./modules/**/*.blade.php",
+        "./vendor/filament/**/*.blade.php",
     ],
 
     darkMode: "class",
 
     theme: {
         extend: {
+            colors    : {
+                danger : colors.rose,
+                primary: colors.amber,
+                success: colors.green,
+                warning: colors.amber,
+            },
             fontFamily: {
-                sans: ["Nunito", ...defaultTheme.fontFamily.sans],
+                sans: ["DM Sans", ...defaultTheme.fontFamily.sans],
             },
             animation : {
                 float: "float 5s linear infinite",
@@ -31,5 +39,8 @@ module.exports = {
         },
     },
 
-    plugins: [require("@tailwindcss/forms"), require("@tailwindcss/typography")],
+    plugins: [
+        require("@tailwindcss/forms"),
+        require("@tailwindcss/typography"),
+    ],
 }

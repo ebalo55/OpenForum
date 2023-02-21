@@ -2,7 +2,7 @@
     'title' => null,
 ])
 
-    <!DOCTYPE html>
+<!DOCTYPE html>
 <html
     lang="{{ str_replace('_', '-', app()->getLocale()) }}"
     dir="{{ __('filament::layout.direction') ?? 'ltr' }}"

@@ -78,9 +78,9 @@ return [
     | Each of these methods is documented in its own function.
     |
     */
-    "datetime_format"                   => "d/m/Y H:i:s",
-    "date_format"                       => "d/m/Y",
-    "time_format"                       => "H:i:s",
+    "datetime_format"                   => env("DATETIME_FORMAT"),
+    "date_format"                       => env("DATE_FORMAT"),
+    "time_format"                       => env("TIME_FORMAT"),
 
     /*
     |--------------------------------------------------------------------------

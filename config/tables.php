@@ -12,9 +12,9 @@ return [
     |
     */
 
-    'date_format'      => 'M j, Y',
-    'date_time_format' => 'M j, Y H:i:s',
-    'time_format'      => 'H:i:s',
+    'date_format'      => env("DATE_FORMAT"),
+    'date_time_format' => env("DATETIME_FORMAT"),
+    'time_format'      => env("TIME_FORMAT"),
 
     /*
     |--------------------------------------------------------------------------
@@ -43,7 +43,7 @@ return [
     |
     */
 
-    'dark_mode' => false,
+    'dark_mode' => true,
 
     /*
     |--------------------------------------------------------------------------

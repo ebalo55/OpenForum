@@ -214,6 +214,7 @@ return [
         App\Providers\JetstreamServiceProvider::class,
 
         App\Providers\OpenForumServiceProvider::class,
+        App\Providers\OpenForumFilamentServiceProvider::class,
     ],
 
     /*
