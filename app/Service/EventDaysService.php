@@ -37,28 +37,6 @@ class EventDaysService extends BaseService {
     }
 
     /**
-     * Checks if the registration is enabled or fail with an exception
-     *
-     * @return bool
-     * @throws Throwable
-     * @throws RegistrationNotEnabledException
-     */
-    public
-    function isRegistrationEnabled(): bool {
-        throw_if(
-            is_null(app(GeneralSettings::class)->registration_enabled_from) ||
-            is_null(app(GeneralSettings::class)->registration_enabled_to) ||
-            !(
-                now()->timestamp >= app(GeneralSettings::class)->registration_enabled_from->timestamp &&
-                now()->timestamp <= app(GeneralSettings::class)->registration_enabled_to->timestamp
-            ),
-            RegistrationNotEnabledException::class,
-        );
-
-        return true;
-    }
-
-    /**
      * Get the count of the unique distinct events.
      * This call is optimized to automatically cache the query result and retrieve in all next calls.
      *
@@ -72,9 +50,16 @@ class EventDaysService extends BaseService {
     ): int {
         if ($refresh) {
             $unique_events = EventDay::query()->distinct()->count("event_days.date");
-            Cache::forever(
-                "unique_event_days_count",
-                $unique_events,
+
+            // As running the cache inside filament with a db transaction seems to always fail for some unknown
+            // reason (at least to me) the solution is to wrap the caching outside the current transaction (if any)
+            DB::afterCommit(
+                function() use ($unique_events) {
+                    Cache::forever(
+                        "unique_event_days_count",
+                        $unique_events,
+                    );
+                },
             );
 
             return $unique_events;
@@ -125,6 +110,28 @@ class EventDaysService extends BaseService {
     }
 
     /**
+     * Checks if the registration is enabled or fail with an exception
+     *
+     * @return bool
+     * @throws Throwable
+     * @throws RegistrationNotEnabledException
+     */
+    public
+    function isRegistrationEnabled(): bool {
+        throw_if(
+            is_null(app(GeneralSettings::class)->registration_enabled_from) ||
+            is_null(app(GeneralSettings::class)->registration_enabled_to) ||
+            !(
+                now()->timestamp >= app(GeneralSettings::class)->registration_enabled_from->timestamp &&
+                now()->timestamp <= app(GeneralSettings::class)->registration_enabled_to->timestamp
+            ),
+            RegistrationNotEnabledException::class,
+        );
+
+        return true;
+    }
+
+    /**
      * Prunes all event days and creates new one using the defined day-location pair
      *
      * @return void
@@ -147,6 +154,10 @@ class EventDaysService extends BaseService {
                 // for each day-location pair create a new event day
                 foreach ($period as $day) {
                     foreach ($locations as $location) {
+                        if (is_array($location)) {
+                            $location = array_values($location)[0];
+                        }
+
                         EventDay::create(
                             [
                                 "nickname" => format_date(Carbon::createFromImmutable($day)) . " - {$location}",

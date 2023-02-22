@@ -4,13 +4,13 @@
     {{ \Filament\Facades\Filament::renderHook('footer.start') }}
 
     @if (config('filament.layout.footer.should_show_logo'))
-        <small class="text-slate-300">
+        <small class="dark:text-slate-300 text-slate-800 font-semibold">
             Powered by&nbsp;
             <a
                 href="https://github.com/ebalo55/OpenForum"
                 target="_blank"
                 rel="noopener noreferrer"
-                class="border-b hover:text-primary-500 hover:border-primary-500 transition duration-300"
+                class="border-b dark:border-gray-200 border-slate-700 hover:text-primary-500 hover:border-primary-500 transition duration-300"
             >
                 OpenForum
             </a>

@@ -1,5 +1,5 @@
 @php use App\Enum\ButtonVariant; @endphp
-@php use App\Enum\Permissions\Classes\Control; @endphp
+@php use App\Enum\Permissions\Classes\Management; @endphp
 @php use App\Enum\InternalRoles; @endphp
 @php use App\Models\Reservation; @endphp
 <div>
@@ -27,7 +27,7 @@
             <x-banner.error/>
             <div class="bg-white rounded shadow-md border grid grid-cols-6 pb-6">
                 <div class="col-span-full bg-gray-50 border-b px-6 py-3 mb-6 rounded-t flex items-center justify-end">
-                    @can(Control::MANAGE_USER_ROLES())
+                    @can(Management::MANAGE_USER_ROLES())
                         <x-jet-dropdown align="right" width="48">
                             <x-slot name="trigger">
                                 <span class="inline-flex rounded-md">

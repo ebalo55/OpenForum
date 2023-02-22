@@ -1,7 +1,7 @@
 <?php
 
-use App\Enum\Permissions\Classes\Control;
 use App\Enum\Permissions\Classes\Event as EventPermissions;
+use App\Enum\Permissions\Classes\Management;
 use App\Http\Livewire\Users\Details;
 use App\Http\Livewire\Users\Index;
 
@@ -17,7 +17,7 @@ Route::middleware(
 
 Route::middleware(
     [
-        "can:" . Control::MANAGE_USER_ROLES(),
+        "can:" . Management::USER_ROLES(),
     ],
 )->get(
     "/user/{user}",

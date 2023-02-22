@@ -56,10 +56,23 @@ class GeneralSettingsForm extends Component {
               " to " .
               format_date(app(GeneralSettings::class)->events_ending_day)
             : "";
-        $this->locations = Arr::join(
-            app(GeneralSettings::class)->event_locations,
-            "\n",
-        );
+
+        // migration to filament fix
+        try {
+            $this->locations = Arr::join(
+                Arr::map(
+                    app(GeneralSettings::class)->event_locations,
+                    fn(array $arr) => array_values($arr)[0],
+                ),
+                "\n",
+            );
+        }
+        catch (Throwable) {
+            $this->locations = Arr::join(
+                app(GeneralSettings::class)->event_locations,
+                "\n",
+            );
+        }
     }
 
     /**

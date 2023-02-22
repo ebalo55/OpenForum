@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Enum\InternalRoles;
+use App\Enum\Permissions\Classes\Management;
 use Filament\Models\Contracts\FilamentUser;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -89,10 +90,35 @@ class User extends Authenticatable implements FilamentUser {
         'two_factor_secret',
     ];
 
+    /**
+     * Checks if the user can access the filament dashboard
+     *
+     * @return bool
+     */
     public
     function canAccessFilament(): bool {
         return ($this->hasRole(InternalRoles::ADMIN()) || $this->hasRole(InternalRoles::SUPER_ADMIN())) &&
                $this->hasVerifiedEmail();
+    }
+
+    /**
+     * Checks if the user can manage the platform general settings
+     *
+     * @return bool
+     */
+    public
+    function canManageGeneralSettings(): bool {
+        return $this->can(Management::GENERAL_SETTINGS());
+    }
+
+    /**
+     * Checks if the user can manage the platform critical settings
+     *
+     * @return bool
+     */
+    public
+    function canManageCriticalSettings(): bool {
+        return $this->can(Management::CRITICAL_SETTINGS());
     }
 
     /**

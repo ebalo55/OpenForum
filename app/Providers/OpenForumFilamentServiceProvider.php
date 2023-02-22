@@ -42,9 +42,12 @@ class OpenForumFilamentServiceProvider extends ServiceProvider {
                 Filament::registerNavigationGroups(
                     [
                         NavigationGroup::make()
+                                       ->label('Settings')
+                                       ->icon('isax-broken.setting'),
+                        NavigationGroup::make()
                                        ->label('Documentation')
-                                       ->icon('heroicon-s-shopping-cart')
-                                       ->collapsed(false),
+                                       ->icon('isax-broken.book')
+                                       ->collapsed(),
                     ],
                 );
             },
@@ -62,7 +65,7 @@ class OpenForumFilamentServiceProvider extends ServiceProvider {
                                           'https://openforum-docs.override.sh/',
                                           true,
                                       )
-                                      ->icon('heroicon-o-presentation-chart-line')
+                                      ->icon('isax-broken.book')
                                       ->activeIcon('heroicon-s-presentation-chart-line')
                                       ->group('Documentation')
                                       ->sort(3),
@@ -71,7 +74,7 @@ class OpenForumFilamentServiceProvider extends ServiceProvider {
                                           '/docs/index.html',
                                           true,
                                       )
-                                      ->icon('heroicon-o-presentation-chart-line')
+                                      ->icon('isax-broken.book')
                                       ->activeIcon('heroicon-s-presentation-chart-line')
                                       ->group('Documentation')
                                       ->sort(3),

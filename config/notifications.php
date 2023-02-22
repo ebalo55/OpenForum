@@ -14,23 +14,23 @@ return [
 	|
 	*/
 
-	'dark_mode' => false,
+    'dark_mode' => true,
 
-	/*
-	|--------------------------------------------------------------------------
-	| Database notifications
-	|--------------------------------------------------------------------------
-	|
-	| By enabling this feature, your users are able to open a slide-over within
-	| the app to view their database notifications.
-	|
-	*/
+    /*
+    |--------------------------------------------------------------------------
+    | Database notifications
+    |--------------------------------------------------------------------------
+    |
+    | By enabling this feature, your users are able to open a slide-over within
+    | the app to view their database notifications.
+    |
+    */
 
 	'database' => [
-		'enabled'          => false,
-		'trigger'          => null,
-		'polling_interval' => '30s',
-	],
+        'enabled'          => true,
+        'trigger'          => null,
+        'polling_interval' => '30s',
+    ],
 
 	/*
 	|--------------------------------------------------------------------------

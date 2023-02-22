@@ -10,6 +10,20 @@ use Carbon\Carbon;
 final
 class SettingsService extends BaseService {
     /**
+     * Cast a datetime string coming from filament to carbon.
+     *
+     * @param string $value
+     *
+     * @return Carbon
+     */
+    public static
+    function dehydrateCastingToCarbon(
+        string $value,
+    ): Carbon {
+        return Carbon::parseFromLocale($value);
+    }
+
+    /**
      * Globally increase the number of import errors
      *
      * @return int
@@ -68,45 +82,45 @@ class SettingsService extends BaseService {
      *
      * @return Carbon
      */
-	public
-	function setEventsStartingDay(
-		Carbon $events_starting_time,
-	): Carbon {
-		return tap(
-			$events_starting_time,
-			function(Carbon $events_starting_time) {
-				$this->general_settings->events_starting_day = $events_starting_time;
-				$this->general_settings->save();
-			},
-		);
-	}
+    public
+    function setEventsStartingDay(
+        Carbon $events_starting_time,
+    ): Carbon {
+        return tap(
+            $events_starting_time,
+            function(Carbon $events_starting_time) {
+                $this->general_settings->events_starting_day = $events_starting_time;
+                $this->general_settings->save();
+            },
+        );
+    }
 
-	/**
-	 * Globally define the new front-end domain
-	 *
-	 * @param string $domain
-	 *
-	 * @return string
-	 */
-	public
-	function setFrontEndDomain(
-		string $domain,
-	): string {
-		return tap(
-			$domain,
-			function(string $domain) {
-				$this->general_settings->front_end_domain = $domain;
-				$this->general_settings->save();
-			},
-		);
-	}
+    /**
+     * Globally define the new front-end domain
+     *
+     * @param string $domain
+     *
+     * @return string
+     */
+    public
+    function setFrontEndDomain(
+        string $domain,
+    ): string {
+        return tap(
+            $domain,
+            function(string $domain) {
+                $this->general_settings->front_end_domain = $domain;
+                $this->general_settings->save();
+            },
+        );
+    }
 
-	/**
-	 * Globally define the new site name
-	 *
-	 * @param bool $is_in_progress
-	 *
-	 * @return bool
+    /**
+     * Globally define the new site name
+     *
+     * @param bool $is_in_progress
+     *
+     * @return bool
      */
     public
     function setIsImportInProgress(
