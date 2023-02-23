@@ -12,6 +12,7 @@ use ArchTech\Enums\Meta\Meta;
  * @method static string USER_ROLES()
  * @method static string GENERAL_SETTINGS()
  * @method static string CRITICAL_SETTINGS()
+ * @method static string PASSWORD_GENERATION_SETTINGS()
  */
 #[Meta(Description::class)]
 enum Management: string {

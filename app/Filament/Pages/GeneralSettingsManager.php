@@ -78,7 +78,7 @@ class GeneralSettingsManager extends SettingsPage {
                            ->success()
                            ->title("Settings updated")
                            ->body("General settings successfully updated!")
-                           ->icon("heroicon-o-check-circle");
+                           ->icon("isax-broken.tick-circle");
     }
 
     public

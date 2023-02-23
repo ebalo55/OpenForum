@@ -104,7 +104,7 @@ class CriticalSettingsManager extends SettingsPage {
                            ->success()
                            ->title("Settings updated")
                            ->body("Critical settings successfully updated!")
-                           ->icon("heroicon-o-check-circle");
+                           ->icon("isax-broken.tick-circle");
     }
 
     public

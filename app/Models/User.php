@@ -122,6 +122,16 @@ class User extends Authenticatable implements FilamentUser {
     }
 
     /**
+     * Checks if the user can manage the platform critical settings
+     *
+     * @return bool
+     */
+    public
+    function canManagePasswordGenerationSettings(): bool {
+        return $this->can(Management::PASSWORD_GENERATION_SETTINGS());
+    }
+
+    /**
      * Get the route key for the model.
      */
     public

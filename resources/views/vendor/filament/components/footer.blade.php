@@ -10,7 +10,7 @@
                 href="https://github.com/ebalo55/OpenForum"
                 target="_blank"
                 rel="noopener noreferrer"
-                class="border-b dark:border-gray-200 border-slate-700 hover:text-primary-500 hover:border-primary-500 transition duration-300"
+                class="border-b dark:border-gray-200 border-slate-700 hover:text-primary-500 hover:border-primary-500 hover:dark:border-primary-500 transition duration-300"
             >
                 OpenForum
             </a>

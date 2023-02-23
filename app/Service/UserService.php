@@ -3,6 +3,7 @@
 namespace App\Service;
 
 use App\Enum\PasswordGenerationRules;
+use App\Enum\Permissions\Classes\User as UserPermissions;
 use App\Models\PersonalAccessToken;
 use App\Models\User;
 use App\Settings\GeneralSettings;
@@ -11,7 +12,6 @@ use Carbon\Carbon;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
-use App\Enum\Permissions\Classes\User as UserPermissions;
 
 final
 class UserService extends BaseService {
@@ -90,6 +90,14 @@ class UserService extends BaseService {
 
         $psw = "";
         foreach (($generation_rule_override ?? app(PasswordGenerationSettings::class)->generation_rule) as $rule) {
+            // filament provides array as of repeaters exit value, extract the value we want from the array
+            if (is_array($rule)) {
+                $rule = array_values($rule)[0];
+            }
+
+            // cast the rule back to the enum
+            $rule = PasswordGenerationRules::from($rule);
+
             $psw .= match ($rule) {
                 PasswordGenerationRules::FIRST_NAME                => Arr::first($name_fragments),
                 PasswordGenerationRules::LAST_NAME                 => Arr::last($name_fragments),

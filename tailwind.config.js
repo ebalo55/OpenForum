@@ -25,7 +25,7 @@ module.exports = {
                 warning: colors.amber,
             },
             fontFamily: {
-                sans: ["DM Sans", ...defaultTheme.fontFamily.sans],
+                sans: ["Nunito", ...defaultTheme.fontFamily.sans],
             },
             animation : {
                 float: "float 5s linear infinite",
