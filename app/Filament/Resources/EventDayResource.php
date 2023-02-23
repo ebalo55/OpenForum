@@ -14,7 +14,7 @@ use Filament\Tables;
 class EventDayResource extends Resource {
     protected static ?string $model = EventDay::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-collection';
+    protected static ?string $navigationIcon = 'isax-broken.layer';
 
     public static
     function form(
@@ -23,17 +23,17 @@ class EventDayResource extends Resource {
         return $form
             ->schema(
                 [
-                    Forms\Components\TextInput::make('nickname')
-                                              ->required()
-                                              ->maxLength(255),
-                    Forms\Components\DatePicker::make('date')
-                                               ->minDate(now())
-                                               ->required(),
-                    Forms\Components\Textarea::make('location')
-                                             ->required(),
-                    Forms\Components\TextInput::make('max_reservation')
-                                              ->integer()
-                                              ->minValue(0),
+                    Forms\Components\Card::make(
+                        [
+                            Forms\Components\TextInput::make('nickname')
+                                                      ->required()
+                                                      ->maxLength(255),
+                            Forms\Components\TextInput::make('max_reservation')
+                                                      ->integer()
+                                                      ->minValue(0),
+                        ],
+                    ),
+
                 ],
             );
     }
@@ -51,7 +51,7 @@ class EventDayResource extends Resource {
     public static
     function getRelations(): array {
         return [
-            //
+            RelationManagers\ActivitiesRelationManager::class,
         ];
     }
 
@@ -62,16 +62,25 @@ class EventDayResource extends Resource {
         return $table
             ->columns(
                 [
-                    Tables\Columns\TextColumn::make('prefixed_id'),
-                    Tables\Columns\TextColumn::make('nickname'),
+                    Tables\Columns\TextColumn::make('prefixed_id')
+                                             ->limit(20),
+                    Tables\Columns\TextColumn::make('nickname')
+                                             ->searchable(),
                     Tables\Columns\TextColumn::make('date')
-                                             ->date(),
-                    Tables\Columns\TextColumn::make('location'),
-                    Tables\Columns\TextColumn::make('max_reservation'),
-                    Tables\Columns\TextColumn::make('created_at')
-                                             ->dateTime(),
-                    Tables\Columns\TextColumn::make('updated_at')
-                                             ->dateTime(),
+                                             ->date()
+                                             ->sortable()
+                                             ->searchable(),
+                    Tables\Columns\TextColumn::make('location')
+                                             ->searchable(),
+                    Tables\Columns\TextColumn::make('activities_count')
+                                             ->label("Activities")
+                                             ->sortable(),
+                    Tables\Columns\TextColumn::make('max_reservation')
+                                             ->default(0)
+                                             ->sortable(),
+                    Tables\Columns\TextColumn::make('reservations_count')
+                                             ->label("Reservations")
+                                             ->sortable(),
                 ],
             )
             ->filters(
@@ -86,9 +95,7 @@ class EventDayResource extends Resource {
                 ],
             )
             ->bulkActions(
-                [
-                    Tables\Actions\DeleteBulkAction::make(),
-                ],
+                [],
             );
     }
 }

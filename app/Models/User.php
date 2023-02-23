@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Enum\InternalRoles;
 use App\Enum\Permissions\Classes\Management;
 use Filament\Models\Contracts\FilamentUser;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -33,7 +34,8 @@ use Spatie\PrefixedIds\Models\Concerns\HasPrefixedId;
  * @property string|null $two_factor_recovery_codes
  * @property string|null $two_factor_confirmed_at
  * @property-read string $profile_photo_url
- * @property-read \Illuminate\Notifications\DatabaseNotificationCollection<int, \Illuminate\Notifications\DatabaseNotification> $notifications
+ * @property-read \Illuminate\Notifications\DatabaseNotificationCollection<int,
+ *                \Illuminate\Notifications\DatabaseNotification> $notifications
  * @property-read int|null $notifications_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \Spatie\Permission\Models\Permission> $permissions
  * @property-read int|null $permissions_count
@@ -102,16 +104,6 @@ class User extends Authenticatable implements FilamentUser {
     }
 
     /**
-     * Checks if the user can manage the platform general settings
-     *
-     * @return bool
-     */
-    public
-    function canManageGeneralSettings(): bool {
-        return $this->can(Management::GENERAL_SETTINGS());
-    }
-
-    /**
      * Checks if the user can manage the platform critical settings
      *
      * @return bool
@@ -122,13 +114,33 @@ class User extends Authenticatable implements FilamentUser {
     }
 
     /**
-     * Checks if the user can manage the platform critical settings
+     * Checks if the user can manage the platform general settings
+     *
+     * @return bool
+     */
+    public
+    function canManageGeneralSettings(): bool {
+        return $this->can(Management::GENERAL_SETTINGS());
+    }
+
+    /**
+     * Checks if the user can manage the platform password generation settings
      *
      * @return bool
      */
     public
     function canManagePasswordGenerationSettings(): bool {
         return $this->can(Management::PASSWORD_GENERATION_SETTINGS());
+    }
+
+    /**
+     * Checks if the user can reset data
+     *
+     * @return bool
+     */
+    public
+    function canReset(): bool {
+        return $this->can(Management::RESET());
     }
 
     /**
@@ -142,5 +154,15 @@ class User extends Authenticatable implements FilamentUser {
     public
     function reservations(): HasMany {
         return $this->hasMany(Reservation::class);
+    }
+
+    public
+    function scopeIsNotSuperAdmin(
+        Builder $query,
+    ): Builder {
+        return $query->whereNot(
+            "email",
+            config("open-forum.super_admin_id.email"),
+        );
     }
 }

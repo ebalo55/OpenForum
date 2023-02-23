@@ -13,7 +13,6 @@ class EditEventDay extends EditRecord {
     function getActions(): array {
         return [
             Actions\ViewAction::make(),
-            Actions\DeleteAction::make(),
         ];
     }
 }

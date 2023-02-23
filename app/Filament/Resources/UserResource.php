@@ -14,7 +14,7 @@ use Filament\Tables;
 class UserResource extends Resource {
     protected static ?string $model = User::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-collection';
+    protected static ?string $navigationIcon = 'isax-broken.layer';
 
     public static
     function form(
@@ -60,11 +60,27 @@ class UserResource extends Resource {
         return $table
             ->columns(
                 [
-                    Tables\Columns\TextColumn::make('prefixed_id'),
+                    Tables\Columns\TextColumn::make('prefixed_id')
+                                             ->limit(20),
                     Tables\Columns\TextColumn::make('name'),
                     Tables\Columns\TextColumn::make('email'),
-                    Tables\Columns\TextColumn::make('email_verified_at')
-                                             ->dateTime(),
+                    Tables\Columns\IconColumn::make('email_verified_at')
+                                             ->label("Has verified email")
+                                             ->options(
+                                                 [
+                                                     "isax-broken.tick-circle" => fn($state) => !is_null($state),
+                                                     "isax-broken.slash"       => fn($state) => is_null($state),
+                                                 ],
+                                             )
+                                             ->colors(
+                                                 [
+                                                     "success" => fn($state) => !is_null($state),
+                                                     "danger"  => fn($state) => is_null($state),
+                                                 ],
+                                             )
+                                             ->alignCenter()
+                                             ->extraAttributes(['class' => 'flex justify-center']),
+                    Tables\Columns\TextColumn::make('reservations_count'),
                     Tables\Columns\TextColumn::make('created_at')
                                              ->dateTime(),
                 ],
