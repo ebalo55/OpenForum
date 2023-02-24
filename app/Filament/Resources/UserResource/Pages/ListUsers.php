@@ -14,12 +14,12 @@ class ListUsers extends ListRecords {
     protected
     function getActions(): array {
         return [
-            Actions\CreateAction::make(),
+            Actions\CreateAction::make()->label("Import users"),
         ];
     }
 
     protected
     function getTableQuery(): Builder {
-        return User::isNotSuperAdmin()->withCount("reservations");
+        return User::isNotSuperAdmin()->withEmptyEmail()->withCount("reservations");
     }
 }

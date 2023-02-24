@@ -25,11 +25,13 @@ class UserResource extends Resource {
                 [
                     Forms\Components\TextInput::make('name')
                                               ->required()
-                                              ->maxLength(255),
+                                              ->maxLength(255)
+                                              ->hiddenOn("create"),
                     Forms\Components\TextInput::make('email')
                                               ->email()
                                               ->required()
-                                              ->maxLength(255),
+                                              ->maxLength(255)
+                                              ->hiddenOn("create"),
                     Forms\Components\DateTimePicker::make('email_verified_at')
                                                    ->hiddenOn("create"),
                 ],
@@ -81,8 +83,6 @@ class UserResource extends Resource {
                                              ->alignCenter()
                                              ->extraAttributes(['class' => 'flex justify-center']),
                     Tables\Columns\TextColumn::make('reservations_count'),
-                    Tables\Columns\TextColumn::make('created_at')
-                                             ->dateTime(),
                 ],
             )
             ->filters(
@@ -96,10 +96,6 @@ class UserResource extends Resource {
                     Tables\Actions\EditAction::make(),
                 ],
             )
-            ->bulkActions(
-                [
-                    Tables\Actions\DeleteBulkAction::make(),
-                ],
-            );
+            ->bulkActions([]);
     }
 }

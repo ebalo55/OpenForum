@@ -160,9 +160,17 @@ class User extends Authenticatable implements FilamentUser {
     function scopeIsNotSuperAdmin(
         Builder $query,
     ): Builder {
-        return $query->whereNot(
-            "email",
+        return $query->where(
+            "users.email",
+            "!=",
             config("open-forum.super_admin_id.email"),
         );
+    }
+
+    public
+    function scopeWithEmptyEmail(
+        Builder $builder,
+    ): Builder {
+        return $builder->orWhereNull("users.email");
     }
 }

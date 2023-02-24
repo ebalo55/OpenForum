@@ -128,7 +128,7 @@ class BulkService extends BaseService {
     ): string {
         return match ($mime) {
             "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" => ".xlsx",
-            'application/csv', 'text/csv', 'text/plain'                         => ".csv",
+            "application/csv", "text/csv", "text/plain"                         => ".csv",
             default                                                             => ""
         };
     }
