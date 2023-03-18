@@ -3,8 +3,6 @@
 # Default to PHP 8.1, but we attempt to match
 # the PHP version from the user (wherever `flyctl launch` is run)
 # Valid version values are PHP 7.4+
-ARG PHP_VERSION=8.2
-ARG NODE_VERSION=18
 FROM php:8.2.3-fpm as base
 
 # PHP_VERSION needs to be repeated here
@@ -56,7 +54,7 @@ RUN if grep -Fq "laravel/octane" /var/www/html/composer.json; then \
 
 # Multi-stage build: Build static assets
 # This allows us to not include Node within the final container
-FROM node:${NODE_VERSION} as node_modules_go_brrr
+FROM node:lts as node_modules_go_brrr
 
 RUN mkdir /app
 
@@ -94,8 +92,8 @@ FROM base
 # or maybe some custom assets were added manually! Either way, we merge
 # in the assets we generated above rather than overwrite them
 COPY --from=node_modules_go_brrr /app/public /var/www/html/public-npm
-RUN rsync -ar /var/www/html/public-npm/ /var/www/html/public/ \
-RUN rm -rf /var/www/html/public-npm \
+RUN rsync -ar /var/www/html/public-npm/ /var/www/html/public/
+RUN rm -rf /var/www/html/public-npm
 RUN chown -R webuser:webgroup /var/www/html/public
 
 EXPOSE 8080
