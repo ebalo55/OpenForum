@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/env ash
 
 if [ "${RUN_QUEUE}" == "true" ]; then
     echo "[+] Running laravel scheduler"

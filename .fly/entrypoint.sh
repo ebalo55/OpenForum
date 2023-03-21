@@ -1,15 +1,13 @@
-#!/usr/bin/env sh
+#!/usr/bin/env ash
 
+echo "[+] Running user scripts"
 # Run user scripts, if they exist
 for f in /var/www/html/.fly/scripts/*.sh; do
     # Bail out this loop if any script exits with non-zero status code
-    bash "$f" || break
+    ash "$f" || break
 done
-chown -R webuser:webgroup /var/www/html
+echo "[+] User script execution completed"
 
-if [ $# -gt 0 ]; then
-    # If we passed a command, run it as root
-    exec "$@"
-else
-    exec /init
-fi
+echo "[+] Spawning cron"
+# Spawn cron
+crond -f -l 2 -L /dev/stdout

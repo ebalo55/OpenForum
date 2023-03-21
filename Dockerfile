@@ -1,100 +1,79 @@
 # syntax = docker/dockerfile:experimental
 
-# Default to PHP 8.1, but we attempt to match
-# the PHP version from the user (wherever `flyctl launch` is run)
-# Valid version values are PHP 7.4+
-FROM php:8.2.3-fpm as base
+FROM php:8-fpm-alpine3.17 as base
 
-# PHP_VERSION needs to be repeated here
-# See https://docs.docker.com/engine/reference/builder/#understand-how-arg-and-from-interact
-ARG PHP_VERSION
+ARG WEB_USER_PSW
+ARG DB_HOST
+ARG IS_DEV="false"
 
-LABEL fly_launch_runtime="laravel"
+ENV DB_HOST=$DB_HOST
+ENV IS_DEV=$IS_DEV
 
 ADD https://github.com/mlocati/docker-php-extension-installer/releases/latest/download/install-php-extensions /usr/local/bin/
 
 # install tools and extensions
 RUN chmod +x /usr/local/bin/install-php-extensions
-RUN apt-get update && apt-get install -y git curl zip unzip rsync ca-certificates vim htop cron nginx
-RUN install-php-extensions pgsql swoole xml bcmath mbstring zip @composer
-RUN apt-get clean
-RUN rm -rf /var/lib/apt/lists/*
+RUN apk update && apk upgrade && apk add curl zip unzip nginx rsync git
+RUN install-php-extensions pgsql pdo_pgsql swoole xml bcmath mbstring zip redis curl @composer
+RUN echo "">/etc/apk/repositories
 
 WORKDIR /var/www/html
 # copy application code, skipping files based on .dockerignore
 COPY . /var/www/html
 
-RUN composer install --optimize-autoloader --no-dev
+# setup composer to download packages from gitlab the install everything needed
+RUN if [[ "$IS_DEV" == "true" ]];  \
+    then \
+      composer install --optimize-autoloader; \
+    else \
+      composer install --optimize-autoloader --no-dev; \
+    fi
+
+# for security reason as soon as the packages got installed we rewrite the value with a dummy string
 RUN mkdir -p storage/logs
+RUN touch storage/logs/laravel.log
 RUN php artisan optimize:clear
-RUN adduser --group webgroup
-RUN useradd -G webgroup webuser
-RUN chown -R webuser:webgroup /var/www/html
-RUN sed -i 's/protected \$proxies/protected \$proxies = "*"/g' app/Http/Middleware/TrustProxies.php
-RUN echo "MAILTO=\"\"\n* * * * * webuser /usr/bin/php /var/www/html/artisan schedule:run" > /etc/cron.d/laravel
-RUN rm -rf /etc/cont-init.d/*
-RUN cp .fly/nginx-websockets.conf /etc/nginx/conf.d/websockets.conf
+RUN addgroup webgroup
+RUN echo -e "${WEB_USER_PSW}\n${WEB_USER_PSW}\n" | adduser -G webgroup webuser
 RUN cp .fly/entrypoint.sh /entrypoint
 RUN chmod +x /entrypoint
 
-# If we're using Octane...
-RUN if grep -Fq "laravel/octane" /var/www/html/composer.json; then \
-        rm -rf /etc/services.d/php-fpm; \
-        if grep -Fq "spiral/roadrunner" /var/www/html/composer.json; then \
-            mv .fly/octane-rr /etc/services.d/octane; \
-            if [ -f ./vendor/bin/rr ]; then ./vendor/bin/rr get-binary; fi; \
-            rm -f .rr.yaml; \
-        else \
-            mv .fly/octane-swoole /etc/services.d/octane; \
-        fi; \
-        cp .fly/nginx-default-swoole /etc/nginx/sites-available/default; \
-    else \
-        cp .fly/nginx-default /etc/nginx/sites-available/default; \
-    fi
+# load octane
+RUN mkdir -p /etc/nginx/sites-available/
+RUN cp .fly/nginx-default-swoole /etc/nginx/http.d/default.conf;
+
+# load .env
+RUN mv .env.example .env
+RUN php artisan key:generate
 
 # Multi-stage build: Build static assets
 # This allows us to not include Node within the final container
-FROM node:lts as node_modules_go_brrr
+FROM node:lts-alpine3.17 as node_modules
 
 RUN mkdir /app
 
-RUN mkdir -p  /app
+RUN mkdir -p /app
 WORKDIR /app
 COPY . .
 COPY --from=base /var/www/html/vendor /app/vendor
 
-# Use yarn or npm depending on what type of
-# lock file we might find. Defaults to
-# NPM if no lock file is found.
-# Note: We run "production" for Mix and "build" for Vite
-RUN if [ -f "vite.config.js" ]; then \
-        ASSET_CMD="build"; \
-    else \
-        ASSET_CMD="production"; \
-    fi; \
-    if [ -f "yarn.lock" ]; then \
-        yarn install --frozen-lockfile; \
-        yarn $ASSET_CMD; \
-    elif [ -f "package-lock.json" ]; then \
-        npm ci --no-audit; \
-        npm run $ASSET_CMD; \
-    else \
-        npm install; \
-        npm run $ASSET_CMD; \
-    fi;
+# Build vite
+RUN npm ci --no-audit
+RUN npm run build;
 
 # From our base container created above, we
 # create our final image, adding in static
 # assets that we generated above
-FROM base
+FROM base as final_image
 
 # Packages like Laravel Nova may have added assets to the public directory
 # or maybe some custom assets were added manually! Either way, we merge
 # in the assets we generated above rather than overwrite them
-COPY --from=node_modules_go_brrr /app/public /var/www/html/public-npm
+COPY --from=node_modules /app/public /var/www/html/public-npm
 RUN rsync -ar /var/www/html/public-npm/ /var/www/html/public/
+RUN apk del rsync git
 RUN rm -rf /var/www/html/public-npm
-RUN chown -R webuser:webgroup /var/www/html/public
+RUN chown -R webuser:webgroup /var/www/html
 
 EXPOSE 8080
 

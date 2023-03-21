@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/env ash
 
 if [ "${RUN_WEBSERVICE}" == "true" ]; then
     echo "[+] Starting webserver"
