@@ -10,7 +10,8 @@ use Tests\TestCase;
 class AuthServiceProviderTest extends TestCase {
     public
     function test_check_super_admin_gate_always_true() {
-        $user = User::whereEmail("ebalo@insane-dev.tips")->first();
+        $user = User::whereEmail(config("open-forum.super_admin_id.email"))
+            ->first();
 
         $this->assertTrue($user->can(Str::random()));
         $this->assertTrue($user->can(Str::random()));

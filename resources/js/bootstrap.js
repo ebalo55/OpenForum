@@ -39,7 +39,9 @@ window.axios.defaults.headers.common["X-Requested-With"] = "XMLHttpRequest"
 /**
  * Load assets into Vite
  */
-import.meta.glob([
-                     "../assets/**",
-                 ])
+import.meta.glob(
+    [
+        "../assets/**",
+    ],
+)
 
