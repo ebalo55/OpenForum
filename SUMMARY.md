@@ -1,6 +1,7 @@
 # Table of contents
 
 * [Introduction](README.md)
+* [Installation](installation.md)
 * [Features](features/README.md)
   * [Dynamic event days and location definition](features/dynamic-event-days-and-location-definition.md)
   * [Reservation date-time range restriction](features/reservation-date-time-range-restriction.md)
